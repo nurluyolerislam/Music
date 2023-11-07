@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		586E1FF82AFABCF800B1D914 /* MusicCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E1FF72AFABCF800B1D914 /* MusicCardView.swift */; };
+		586E20012AFAD03900B1D914 /* MusicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E20002AFAD03900B1D914 /* MusicButton.swift */; };
+		586E20032AFAD65800B1D914 /* PopularSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */; };
 		587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC4EC2AFA54AC00D6B976 /* AppDelegate.swift */; };
 		587FC4EF2AFA54AC00D6B976 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC4EE2AFA54AC00D6B976 /* SceneDelegate.swift */; };
 		587FC4F62AFA54AD00D6B976 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 587FC4F52AFA54AD00D6B976 /* Assets.xcassets */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		586E1FF72AFABCF800B1D914 /* MusicCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MusicCardView.swift; path = Music/Components/MusicCardView.swift; sourceTree = SOURCE_ROOT; };
+		586E20002AFAD03900B1D914 /* MusicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicButton.swift; sourceTree = "<group>"; };
+		586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSongsTableViewCell.swift; sourceTree = "<group>"; };
 		587FC4E92AFA54AC00D6B976 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		587FC4EC2AFA54AC00D6B976 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		587FC4EE2AFA54AC00D6B976 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		586E1FFF2AFAD01B00B1D914 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				586E1FF72AFABCF800B1D914 /* MusicCardView.swift */,
+				586E20002AFAD03900B1D914 /* MusicButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		587FC4E02AFA54AC00D6B976 = {
 			isa = PBXGroup;
 			children = (
@@ -58,7 +73,7 @@
 		587FC4EB2AFA54AC00D6B976 /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				587FC50C2AFA632E00D6B976 /* Components */,
+				586E1FFF2AFAD01B00B1D914 /* Components */,
 				587FC5072AFA58F800D6B976 /* Extensions */,
 				587FC5002AFA556E00D6B976 /* Home */,
 				587FC5062AFA56A100D6B976 /* Supporting Files */,
@@ -71,6 +86,7 @@
 			children = (
 				587FC5012AFA558900D6B976 /* HomeVC.swift */,
 				587FC5032AFA55B300D6B976 /* HomeView.swift */,
+				586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -93,13 +109,6 @@
 				587FC5082AFA592500D6B976 /* UIView+Ext.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		587FC50C2AFA632E00D6B976 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,8 +183,11 @@
 			files = (
 				587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */,
 				587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */,
+				586E20032AFAD65800B1D914 /* PopularSongsTableViewCell.swift in Sources */,
 				587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */,
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
+				586E20012AFAD03900B1D914 /* MusicButton.swift in Sources */,
+				586E1FF82AFABCF800B1D914 /* MusicCardView.swift in Sources */,
 				587FC4EF2AFA54AC00D6B976 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
