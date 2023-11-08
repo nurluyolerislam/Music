@@ -81,6 +81,7 @@ class PopularSongsTableViewCell: UITableViewCell {
     }
     
     private func configureUI() {
+        selectionStyle = .none
         addSubview(containerView)
         containerView.fillSuperview()
         containerView.addSubview(stackView)
@@ -88,6 +89,8 @@ class PopularSongsTableViewCell: UITableViewCell {
     }
 }
 
-#Preview {
-    PopularSongsTableViewCell()
+struct PopularSongsTableViewCellModel {
+    let image: UIImage
+    let songName: String
+    let albumName: String
 }

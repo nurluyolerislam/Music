@@ -27,12 +27,24 @@ class HomeVC: UIViewController {
         let profileImageGestureRecognizer = UITapGestureRecognizer(target: self,
                                                action: #selector(profileImageTapped))
         homeView.profileImage.addGestureRecognizer(profileImageGestureRecognizer)
+        
+        homeView.browseButton.addTarget(self, action: #selector(browseButtonTapped), for: .touchUpInside)
+        
+        homeView.exploreButton.addTarget(self, action: #selector(exploreButtonTapped), for: .touchUpInside)
     }
     
     
     //MARK: - @Actions
     @objc func profileImageTapped() {
         print("DEBUG: profileImage tapped")
+    }
+    
+    @objc func browseButtonTapped() {
+        print("DEBUG: browseButton tapped")
+    }
+    
+    @objc func exploreButtonTapped(){
+        print("DEBUG: exploreButton tapped")
     }
     
     

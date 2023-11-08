@@ -1,5 +1,5 @@
 //
-//  MusicCardView.swift
+//  MusicCollectionViewCell.swift
 //  Music
 //
 //  Created by Erislam Nurluyol on 7.11.2023.
@@ -7,7 +7,9 @@
 
 import UIKit
 
-class MusicCardView: UIView {
+class MusicCollectionViewCell: UICollectionViewCell {
+    
+    static let reuseID = "MusicCollectionViewCell"
     
     //MARK: - UI Elements
     lazy var imageView: UIImageView = {
@@ -16,7 +18,7 @@ class MusicCardView: UIView {
         imageView.clipsToBounds = true
         
         let layer = UIView()
-        layer.backgroundColor = .white
+        layer.backgroundColor = .systemBackground
         layer.layer.opacity = 0.5
         imageView.addSubview(layer)
         layer.fillSuperview()
@@ -53,24 +55,18 @@ class MusicCardView: UIView {
         configureUI()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        imageView.layer.cornerRadius = imageView.bounds.height / 10
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(image: UIImage, title: String, subtitle: String) {
-        self.init()
-        imageView.image = image
-        firstLabel.text = title
-        secondLabel.text = subtitle
+    //MARK: - Lifecycle
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imageView.layer.cornerRadius = imageView.bounds.height / 8
     }
     
     
-    //MARK: - Helper Functions
+    //MARK: - Configuration Methods
     private func configureUI () {
         configureImageView()
         configureStackView()
@@ -85,4 +81,10 @@ class MusicCardView: UIView {
         imageView.addSubview(stackView)
         stackView.centerInSuperview()
     }
+}
+
+struct MusicCollectionViewCellModel {
+    let image: UIImage
+    let firstLabelText: String
+    let secondLabelText: String
 }

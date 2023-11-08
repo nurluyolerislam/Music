@@ -9,6 +9,38 @@ import UIKit
 
 class HomeView: UIView {
     
+    //MARK: - Mocks
+    let discoverCards : [MusicCollectionViewCellModel] = [MusicCollectionViewCellModel(image: UIImage(named: "profileImage")!,
+                                                                   firstLabelText: "Chill out",
+                                                                   secondLabelText: "Study with"),
+                                                          MusicCollectionViewCellModel(image: UIImage(named: "profileImage")!,
+                                                                   firstLabelText: "Get jazzy",
+                                                                   secondLabelText: "Enjoy a rainy"),
+                                                          MusicCollectionViewCellModel(image: UIImage(named: "profileImage")!,
+                                                                   firstLabelText: "Soundtrack",
+                                                                   secondLabelText: "Rock out with")
+    ]
+    
+    let personalizedCards : [MusicCollectionViewCellModel] = [MusicCollectionViewCellModel(image: UIImage(named: "profileImage")!,
+                                                                       firstLabelText: "Your top played",
+                                                                       secondLabelText: "Discover new artists"),
+                                                              MusicCollectionViewCellModel(image: UIImage(named: "profileImage")!,
+                                                                       firstLabelText: "Best of",
+                                                                       secondLabelText: "Office music for")
+    ]
+    
+    let popularSongs: [PopularSongsTableViewCellModel] = [
+        .init(image: UIImage(named: "profileImage")!,
+              songName: "California living vibes",
+              albumName: "Trending tracks by Tom"),
+        .init(image: UIImage(named: "profileImage")!,
+              songName: "On the top charts",
+              albumName: "Recommended tracks by Alma"),
+        .init(image: UIImage(named: "profileImage")!,
+              songName: "Enjoy together with friends",
+              albumName: "Tunes by Jonas&Jonas")
+    ]
+    
     //MARK: - UI Elements
     lazy var welcomeLabel: UILabel = {
         let label = UILabel()
@@ -47,13 +79,10 @@ class HomeView: UIView {
         let button = UIButton(configuration: .plain())
         button.setTitle("Browse", for: .normal)
         button.setTitleColor(.label, for: .normal)
-        button.layer.borderColor = UIColor.label.cgColor
-        button.layer.borderWidth = 2
-        button.layer.cornerRadius = 20
         return button
     }()
     
-    lazy var browseStackView: UIStackView = {
+    lazy var discoverStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             discoverLabel,
             browseButton
@@ -63,37 +92,21 @@ class HomeView: UIView {
         return stackView
     }()
     
-    lazy var browseContentStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            card1,
-            card2,
-            card3
-        ])
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
-    
-    lazy var card1: MusicCardView = {
-        let card = MusicCardView(image: UIImage(named: "profileImage")!,
-                                 title: "Chill out",
-                                 subtitle: "Study with")
-        return card
-    }()
-    
-    lazy var card2: MusicCardView = {
-        let card = MusicCardView(image: UIImage(named: "profileImage")!,
-                                 title: "Get jazzy",
-                                 subtitle: "Enjoy a rainy")
-        return card
-    }()
-    
-    lazy var card3: MusicCardView = {
-        let card = MusicCardView(image: UIImage(named: "profileImage")!,
-                                 title: "Soundtrack",
-                                 subtitle: "Rock out with")
-        return card
+    lazy var discoverCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 120, height: 120)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
+        
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(MusicCollectionViewCell.self,
+                                forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
+        return collectionView
     }()
     
     lazy var personalizedLabel: UILabel = {
@@ -113,7 +126,7 @@ class HomeView: UIView {
         return button
     }()
     
-    lazy var exploreStackView: UIStackView = {
+    lazy var personalizedStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             personalizedLabel,
             exploreButton
@@ -123,29 +136,21 @@ class HomeView: UIView {
         return stackView
     }()
     
-    lazy var exploreContentStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            card4,
-            card5
-        ])
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
-    
-    lazy var card4: MusicCardView = {
-        let card = MusicCardView(image: UIImage(named: "profileImage")!,
-                                 title: "Your top played",
-                                 subtitle: "Discover new artists")
-        return card
-    }()
-    
-    lazy var card5: MusicCardView = {
-        let card = MusicCardView(image: UIImage(named: "profileImage")!,
-                                 title: "Best of",
-                                 subtitle: "Officce music for")
-        return card
+    lazy var personalizedCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 160, height: 160)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
+        
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(MusicCollectionViewCell.self,
+                                forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
+        return collectionView
     }()
     
     lazy var popularSongsLabel: UILabel = {
@@ -177,14 +182,27 @@ class HomeView: UIView {
     }
     
     
-    //MARK: - Helper Functions
+    //MARK: - Lifecycle
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        browseButton.layer.borderColor = UIColor.label.cgColor
+        browseButton.layer.borderWidth = 2
+        browseButton.layer.cornerRadius = 20
+        
+        exploreButton.layer.borderColor = UIColor.label.cgColor
+        exploreButton.layer.borderWidth = 2
+        exploreButton.layer.cornerRadius = 20
+    }
+    
+    
+    //MARK: - Configuration Methods
     private func configureUI() {
         backgroundColor = .systemBackground
         configureHeaderStackView()
-        configureBrowseStackView()
-        configureBrowseContentStackView()
-        configureExploreStackView()
-        configureExploreContentStackView()
+        configureDiscoverStackView()
+        configureDiscoverCollectionView()
+        configurePersonalizedStackView()
+        configurePersonalizedCollectionView()
         configurePopularSongsLabel()
         configurePopularSongsTableView()
     }
@@ -194,33 +212,34 @@ class HomeView: UIView {
         headerStackView.anchor(top: safeAreaLayoutGuide.topAnchor,
                                leading: safeAreaLayoutGuide.leadingAnchor,
                                trailing: safeAreaLayoutGuide.trailingAnchor,
-                               padding: .init(leading: 20, trailing: 20))
+                               padding: .init(leading: 20,
+                                              trailing: 20))
     }
     
-    private func configureBrowseStackView() {
-        addSubview(browseStackView)
-        browseStackView.anchor(top: headerStackView.bottomAnchor,
-                                 leading: safeAreaLayoutGuide.leadingAnchor,
-                                 trailing: safeAreaLayoutGuide.trailingAnchor,
-                                 padding: .init(top: 20,
-                                                leading: 20,
-                                               trailing: 20))
+    private func configureDiscoverStackView() {
+        addSubview(discoverStackView)
+        discoverStackView.anchor(top: headerStackView.bottomAnchor,
+                               leading: safeAreaLayoutGuide.leadingAnchor,
+                               trailing: safeAreaLayoutGuide.trailingAnchor,
+                               padding: .init(top: 20,
+                                              leading: 20,
+                                              trailing: 20))
     }
     
-    private func configureBrowseContentStackView() {
-        addSubview(browseContentStackView)
-        browseContentStackView.anchor(top: browseStackView.bottomAnchor,
-                                 leading: safeAreaLayoutGuide.leadingAnchor,
-                                 trailing: safeAreaLayoutGuide.trailingAnchor,
-                                 padding: .init(top: 20,
-                                                leading: 20,
-                                                trailing: 20),
-                                 size: .init(heightSize: 150))
+    private func configureDiscoverCollectionView() {
+        addSubview(discoverCollectionView)
+        discoverCollectionView.anchor(top: discoverStackView.bottomAnchor,
+                                      leading: safeAreaLayoutGuide.leadingAnchor,
+                                      trailing: safeAreaLayoutGuide.trailingAnchor,
+                                      padding: .init(top: 20,
+                                                     leading: 20,
+                                                     trailing: 20),
+                                      size: .init(heightSize: 150))
     }
     
-    private func configureExploreStackView() {
-        addSubview(exploreStackView)
-        exploreStackView.anchor(top: browseContentStackView.bottomAnchor,
+    private func configurePersonalizedStackView() {
+        addSubview(personalizedStackView)
+        personalizedStackView.anchor(top: discoverCollectionView.bottomAnchor,
                                 leading: safeAreaLayoutGuide.leadingAnchor,
                                 trailing: safeAreaLayoutGuide.trailingAnchor,
                                 padding: .init(top: 20,
@@ -228,23 +247,23 @@ class HomeView: UIView {
                                                trailing: 20))
     }
     
-    private func configureExploreContentStackView() {
-        addSubview(exploreContentStackView)
-        exploreContentStackView.anchor(top: exploreStackView.bottomAnchor,
-                                 leading: safeAreaLayoutGuide.leadingAnchor,
-                                 trailing: safeAreaLayoutGuide.trailingAnchor,
-                                 padding: .init(top: 20,
-                                                leading: 20,
-                                                trailing: 20),
-                                 size: .init(heightSize: 150))
+    private func configurePersonalizedCollectionView() {
+        addSubview(personalizedCollectionView)
+        personalizedCollectionView.anchor(top: personalizedStackView.bottomAnchor,
+                                          leading: safeAreaLayoutGuide.leadingAnchor,
+                                          trailing: safeAreaLayoutGuide.trailingAnchor,
+                                          padding: .init(top: 20,
+                                                         leading: 20,
+                                                         trailing: 20),
+                                          size: .init(heightSize: 150))
     }
     
     private func configurePopularSongsLabel() {
         addSubview(popularSongsLabel)
-        popularSongsLabel.anchor(top: exploreContentStackView.bottomAnchor,
-                                leading: safeAreaLayoutGuide.leadingAnchor,
-                                padding: .init(top: 20,
-                                               leading: 20))
+        popularSongsLabel.anchor(top: personalizedCollectionView.bottomAnchor,
+                                 leading: safeAreaLayoutGuide.leadingAnchor,
+                                 padding: .init(top: 20,
+                                                leading: 20))
     }
     
     private func configurePopularSongsTableView() {
@@ -262,15 +281,68 @@ class HomeView: UIView {
 
 extension HomeView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return popularSongs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = popularSongsTableView.dequeueReusableCell(withIdentifier: PopularSongsTableViewCell.reuseID) as! PopularSongsTableViewCell
+        let song = popularSongs[indexPath.row]
+        
+        cell.songImageView.image = song.image
+        cell.songNameLabel.text = song.songName
+        cell.recommendationReason.text = song.albumName
+        
         return cell
     }
     
     
+}
+
+extension HomeView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView {
+        case discoverCollectionView:
+            return discoverCards.count
+        case personalizedCollectionView:
+            return personalizedCards.count
+        default:
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = discoverCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
+                                                              for: indexPath) as! MusicCollectionViewCell
+        switch collectionView {
+        case discoverCollectionView:
+            let card = discoverCards[indexPath.row]
+            cell.imageView.image = card.image
+            cell.firstLabel.text = card.firstLabelText
+            cell.secondLabel.text = card.secondLabelText
+        case personalizedCollectionView:
+            let card = personalizedCards[indexPath.row]
+            cell.imageView.image = card.image
+            cell.firstLabel.text = card.firstLabelText
+            cell.secondLabel.text = card.secondLabelText
+        default:
+            return UICollectionViewCell()
+        }
+        
+        return cell
+    }
+}
+
+extension HomeView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionView {
+        case discoverCollectionView:
+            print("DEBUG: discoverCollectionView's \(discoverCards[indexPath.row].firstLabelText) tapped")
+        case personalizedCollectionView:
+            print("DEBUG: personalizedCollectionView's \(personalizedCards[indexPath.row].firstLabelText) tapped")
+        default:
+            print("DEBUG: Unrecognized collection view tapped")
+        }
+    }
 }
 
 #Preview {
