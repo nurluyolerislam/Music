@@ -16,6 +16,10 @@
 		587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5012AFA558900D6B976 /* HomeVC.swift */; };
 		587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5032AFA55B300D6B976 /* HomeView.swift */; };
 		587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5082AFA592500D6B976 /* UIView+Ext.swift */; };
+		83ABE1AE2AFCE9E100AA4146 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1AD2AFCE9E100AA4146 /* ProfileVC.swift */; };
+		83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1AF2AFCE9F700AA4146 /* ProfileView.swift */; };
+		83ABE1B22AFD074700AA4146 /* ProfileAlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B12AFD074700AA4146 /* ProfileAlbumTableViewCell.swift */; };
+		83ABE1B52AFD076900AA4146 /* ProfileFavoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B42AFD076900AA4146 /* ProfileFavoreCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +34,10 @@
 		587FC5012AFA558900D6B976 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		587FC5032AFA55B300D6B976 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		587FC5082AFA592500D6B976 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		83ABE1AD2AFCE9E100AA4146 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		83ABE1AF2AFCE9F700AA4146 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		83ABE1B12AFD074700AA4146 /* ProfileAlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAlbumTableViewCell.swift; sourceTree = "<group>"; };
+		83ABE1B42AFD076900AA4146 /* ProfileFavoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoreCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +72,7 @@
 			children = (
 				587FC5072AFA58F800D6B976 /* Extensions */,
 				587FC5002AFA556E00D6B976 /* Home */,
+				83ABE1AC2AFCE96A00AA4146 /* Profile */,
 				587FC5062AFA56A100D6B976 /* Supporting Files */,
 			);
 			path = Music;
@@ -106,6 +115,25 @@
 				586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		83ABE1AC2AFCE96A00AA4146 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				83ABE1B32AFD074A00AA4146 /* Cell */,
+				83ABE1AD2AFCE9E100AA4146 /* ProfileVC.swift */,
+				83ABE1AF2AFCE9F700AA4146 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		83ABE1B32AFD074A00AA4146 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				83ABE1B12AFD074700AA4146 /* ProfileAlbumTableViewCell.swift */,
+				83ABE1B42AFD076900AA4146 /* ProfileFavoreCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,11 +206,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83ABE1B52AFD076900AA4146 /* ProfileFavoreCell.swift in Sources */,
 				587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */,
+				83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */,
 				587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */,
 				586E20032AFAD65800B1D914 /* PopularSongsTableViewCell.swift in Sources */,
 				587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */,
+				83ABE1AE2AFCE9E100AA4146 /* ProfileVC.swift in Sources */,
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
+				83ABE1B22AFD074700AA4146 /* ProfileAlbumTableViewCell.swift in Sources */,
 				586E1FF82AFABCF800B1D914 /* MusicCollectionViewCell.swift in Sources */,
 				587FC4EF2AFA54AC00D6B976 /* SceneDelegate.swift in Sources */,
 			);
