@@ -34,7 +34,7 @@ class PopularSongsTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var recommendationReason: UILabel = {
+    lazy var albumNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Trending tracks by Tom"
         return label
@@ -43,7 +43,7 @@ class PopularSongsTableViewCell: UITableViewCell {
     lazy var vstackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             songNameLabel,
-            recommendationReason
+            albumNameLabel
         ])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually

@@ -121,7 +121,7 @@ extension HomeVC: UITableViewDataSource {
         
         cell.songImageView.image = song.image
         cell.songNameLabel.text = song.songName
-        cell.recommendationReason.text = song.albumName
+        cell.albumNameLabel.text = song.albumName
         
         return cell
     }
