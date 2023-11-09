@@ -57,6 +57,8 @@ final class ProfileView : UIView{
         return tableView
     }()
     
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -77,7 +79,8 @@ final class ProfileView : UIView{
         backgroundColor = .systemBackground
         configureHeaderStackView()
         configureSegenmtedControl()
-        configureTableView()
+        configurePlaylistTableView()
+       
     }
     private func configureHeaderStackView(){
         addSubview(headerStackView)
@@ -87,10 +90,7 @@ final class ProfileView : UIView{
         
         headerStackView.anchor(top: safeAreaLayoutGuide.topAnchor,
                                leading: leadingAnchor,
-                               trailing: trailingAnchor
-                               
-        )
-        
+                               trailing: trailingAnchor)
     }
     
     private func configureSegenmtedControl(){
@@ -102,21 +102,14 @@ final class ProfileView : UIView{
      
     }
     
-    private func configureTableView(){
+    private func configurePlaylistTableView(){
         addSubview(tableView)
         tableView.anchor(top: segenmtedControl.bottomAnchor,
                          leading: segenmtedControl.leadingAnchor,
                          bottom: safeAreaLayoutGuide.bottomAnchor,
                          trailing: trailingAnchor,
-                         padding: .init(top: 20, leading: 20)
-        )
+                         padding: .init(top: 20, leading: 20))
     }
-
     
-
-    
-}
-
-#Preview{
-    ProfileVC()
+  
 }
