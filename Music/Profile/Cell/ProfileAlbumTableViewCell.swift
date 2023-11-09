@@ -88,7 +88,3 @@ final class ProfileAlbumTableViewCell: UITableViewCell {
     }
     
 }
-
-#Preview{
-    ProfileAlbumTableViewCell()
-}

@@ -62,6 +62,16 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         addTargets()
         addDelegatesAndDataSources()
+        configureUI()
+    }
+    
+    //MARK: - Configuration Methods
+    private func configureUI() {
+        configureNavigationBar()
+    }
+    
+    private func configureNavigationBar() {
+        navigationController?.isNavigationBarHidden = true
     }
     
     

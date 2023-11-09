@@ -17,9 +17,14 @@ class ProfileVC: UIViewController {
         view = profielView
         profielView.tableView.dataSource = self
         configureSegmentedControll()
+        configureNavigationBar()
     }
     
     //MARK: - UI Configuration
+    private func configureNavigationBar() {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     private func configureSegmentedControll(){
         profielView.segenmtedControl.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
     }

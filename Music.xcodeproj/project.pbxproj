@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */; };
 		586E1FF82AFABCF800B1D914 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E1FF72AFABCF800B1D914 /* MusicCollectionViewCell.swift */; };
 		586E20032AFAD65800B1D914 /* PopularSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */; };
 		587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC4EC2AFA54AC00D6B976 /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
 		586E1FF72AFABCF800B1D914 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MusicCollectionViewCell.swift; path = Music/Home/Cells/MusicCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSongsTableViewCell.swift; sourceTree = "<group>"; };
 		587FC4E92AFA54AC00D6B976 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		582B6C5A2AFD325F00B74E8B /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		587FC4E02AFA54AC00D6B976 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				587FC5072AFA58F800D6B976 /* Extensions */,
+				582B6C5A2AFD325F00B74E8B /* TabBar */,
 				587FC5002AFA556E00D6B976 /* Home */,
 				58BBD8632AFCEF9900DB65BD /* Search */,
 				83ABE1B72AFD258800AA4146 /* Player */,
@@ -253,6 +264,7 @@
 				587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */,
 				83ABE1AE2AFCE9E100AA4146 /* ProfileVC.swift in Sources */,
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
+				582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */,
 				58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */,
 				83ABE1B22AFD074700AA4146 /* ProfileAlbumTableViewCell.swift in Sources */,
 				586E1FF82AFABCF800B1D914 /* MusicCollectionViewCell.swift in Sources */,
