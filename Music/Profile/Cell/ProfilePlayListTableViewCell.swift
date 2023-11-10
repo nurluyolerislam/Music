@@ -1,5 +1,5 @@
 //
-//  ProfileAlbumTableViewCell.swift
+//  ProfilePlayListTableViewCell.swift
 //  Music
 //
 //  Created by Yaşar Duman on 9.11.2023.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-final class ProfileAlbumTableViewCell: UITableViewCell {
+final class ProfilePlayListTableViewCell: UITableViewCell {
     
     //MARK: - Variables
     static let reuseID = "ProfileAlbumTableViewCell"
     
     //MARK: - UI Elements
-    lazy var containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         return view
     }()
@@ -28,7 +28,7 @@ final class ProfileAlbumTableViewCell: UITableViewCell {
         stackView.distribution = .fillEqually
         return stackView
     }()
-    lazy var containerHStackView: UIStackView = {
+    private lazy var containerHStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             songImageView,
             textVStackView
@@ -64,9 +64,6 @@ final class ProfileAlbumTableViewCell: UITableViewCell {
     }()
     
 
-    
-  
-    
     //MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -78,6 +75,7 @@ final class ProfileAlbumTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - UI Configuration
     private func configureUI() {
         accessoryType = .disclosureIndicator
         selectionStyle = .none
@@ -86,5 +84,4 @@ final class ProfileAlbumTableViewCell: UITableViewCell {
         containerView.addSubview(containerHStackView)
         containerHStackView.fillSuperview(padding: .init(top: 10, bottom: 10))
     }
-    
 }

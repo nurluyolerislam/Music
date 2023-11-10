@@ -9,9 +9,12 @@ import UIKit
 
 class PlayerVC: UIViewController {
 
+    lazy var playerUIView = PlayerUIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view = playerUIView
     }
 
 }

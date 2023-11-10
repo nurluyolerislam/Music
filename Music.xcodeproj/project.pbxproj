@@ -23,8 +23,8 @@
 		58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */; };
 		83ABE1AE2AFCE9E100AA4146 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1AD2AFCE9E100AA4146 /* ProfileVC.swift */; };
 		83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1AF2AFCE9F700AA4146 /* ProfileView.swift */; };
-		83ABE1B22AFD074700AA4146 /* ProfileAlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B12AFD074700AA4146 /* ProfileAlbumTableViewCell.swift */; };
-		83ABE1B52AFD076900AA4146 /* ProfileFavoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B42AFD076900AA4146 /* ProfileFavoreCell.swift */; };
+		83ABE1B22AFD074700AA4146 /* ProfilePlayListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B12AFD074700AA4146 /* ProfilePlayListTableViewCell.swift */; };
+		83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B42AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift */; };
 		83ABE1B92AFD25DA00AA4146 /* PlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B82AFD25DA00AA4146 /* PlayerVC.swift */; };
 		83ABE1BB2AFD25EC00AA4146 /* PlayerUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1BA2AFD25EC00AA4146 /* PlayerUIView.swift */; };
 /* End PBXBuildFile section */
@@ -48,8 +48,8 @@
 		58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVC.swift; sourceTree = "<group>"; };
 		83ABE1AD2AFCE9E100AA4146 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		83ABE1AF2AFCE9F700AA4146 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		83ABE1B12AFD074700AA4146 /* ProfileAlbumTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAlbumTableViewCell.swift; sourceTree = "<group>"; };
-		83ABE1B42AFD076900AA4146 /* ProfileFavoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoreCell.swift; sourceTree = "<group>"; };
+		83ABE1B12AFD074700AA4146 /* ProfilePlayListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlayListTableViewCell.swift; sourceTree = "<group>"; };
+		83ABE1B42AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		83ABE1B82AFD25DA00AA4146 /* PlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVC.swift; sourceTree = "<group>"; };
 		83ABE1BA2AFD25EC00AA4146 /* PlayerUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,8 +166,8 @@
 		83ABE1B32AFD074A00AA4146 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				83ABE1B12AFD074700AA4146 /* ProfileAlbumTableViewCell.swift */,
-				83ABE1B42AFD076900AA4146 /* ProfileFavoreCell.swift */,
+				83ABE1B12AFD074700AA4146 /* ProfilePlayListTableViewCell.swift */,
+				83ABE1B42AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -254,7 +254,7 @@
 				58BBD8652AFCEFB500DB65BD /* SearchVC.swift in Sources */,
 				58BBD8672AFCEFC200DB65BD /* RecentSearchesView.swift in Sources */,
 				58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */,
-				83ABE1B52AFD076900AA4146 /* ProfileFavoreCell.swift in Sources */,
+				83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */,
 				587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */,
 				83ABE1BB2AFD25EC00AA4146 /* PlayerUIView.swift in Sources */,
 				83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */,
@@ -266,7 +266,7 @@
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
 				582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */,
 				58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */,
-				83ABE1B22AFD074700AA4146 /* ProfileAlbumTableViewCell.swift in Sources */,
+				83ABE1B22AFD074700AA4146 /* ProfilePlayListTableViewCell.swift in Sources */,
 				586E1FF82AFABCF800B1D914 /* MusicCollectionViewCell.swift in Sources */,
 				587FC4EF2AFA54AC00D6B976 /* SceneDelegate.swift in Sources */,
 			);

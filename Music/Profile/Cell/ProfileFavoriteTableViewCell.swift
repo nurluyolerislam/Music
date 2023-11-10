@@ -8,13 +8,13 @@
 
 import UIKit
 
-final class ProfileFavoreCell: UITableViewCell {
+final class ProfileFavoriteTableViewCell: UITableViewCell {
     
     //MARK: - Variables
     static let reuseID = "ProfileFavoreCell"
     
     //MARK: - UI Elements
-    lazy var containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         return view
     }()
@@ -38,10 +38,11 @@ final class ProfileFavoreCell: UITableViewCell {
     lazy var recommendationReason: UILabel = {
         let label = UILabel()
         label.text = "Trending tracks by Tom"
+        label.textColor = .secondaryLabel
         return label
     }()
     
-    lazy var vstackView: UIStackView = {
+    private lazy var vstackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             songNameLabel,
             recommendationReason
@@ -59,7 +60,7 @@ final class ProfileFavoreCell: UITableViewCell {
         return button
     }()
     
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             songImageView,
             vstackView,
@@ -81,6 +82,7 @@ final class ProfileFavoreCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - UI Configuration
     private func configureUI() {
         selectionStyle = .none
         addSubview(containerView)
@@ -88,5 +90,4 @@ final class ProfileFavoreCell: UITableViewCell {
         containerView.addSubview(stackView)
         stackView.fillSuperview(padding: .init(top: 10, bottom: 10))
     }
-    
 }

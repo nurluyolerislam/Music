@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileVC: UIViewController {
+final class ProfileVC: UIViewController {
     // MARK: - Properties
     lazy var  profielView = ProfileView()
     
@@ -33,11 +33,11 @@ class ProfileVC: UIViewController {
         switch profielView.segenmtedControl.selectedSegmentIndex {
         case 0:
             print("----->>>> DEBUG: 0")
-            profielView.tableView.register(ProfileAlbumTableViewCell.self, forCellReuseIdentifier: ProfileAlbumTableViewCell.reuseID)
+            profielView.tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
             profielView.tableView.reloadData()
         case 1:
             print("----->>>> DEBUG: 1")
-            profielView.tableView.register(ProfileFavoreCell.self, forCellReuseIdentifier: ProfileFavoreCell.reuseID)
+            profielView.tableView.register(ProfileFavoriteTableViewCell.self, forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
             profielView.tableView.reloadData()
         default:
             break;
@@ -55,13 +55,13 @@ extension ProfileVC: UITableViewDataSource {
         
         switch profielView.segenmtedControl.selectedSegmentIndex {
         case 0:
-            guard let cell = profielView.tableView.dequeueReusableCell(withIdentifier: ProfileAlbumTableViewCell.reuseID, for: indexPath) as? ProfileAlbumTableViewCell else {
+            guard let cell = profielView.tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID, for: indexPath) as? ProfilePlayListTableViewCell else {
                 return UITableViewCell()
             }
             return cell
             
         case 1:
-            guard let cell = profielView.tableView.dequeueReusableCell(withIdentifier: ProfileFavoreCell.reuseID, for: indexPath) as? ProfileFavoreCell else {
+            guard let cell = profielView.tableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID, for: indexPath) as? ProfileFavoriteTableViewCell else {
                 return UITableViewCell()
             }
             return cell

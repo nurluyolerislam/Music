@@ -9,7 +9,8 @@ import UIKit
 
 final class ProfileView : UIView{
   
-    lazy var headerStackView: UIStackView = {
+    //MARK: - UI Elements
+    private lazy var headerStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 15
@@ -17,7 +18,7 @@ final class ProfileView : UIView{
         return stackView
     }()
     
-    lazy var userImage : UIImageView = {
+     lazy var userImage : UIImageView = {
         let userImage = UIImageView()
         userImage.image = UIImage(named: "profileImage")
         userImage.contentMode = .scaleAspectFit
@@ -26,7 +27,7 @@ final class ProfileView : UIView{
         return userImage
     }()
     
-    lazy var userName: UILabel = {
+     lazy var userName: UILabel = {
         let userName = UILabel()
         userName.text = "Yaşar Duman"
         userName.font = UIFont.systemFont(ofSize: 20)
@@ -34,7 +35,7 @@ final class ProfileView : UIView{
         return userName
     }()
     
-    lazy var editButton: UIButton = {
+     lazy var editButton: UIButton = {
         let editButton = UIButton(configuration: .bordered())
         editButton.configuration?.cornerStyle = .capsule
         editButton.setTitle("Edit", for: .normal)
@@ -53,12 +54,13 @@ final class ProfileView : UIView{
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.register(ProfileAlbumTableViewCell.self, forCellReuseIdentifier: ProfileAlbumTableViewCell.reuseID)
+        tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     
 
-    
+    //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -75,13 +77,14 @@ final class ProfileView : UIView{
         editButton.anchor(size: .init(width: 120, height: 45))
     }
     
+    //MARK: - UI Configuration
     private func configureUI(){
         backgroundColor = .systemBackground
         configureHeaderStackView()
         configureSegenmtedControl()
         configurePlaylistTableView()
-       
     }
+    
     private func configureHeaderStackView(){
         addSubview(headerStackView)
         headerStackView.addArrangedSubview(userImage)
@@ -99,7 +102,6 @@ final class ProfileView : UIView{
                                 leading: safeAreaLayoutGuide.leadingAnchor,
                                 trailing: safeAreaLayoutGuide.trailingAnchor,
                                 padding: .init(top: 20))
-     
     }
     
     private func configurePlaylistTableView(){
@@ -107,9 +109,10 @@ final class ProfileView : UIView{
         tableView.anchor(top: segenmtedControl.bottomAnchor,
                          leading: segenmtedControl.leadingAnchor,
                          bottom: safeAreaLayoutGuide.bottomAnchor,
-                         trailing: trailingAnchor,
-                         padding: .init(top: 20, leading: 20))
+                         trailing: safeAreaLayoutGuide.trailingAnchor,
+                         padding: .init(top: 20, leading: 20, trailing: 20))
     }
-    
-  
+}
+#Preview{
+    MainTabBarVC()
 }
