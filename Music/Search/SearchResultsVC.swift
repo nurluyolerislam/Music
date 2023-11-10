@@ -6,42 +6,32 @@
 //
 
 import UIKit
+import Kingfisher
+import AVFoundation
+
+protocol SearchViewModelProtocol: AnyObject {
+    func getData()
+    var data: SearchTrackResponse? { get set }
+}
 
 class SearchResultsVC: UIViewController {
-    //MARK: - Mocks
-    let searchResults: [PopularSongsTableViewCellModel] = [
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Yerli Plaka - Ceza",
-              albumName: "Yerli Plaka"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "On the top charts",
-              albumName: "Recommended tracks by Alma"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas")
-    ]
-    
+
     //MARK: - Variables
     lazy var searchResultsView = SearchResultsView()
+    private let viewModel: SearchViewModel
+    weak var viewModelDelegate: SearchViewModelProtocol?
+    var player: AVPlayer?
+    var isPlaying = false
     
+    //MARK: - Initializers
+    init(viewModel: SearchViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - Lifecycle
     override func loadView() {
@@ -51,6 +41,12 @@ class SearchResultsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addDelegatesAndDataSources()
+        addTargets()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModelDelegate?.getData()
     }
     
     //MARK: - Helper Functionsı
@@ -58,23 +54,101 @@ class SearchResultsVC: UIViewController {
         searchResultsView.searchResultsTableView.register(PopularSongsTableViewCell.self,
                                                           forCellReuseIdentifier: PopularSongsTableViewCell.reuseID)
         searchResultsView.searchResultsTableView.dataSource = self
+        searchResultsView.searchResultsTableView.delegate = self
+        
+        viewModel.changeResultsProtocol = self
+        viewModelDelegate = viewModel
     }
+    
+    private func addTargets() {
+        searchResultsView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+    }
+    
+    // Bu fonksiyon, URL'yi alır ve onu çalmak için AVPlayer'ı yapılandırır.
+    func playAudio(url: URL) {
+        let playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        
+        // Oynatma başladığında yapılan işlemler
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying),
+                                               name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+        
+        // AVPlayer'ı başlat
+        player?.play()
+    }
+    
+    //MARK: - @Actions
+    @objc func searchButtonTapped(){
+        searchButtonDidTapped()
+    }
+    
+    // AVPlayer oynatmayı bitirdiğinde yapılacak işlemler
+    @objc func playerDidFinishPlaying(note: NSNotification) {
+        // Oynatma tamamlandığında buraya kod ekleyebilirsiniz
+    }
+    
 }
 
 extension SearchResultsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+        if let response = viewModel.data {
+            if let songs = response.data {
+                return songs.count
+            }
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = searchResultsView.searchResultsTableView.dequeueReusableCell(withIdentifier: PopularSongsTableViewCell.reuseID) as! PopularSongsTableViewCell
-        let song = searchResults[indexPath.row]
         
-        cell.songImageView.image = song.image
-        cell.songNameLabel.text = song.songName
-        cell.albumNameLabel.text = song.albumName
+        if let response = viewModel.data {
+            if let songs = response.data {
+                let song = songs[indexPath.row]
+                if let artist = song.artist {
+                    if let name = artist.name {
+                        cell.songNameLabel.text = "\(name) - \(song.title)"
+                    }
+                }
+                cell.songNameLabel.text = song.title
+                cell.albumNameLabel.text = song.album?.title
+                
+                if let imageURL = song.album?.coverXl {
+                    cell.songImageView.kf.setImage(with: URL(string: imageURL))
+                }
+            }
+        }
         
         return cell
     }
     
+}
+
+extension SearchResultsVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let response = viewModel.data {
+            if let songs = response.data {
+                let song = songs[indexPath.row]
+                if isPlaying {
+                    player?.pause()
+                    isPlaying.toggle()
+                } else {
+                    playAudio(url: URL(string: song.preview!)!)
+                    isPlaying.toggle()
+                }
+            }
+        }
+    }
+}
+
+extension SearchResultsVC: SearchResultsViewProtocol {
+    func searchButtonDidTapped() {
+        self.viewModelDelegate?.getData()
+    }
+}
+
+extension SearchResultsVC: ChangeResultsProtocol {
+    func changeResults(_ response: SearchTrackResponse) {
+        searchResultsView.searchResultsTableView.reloadData()
+    }
 }

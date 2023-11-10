@@ -42,11 +42,11 @@ class SearchVC: UIViewController {
     
     //MARK: - Variables
     lazy var recentSearchesView = RecentSearchesView()
-    
+    lazy var viewModel = SearchViewModel()
     
     //MARK: - UI Elements
     lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: SearchResultsVC())
+        let searchController = UISearchController(searchResultsController: SearchResultsVC(viewModel: viewModel))
         searchController.searchBar.placeholder = "Search for songs, albums or artists"
         searchController.searchBar.backgroundImage = UIImage()
         return searchController
@@ -84,7 +84,12 @@ extension SearchVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else {return}
-        let resultVC = searchController.searchResultsController as! SearchResultsVC
+        if query == "" {
+            let resultVC = searchController.searchResultsController as! SearchResultsVC
+            viewModel.data = nil
+            resultVC.searchResultsView.searchResultsTableView.reloadData()
+        }
+        viewModel.searchText = query
     }
     
 }

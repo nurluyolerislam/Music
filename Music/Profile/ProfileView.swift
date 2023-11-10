@@ -113,6 +113,3 @@ final class ProfileView : UIView{
                          padding: .init(top: 20, leading: 20, trailing: 20))
     }
 }
-#Preview{
-    MainTabBarVC()
-}

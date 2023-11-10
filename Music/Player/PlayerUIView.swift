@@ -266,8 +266,3 @@ class PlayerUIView: UIView {
         volumeSlider.value += 10
     }
 }
-
-
-#Preview{
-    PlayerVC()
-}

@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */; };
+		58563FE42AFE76F000ADECE1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 58563FE32AFE76F000ADECE1 /* Alamofire */; };
+		58563FE82AFE772900ADECE1 /* AlamofireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FE72AFE772900ADECE1 /* AlamofireService.swift */; };
+		58563FEA2AFE7EAA00ADECE1 /* SearchSongManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FE92AFE7EAA00ADECE1 /* SearchSongManager.swift */; };
+		58563FED2AFE7F7800ADECE1 /* SearchTrackResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FEC2AFE7F7700ADECE1 /* SearchTrackResponse.swift */; };
+		58563FEF2AFE7FAF00ADECE1 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FEE2AFE7FAF00ADECE1 /* SearchViewModel.swift */; };
+		58563FF52AFE9DDE00ADECE1 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 58563FF42AFE9DDE00ADECE1 /* Kingfisher */; };
 		586E1FF82AFABCF800B1D914 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E1FF72AFABCF800B1D914 /* MusicCollectionViewCell.swift */; };
 		586E20032AFAD65800B1D914 /* PopularSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */; };
 		587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC4EC2AFA54AC00D6B976 /* AppDelegate.swift */; };
@@ -31,6 +37,10 @@
 
 /* Begin PBXFileReference section */
 		582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
+		58563FE72AFE772900ADECE1 /* AlamofireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireService.swift; sourceTree = "<group>"; };
+		58563FE92AFE7EAA00ADECE1 /* SearchSongManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSongManager.swift; sourceTree = "<group>"; };
+		58563FEC2AFE7F7700ADECE1 /* SearchTrackResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTrackResponse.swift; sourceTree = "<group>"; };
+		58563FEE2AFE7FAF00ADECE1 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		586E1FF72AFABCF800B1D914 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MusicCollectionViewCell.swift; path = Music/Home/Cells/MusicCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSongsTableViewCell.swift; sourceTree = "<group>"; };
 		587FC4E92AFA54AC00D6B976 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58563FF52AFE9DDE00ADECE1 /* Kingfisher in Frameworks */,
+				58563FE42AFE76F000ADECE1 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +83,30 @@
 				582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		58563FE52AFE76FE00ADECE1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				58563FE72AFE772900ADECE1 /* AlamofireService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		58563FE62AFE770400ADECE1 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				58563FE92AFE7EAA00ADECE1 /* SearchSongManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		58563FEB2AFE7EC000ADECE1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				58563FEC2AFE7F7700ADECE1 /* SearchTrackResponse.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		587FC4E02AFA54AC00D6B976 = {
@@ -92,6 +128,9 @@
 		587FC4EB2AFA54AC00D6B976 /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				58563FEB2AFE7EC000ADECE1 /* Models */,
+				58563FE62AFE770400ADECE1 /* Managers */,
+				58563FE52AFE76FE00ADECE1 /* Services */,
 				587FC5072AFA58F800D6B976 /* Extensions */,
 				582B6C5A2AFD325F00B74E8B /* TabBar */,
 				587FC5002AFA556E00D6B976 /* Home */,
@@ -149,6 +188,7 @@
 				58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */,
 				58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */,
 				58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */,
+				58563FEE2AFE7FAF00ADECE1 /* SearchViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -197,6 +237,10 @@
 			dependencies = (
 			);
 			name = Music;
+			packageProductDependencies = (
+				58563FE32AFE76F000ADECE1 /* Alamofire */,
+				58563FF42AFE9DDE00ADECE1 /* Kingfisher */,
+			);
 			productName = Music;
 			productReference = 587FC4E92AFA54AC00D6B976 /* Music.app */;
 			productType = "com.apple.product-type.application";
@@ -225,6 +269,10 @@
 				Base,
 			);
 			mainGroup = 587FC4E02AFA54AC00D6B976;
+			packageReferences = (
+				58563FE22AFE76F000ADECE1 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				58563FF32AFE9DDE00ADECE1 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 587FC4EA2AFA54AC00D6B976 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -251,8 +299,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58563FEF2AFE7FAF00ADECE1 /* SearchViewModel.swift in Sources */,
 				58BBD8652AFCEFB500DB65BD /* SearchVC.swift in Sources */,
 				58BBD8672AFCEFC200DB65BD /* RecentSearchesView.swift in Sources */,
+				58563FEA2AFE7EAA00ADECE1 /* SearchSongManager.swift in Sources */,
 				58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */,
 				83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */,
 				587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */,
@@ -266,7 +316,9 @@
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
 				582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */,
 				58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */,
+				58563FED2AFE7F7800ADECE1 /* SearchTrackResponse.swift in Sources */,
 				83ABE1B22AFD074700AA4146 /* ProfilePlayListTableViewCell.swift in Sources */,
+				58563FE82AFE772900ADECE1 /* AlamofireService.swift in Sources */,
 				586E1FF82AFABCF800B1D914 /* MusicCollectionViewCell.swift in Sources */,
 				587FC4EF2AFA54AC00D6B976 /* SceneDelegate.swift in Sources */,
 			);
@@ -481,6 +533,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		58563FE22AFE76F000ADECE1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
+		58563FF32AFE9DDE00ADECE1 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		58563FE32AFE76F000ADECE1 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58563FE22AFE76F000ADECE1 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		58563FF42AFE9DDE00ADECE1 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58563FF32AFE9DDE00ADECE1 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 587FC4E12AFA54AC00D6B976 /* Project object */;
 }
