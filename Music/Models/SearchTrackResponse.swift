@@ -14,12 +14,12 @@ import Foundation
 
 // MARK: - SearchTrackResponse
 struct SearchTrackResponse: Codable {
-    let data: [Datum]?
+    let data: [Track]?
     let total: Int?
 }
 
 // MARK: - Datum
-struct Datum: Codable {
+struct Track: Codable {
     let id: Int?
     let readable: Bool?
     let title, titleShort: String?

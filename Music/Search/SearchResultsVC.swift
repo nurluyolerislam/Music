@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 import AVFoundation
 
 protocol SearchViewModelProtocol: AnyObject {
@@ -104,18 +103,7 @@ extension SearchResultsVC: UITableViewDataSource {
         
         if let response = viewModel.data {
             if let songs = response.data {
-                let song = songs[indexPath.row]
-                if let artist = song.artist {
-                    if let name = artist.name {
-                        cell.songNameLabel.text = "\(name) - \(song.title)"
-                    }
-                }
-                cell.songNameLabel.text = song.title
-                cell.albumNameLabel.text = song.album?.title
-                
-                if let imageURL = song.album?.coverXl {
-                    cell.songImageView.kf.setImage(with: URL(string: imageURL))
-                }
+                cell.updateUI(track: songs[indexPath.row])
             }
         }
         

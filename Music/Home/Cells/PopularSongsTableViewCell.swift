@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PopularSongsTableViewCell: UITableViewCell {
     
     //MARK: - Variables
     static let reuseID = "PopularSongsTableViewCell"
+    
+    var track: Track?
     
     //MARK: - UI Elements
     lazy var containerView: UIView = {
@@ -86,6 +89,25 @@ class PopularSongsTableViewCell: UITableViewCell {
         containerView.fillSuperview()
         containerView.addSubview(stackView)
         stackView.fillSuperview(padding: .init(top: 10, bottom: 10))
+    }
+    
+    func updateUI(track: Track) {
+        if let album = track.album {
+            if let albumImageURL = album.coverXl {
+                songImageView.kf.setImage(with: URL(string: albumImageURL))
+            }
+            
+            if let albumName = track.title {
+                albumNameLabel.text = albumName
+            }
+        }
+        
+        if let artist = track.artist {
+            if let artistName = artist.name,
+               let songName = track.title{
+                songNameLabel.text = "\(artistName) - \(songName)"
+            }
+        }
     }
 }
 
