@@ -10,7 +10,7 @@ import UIKit
 class SearchVC: UIViewController {
     
     //MARK: - Mocks
-    let recentSearches: [PopularSongsTableViewCellModel] = [
+    let recentSearches: [SearchTableViewCellModel] = [
         .init(image: UIImage(named: "profileImage")!,
               songName: "Yerli Plaka - Ceza",
               albumName: "Yerli Plaka"),
@@ -73,8 +73,8 @@ class SearchVC: UIViewController {
     }
     
     private func addDelegatesAndDataSources() {
-        recentSearchesView.recentSearchesTableView.register(PopularSongsTableViewCell.self,
-                                                          forCellReuseIdentifier: PopularSongsTableViewCell.reuseID)
+        recentSearchesView.recentSearchesTableView.register(SearchTableViewCell.self,
+                                                          forCellReuseIdentifier: SearchTableViewCell.reuseID)
         recentSearchesView.recentSearchesTableView.dataSource = self
     }
     
@@ -100,7 +100,7 @@ extension SearchVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = recentSearchesView.recentSearchesTableView.dequeueReusableCell(withIdentifier: PopularSongsTableViewCell.reuseID) as! PopularSongsTableViewCell
+        let cell = recentSearchesView.recentSearchesTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reuseID) as! SearchTableViewCell
         let song = recentSearches[indexPath.row]
         
         cell.songImageView.image = song.image

@@ -50,8 +50,8 @@ class SearchResultsVC: UIViewController {
     
     //MARK: - Helper Functionsı
     private func addDelegatesAndDataSources() {
-        searchResultsView.searchResultsTableView.register(PopularSongsTableViewCell.self,
-                                                          forCellReuseIdentifier: PopularSongsTableViewCell.reuseID)
+        searchResultsView.searchResultsTableView.register(SearchTableViewCell.self,
+                                                          forCellReuseIdentifier: SearchTableViewCell.reuseID)
         searchResultsView.searchResultsTableView.dataSource = self
         searchResultsView.searchResultsTableView.delegate = self
         
@@ -99,8 +99,8 @@ extension SearchResultsVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = searchResultsView.searchResultsTableView.dequeueReusableCell(withIdentifier: PopularSongsTableViewCell.reuseID) as! PopularSongsTableViewCell
-        
+        let cell = searchResultsView.searchResultsTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reuseID) as! SearchTableViewCell
+
         if let response = viewModel.data {
             if let songs = response.data {
                 cell.updateUI(track: songs[indexPath.row])
@@ -113,17 +113,23 @@ extension SearchResultsVC: UITableViewDataSource {
 }
 
 extension SearchResultsVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {    
+        
+        print("----->>>> DEBUG: did select tapped")
         if let response = viewModel.data {
             if let songs = response.data {
                 let song = songs[indexPath.row]
-                if isPlaying {
-                    player?.pause()
-                    isPlaying.toggle()
-                } else {
-                    playAudio(url: URL(string: song.preview!)!)
-                    isPlaying.toggle()
-                }
+                let vc = PlayerVC(songModel: song)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+                
+//                if isPlaying {
+//                    player?.pause()
+//                    isPlaying.toggle()
+//                } else {
+//                    playAudio(url: URL(string: song.preview!)!)
+//                    isPlaying.toggle()
+//                }
             }
         }
     }

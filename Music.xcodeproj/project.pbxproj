@@ -27,6 +27,8 @@
 		58BBD8672AFCEFC200DB65BD /* RecentSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */; };
 		58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */; };
 		58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */; };
+		836F4D722AFF5BD4008BE3FA /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F4D712AFF5BD4008BE3FA /* SearchTableViewCell.swift */; };
+		836F4D742AFF6685008BE3FA /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F4D732AFF6685008BE3FA /* PlayerViewModel.swift */; };
 		83ABE1AE2AFCE9E100AA4146 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1AD2AFCE9E100AA4146 /* ProfileVC.swift */; };
 		83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1AF2AFCE9F700AA4146 /* ProfileView.swift */; };
 		83ABE1B22AFD074700AA4146 /* ProfilePlayListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B12AFD074700AA4146 /* ProfilePlayListTableViewCell.swift */; };
@@ -56,6 +58,8 @@
 		58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesView.swift; sourceTree = "<group>"; };
 		58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVC.swift; sourceTree = "<group>"; };
+		836F4D712AFF5BD4008BE3FA /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		836F4D732AFF6685008BE3FA /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		83ABE1AD2AFCE9E100AA4146 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		83ABE1AF2AFCE9F700AA4146 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		83ABE1B12AFD074700AA4146 /* ProfilePlayListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePlayListTableViewCell.swift; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 		58BBD8632AFCEF9900DB65BD /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				836F4D702AFF5B93008BE3FA /* Cell */,
 				58BBD8642AFCEFB500DB65BD /* SearchVC.swift */,
 				58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */,
 				58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */,
@@ -191,6 +196,14 @@
 				58563FEE2AFE7FAF00ADECE1 /* SearchViewModel.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		836F4D702AFF5B93008BE3FA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				836F4D712AFF5BD4008BE3FA /* SearchTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		83ABE1AC2AFCE96A00AA4146 /* Profile */ = {
@@ -217,6 +230,7 @@
 			children = (
 				83ABE1B82AFD25DA00AA4146 /* PlayerVC.swift */,
 				83ABE1BA2AFD25EC00AA4146 /* PlayerUIView.swift */,
+				836F4D732AFF6685008BE3FA /* PlayerViewModel.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -307,6 +321,8 @@
 				83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */,
 				587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */,
 				83ABE1BB2AFD25EC00AA4146 /* PlayerUIView.swift in Sources */,
+				836F4D722AFF5BD4008BE3FA /* SearchTableViewCell.swift in Sources */,
+				836F4D742AFF6685008BE3FA /* PlayerViewModel.swift in Sources */,
 				83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */,
 				83ABE1B92AFD25DA00AA4146 /* PlayerVC.swift in Sources */,
 				587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */,

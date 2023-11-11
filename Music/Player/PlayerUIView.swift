@@ -9,6 +9,9 @@ import UIKit
 
 class PlayerUIView: UIView {
     
+    // MARK: - Properties
+    var viewModel: PlayerViewModel?
+    
     //MARK: - UI Elements
     lazy var containerVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [songImage,
@@ -69,7 +72,7 @@ class PlayerUIView: UIView {
         slider.minimumValue = 0
         slider.maximumValue = 30 // Maksimum değeri saniye cinsinden ayarladık
         slider.value = 0 // Başlangıç değeri
-        slider.addTarget(self, action: #selector(sliderValueChanged(_:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(musicTimeSliderValueChanged(_:)), for: .valueChanged)
         
         return slider
     }()
@@ -200,10 +203,8 @@ class PlayerUIView: UIView {
     }
     
     //MARK: - sliderValue @Actions
-    @objc func sliderValueChanged(_ sender: UISlider) {
-        let selectedTimeInSeconds = sender.value
-        let formattedTime = formatTime(seconds: Int(selectedTimeInSeconds))
-        timeLabelMin.text = formattedTime
+    @objc func musicTimeSliderValueChanged(_ sender: UISlider) {
+        viewModel?.musicTimeSliderValueChanged(selectedTimeInSeconds: sender.value)
     }
     
     // MARK: - FormatTime Function
@@ -215,54 +216,33 @@ class PlayerUIView: UIView {
     
     //MARK: - PlayerControls @Actions
     @objc func rewindButtonPressed(_ sender: UIButton) {
-        print("Rewind Button Pressed")
-        
-        if 0 <= songSlider.value && songSlider.value < 10 {
-            songSlider.value = 0
-        } else {
-            let newValue = songSlider.value - 10
-            songSlider.value = max(0, newValue)
-        }
-        
-        let formattedTime = formatTime(seconds: Int(songSlider.value))
-        timeLabelMin.text = formattedTime
+        viewModel?.rewindButtonPressed()
     }
     
     @objc func playButtonPressed(_ sender: UIButton) {
-        print("Play Button Pressed")
+        viewModel?.playButtonPressed()
         
     }
     
     @objc func fastForwardButtonPressed(_ sender: UIButton) {
-        print("Fast Forward Button Pressed")
+        viewModel?.fastForwardButtonPressed()
         
-        if 20 < songSlider.value && songSlider.value <= 30 {
-            songSlider.value = 30
-        } else {
-            let newValue = songSlider.value + 10
-            songSlider.value = min(30, newValue)
-        }
-        
-        let formattedTime = formatTime(seconds: Int(songSlider.value))
-        timeLabelMin.text = formattedTime
     }
     
     
     //MARK: - sliderVolume @Actions
     @objc func sliderVolumeChanged(_ sender: UISlider) {
-        let selectedTimeInSeconds = sender.value
-        
-        print("Selected Time: \(selectedTimeInSeconds)")
-        
+        viewModel?.sliderVolumeChanged(selectedVolume: sender.value)
+  
     }
     
     @objc func volumeDownPressed(_ sender: UIButton) {
-        print("Volume Down Pressed")
-        volumeSlider.value -= 10
+        viewModel?.volumeDownPressed()
+
     }
     
     @objc func volumeUpPressed(_ sender: UIButton) {
-        print("Volume Up Pressed")
+        viewModel?.volumeUpPressed()
         volumeSlider.value += 10
     }
 }
