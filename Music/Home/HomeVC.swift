@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol HomeVCProtocol: AnyObject {
+    func profileImageTapped()
+}
+
 class HomeVC: UIViewController {
     
     //MARK: - Mocks
@@ -52,6 +56,7 @@ class HomeVC: UIViewController {
     
     //MARK: - Variables
     lazy var homeView = HomeView()
+    weak var delegate: HomeVCProtocol?
     
     //MARK: - Lifecycle
     override func loadView() {
@@ -105,7 +110,7 @@ class HomeVC: UIViewController {
     
     //MARK: - @Actions
     @objc func profileImageTapped() {
-        print("DEBUG: profileImage tapped")
+        self.delegate?.profileImageTapped()
     }
     
     @objc func browseButtonTapped() {

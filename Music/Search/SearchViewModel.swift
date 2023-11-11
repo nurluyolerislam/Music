@@ -18,6 +18,7 @@ class SearchViewModel: SearchViewModelProtocol {
     
     // MARK: - Functions
     func getData() {
+        print("getdata")
         manager.getJsonData(searchText: self.searchText) { data in
             self.data = data
             if let data = data {

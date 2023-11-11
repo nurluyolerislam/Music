@@ -40,12 +40,10 @@ class SearchResultsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addDelegatesAndDataSources()
-        addTargets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModelDelegate?.getData()
     }
     
     //MARK: - Helper Functionsı
@@ -57,10 +55,6 @@ class SearchResultsVC: UIViewController {
         
         viewModel.changeResultsProtocol = self
         viewModelDelegate = viewModel
-    }
-    
-    private func addTargets() {
-        searchResultsView.searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
     }
     
     // Bu fonksiyon, URL'yi alır ve onu çalmak için AVPlayer'ı yapılandırır.
@@ -77,9 +71,6 @@ class SearchResultsVC: UIViewController {
     }
     
     //MARK: - @Actions
-    @objc func searchButtonTapped(){
-        searchButtonDidTapped()
-    }
     
     // AVPlayer oynatmayı bitirdiğinde yapılacak işlemler
     @objc func playerDidFinishPlaying(note: NSNotification) {
@@ -113,31 +104,19 @@ extension SearchResultsVC: UITableViewDataSource {
 }
 
 extension SearchResultsVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("----->>>> DEBUG: did select tapped")
         if let response = viewModel.data {
+            
             if let songs = response.data {
+                
                 let song = songs[indexPath.row]
-                let vc = PlayerVC(songModel: song)
-                vc.modalPresentationStyle = .fullScreen
+                let vc = PlayerVC(track: song)
+                vc.modalPresentationStyle = .pageSheet
                 self.present(vc, animated: true)
                 
-//                if isPlaying {
-//                    player?.pause()
-//                    isPlaying.toggle()
-//                } else {
-//                    playAudio(url: URL(string: song.preview!)!)
-//                    isPlaying.toggle()
-//                }
             }
         }
-    }
-}
-
-extension SearchResultsVC: SearchResultsViewProtocol {
-    func searchButtonDidTapped() {
-        self.viewModelDelegate?.getData()
     }
 }
 

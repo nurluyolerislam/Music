@@ -8,21 +8,23 @@
 import UIKit
 
 class MainTabBarVC: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        lazy var homeVC = UINavigationController(rootViewController: HomeVC())
+        lazy var homeVC = HomeVC()
+        lazy var searchVC = SearchVC()
+        lazy var profileVC = ProfileVC()
+        
+        homeVC.delegate = self
         homeVC.tabBarItem = UITabBarItem(title: "Home",
                                          image: UIImage(systemName: "house"),
                                          tag: 0)
         
-        lazy var searchVC = UINavigationController(rootViewController: SearchVC())
         searchVC.tabBarItem = UITabBarItem(title: "Search",
                                            image: UIImage(systemName: "magnifyingglass"),
                                            tag: 0)
         
-        lazy var profileVC = UINavigationController(rootViewController: ProfileVC())
         profileVC.tabBarItem = UITabBarItem(title: "Profile",
                                             image: UIImage(systemName: "person"),
                                             tag: 0)
@@ -30,10 +32,16 @@ class MainTabBarVC: UITabBarController {
         tabBar.tintColor = .label
         
         viewControllers = [
-            homeVC,
-            searchVC,
-            profileVC
+            UINavigationController(rootViewController: homeVC),
+            UINavigationController(rootViewController: searchVC),
+            UINavigationController(rootViewController: profileVC)
         ]
     }
     
+}
+
+extension MainTabBarVC: HomeVCProtocol {
+    func profileImageTapped() {
+        selectedIndex = 2
+    }
 }

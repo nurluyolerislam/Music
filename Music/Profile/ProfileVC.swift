@@ -32,11 +32,9 @@ final class ProfileVC: UIViewController {
     @objc func segmentValueChanged() {
         switch profielView.segenmtedControl.selectedSegmentIndex {
         case 0:
-            print("----->>>> DEBUG: 0")
             profielView.tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
             profielView.tableView.reloadData()
         case 1:
-            print("----->>>> DEBUG: 1")
             profielView.tableView.register(ProfileFavoriteTableViewCell.self, forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
             profielView.tableView.reloadData()
         default:

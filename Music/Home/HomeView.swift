@@ -46,6 +46,7 @@ class HomeView: UIView {
     lazy var browseButton: UIButton = {
         let button = UIButton(configuration: .bordered())
         button.configuration?.cornerStyle = .capsule
+        button.anchor(size: .init(widthSize: 100))
         button.tintColor = .label
         button.setTitle("Browse", for: .normal)
         button.setTitleColor(.label, for: .normal)
@@ -83,6 +84,7 @@ class HomeView: UIView {
     lazy var exploreButton: UIButton = {
         let button = UIButton(configuration: .bordered())
         button.configuration?.cornerStyle = .capsule
+        button.anchor(size: .init(widthSize: 100))
         button.tintColor = .label
         button.setTitle("Explore", for: .normal)
         button.setTitleColor(.label, for: .normal)

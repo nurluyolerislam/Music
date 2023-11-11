@@ -43,6 +43,7 @@ class SearchVC: UIViewController {
     //MARK: - Variables
     lazy var recentSearchesView = RecentSearchesView()
     lazy var viewModel = SearchViewModel()
+    lazy var workItem = WorkItem()
     
     //MARK: - UI Elements
     lazy var searchController: UISearchController = {
@@ -88,8 +89,14 @@ extension SearchVC: UISearchResultsUpdating {
             let resultVC = searchController.searchResultsController as! SearchResultsVC
             viewModel.data = nil
             resultVC.searchResultsView.searchResultsTableView.reloadData()
+        } else {
+            workItem.perform(after: 0.5) { [weak self] in
+                guard let self = self else { return }
+                viewModel.searchText = query
+                viewModel.getData()
+            }
         }
-        viewModel.searchText = query
+        
     }
     
 }
