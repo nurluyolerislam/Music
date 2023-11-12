@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol HomeVCProtocol: AnyObject {
     func profileImageTapped()
@@ -57,6 +58,7 @@ class HomeVC: UIViewController {
     //MARK: - Variables
     lazy var homeView = HomeView()
     weak var delegate: HomeVCProtocol?
+    let viewModel = HomeViewModel()
     
     //MARK: - Lifecycle
     override func loadView() {
@@ -68,6 +70,7 @@ class HomeVC: UIViewController {
         addTargets()
         addDelegatesAndDataSources()
         configureUI()
+        viewModel.delegate = self
     }
     
     //MARK: - Configuration Methods
@@ -114,7 +117,7 @@ class HomeVC: UIViewController {
     }
     
     @objc func browseButtonTapped() {
-        print("DEBUG: browseButton tapped")
+        navigationController?.pushViewController(DiscoverVC(viewModel: viewModel), animated: true)
     }
     
     @objc func exploreButtonTapped(){
@@ -148,12 +151,15 @@ extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case homeView.discoverCollectionView:
-            return discoverCards.count
+            return 5
+            
         case homeView.personalizedCollectionView:
             return personalizedCards.count
+            
         default:
             return 0
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -161,18 +167,28 @@ extension HomeVC: UICollectionViewDataSource {
         case homeView.discoverCollectionView:
             let cell = homeView.discoverCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
                                                                            for: indexPath) as! MusicCollectionViewCell
-            let card = discoverCards[indexPath.row]
-            cell.imageView.image = card.image
-            cell.firstLabel.text = card.firstLabelText
-            cell.secondLabel.text = card.secondLabelText
+            
+            if let response = viewModel.data {
+                if let playlists = response.data {
+                    let playlist = playlists[indexPath.row]
+                    
+                    if let imageURL = playlist.pictureXl {
+                        cell.imageView.kf.setImage(with: URL(string: imageURL)!)
+                    }
+                    
+                    if let title = playlist.title {
+                        cell.label.text = title
+                    }
+                }
+            }
+            
             return cell
         case homeView.personalizedCollectionView:
             let cell = homeView.personalizedCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
                                                                                for: indexPath) as! MusicCollectionViewCell
             let card = personalizedCards[indexPath.row]
             cell.imageView.image = card.image
-            cell.firstLabel.text = card.firstLabelText
-            cell.secondLabel.text = card.secondLabelText
+            cell.label.text = card.firstLabelText
             return cell
         default:
             return UICollectionViewCell()
@@ -186,7 +202,17 @@ extension HomeVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
         case homeView.discoverCollectionView:
-            print("DEBUG: discoverCollectionView's \(discoverCards[indexPath.row].firstLabelText) tapped")
+            
+                if let response = viewModel.data {
+                    if let playlists = response.data {
+                        let playlist = playlists[indexPath.row]
+                        
+                        if let playlistURL = playlist.tracklist {
+                            navigationController?.pushViewController(PlaylistVC(playlistURL: playlistURL, manager: viewModel.manager), animated: true)
+                        }
+                    }
+                }
+            
         case homeView.personalizedCollectionView:
             print("DEBUG: personalizedCollectionView's \(personalizedCards[indexPath.row].firstLabelText) tapped")
         default:
@@ -194,4 +220,10 @@ extension HomeVC: UICollectionViewDelegate {
         }
     }
     
+}
+
+extension HomeVC: HomeViewModelDelegate {
+    func updateUI() {
+        homeView.discoverCollectionView.reloadData()
+    }
 }

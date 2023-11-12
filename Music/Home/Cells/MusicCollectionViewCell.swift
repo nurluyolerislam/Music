@@ -13,7 +13,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
     
     //MARK: - UI Elements
     lazy var imageView: UIImageView = {
-        let imageView = UIImageView(frame: bounds)
+        let imageView = UIImageView(frame: frame)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
@@ -26,26 +26,13 @@ class MusicCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    lazy var firstLabel: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 20)
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
         return label
-    }()
-    
-    lazy var secondLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 12)
-        return label
-    }()
-    
-    lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            firstLabel,
-            secondLabel
-        ])
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        return stackView
     }()
     
     
@@ -69,7 +56,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
     //MARK: - Configuration Methods
     private func configureUI () {
         configureImageView()
-        configureStackView()
+        configureLabel()
     }
     
     private func configureImageView () {
@@ -77,10 +64,11 @@ class MusicCollectionViewCell: UICollectionViewCell {
         imageView.fillSuperview()
     }
     
-    private func configureStackView () {
-        imageView.addSubview(stackView)
-        stackView.centerInSuperview()
+    private func configureLabel() {
+        imageView.addSubview(label)
+        label.centerInSuperview(size: .init(width: imageView.frame.width, height: imageView.frame.height))
     }
+    
 }
 
 struct MusicCollectionViewCellModel {

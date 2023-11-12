@@ -13,6 +13,10 @@ protocol ServiceProtocol: AnyObject {
 
 final class AlamofireService: ServiceProtocol {
     
+    static let shared = AlamofireService()
+    
+    private init() {}
+    
     func fetch<T>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void) where T: Codable {
         // Patlarsa AF.request(path, encoding: JSONEncoding.default)
         AF.request(path).validate().responseDecodable(of: T.self) { (response) in

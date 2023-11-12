@@ -24,6 +24,7 @@ class PlayerVC: UIViewController {
         viewModel = PlayerViewModel(track: track)
         addTargets()
         configureUI()
+        playAudio()
     }
     
     required init?(coder: NSCoder) {
@@ -38,7 +39,6 @@ class PlayerVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        playAudio()
     }
     
     

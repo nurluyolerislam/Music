@@ -10,16 +10,16 @@ protocol ChangeResultsProtocol: AnyObject{
 }
 
 class SearchViewModel: SearchViewModelProtocol {
-    // MARK: - Propertires
+    
+    //MARK: - Properties
     var data: SearchTrackResponse?
     weak var changeResultsProtocol: ChangeResultsProtocol?
-    let manager = SearchSongManager(service: AlamofireService())
+    let manager = DeezerAPIManager()
     var searchText = ""
     
     // MARK: - Functions
     func getData() {
-        print("getdata")
-        manager.getJsonData(searchText: self.searchText) { data in
+        manager.getSearchResults(searchText: self.searchText) { data in
             self.data = data
             if let data = data {
                 self.changeResultsProtocol?.changeResults(data)

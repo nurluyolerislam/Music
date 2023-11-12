@@ -10,11 +10,13 @@
 		582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */; };
 		58563FE42AFE76F000ADECE1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 58563FE32AFE76F000ADECE1 /* Alamofire */; };
 		58563FE82AFE772900ADECE1 /* AlamofireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FE72AFE772900ADECE1 /* AlamofireService.swift */; };
-		58563FEA2AFE7EAA00ADECE1 /* SearchSongManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FE92AFE7EAA00ADECE1 /* SearchSongManager.swift */; };
+		58563FEA2AFE7EAA00ADECE1 /* DeezerAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FE92AFE7EAA00ADECE1 /* DeezerAPIManager.swift */; };
 		58563FED2AFE7F7800ADECE1 /* SearchTrackResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FEC2AFE7F7700ADECE1 /* SearchTrackResponse.swift */; };
 		58563FEF2AFE7FAF00ADECE1 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FEE2AFE7FAF00ADECE1 /* SearchViewModel.swift */; };
 		58563FF52AFE9DDE00ADECE1 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 58563FF42AFE9DDE00ADECE1 /* Kingfisher */; };
 		58563FFB2AFFC13000ADECE1 /* WorkItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FFA2AFFC13000ADECE1 /* WorkItem.swift */; };
+		58563FFD2AFFCBAC00ADECE1 /* RadioResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FFC2AFFCBAC00ADECE1 /* RadioResponse.swift */; };
+		58563FFF2AFFCD2100ADECE1 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58563FFE2AFFCD2100ADECE1 /* HomeViewModel.swift */; };
 		586E1FF82AFABCF800B1D914 /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E1FF72AFABCF800B1D914 /* MusicCollectionViewCell.swift */; };
 		586E20032AFAD65800B1D914 /* PopularSongsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */; };
 		587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC4EC2AFA54AC00D6B976 /* AppDelegate.swift */; };
@@ -24,6 +26,10 @@
 		587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5012AFA558900D6B976 /* HomeVC.swift */; };
 		587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5032AFA55B300D6B976 /* HomeView.swift */; };
 		587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5082AFA592500D6B976 /* UIView+Ext.swift */; };
+		58A8462B2B00C4CB002F6544 /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8462A2B00C4CB002F6544 /* DiscoverVC.swift */; };
+		58A8462D2B016403002F6544 /* RadioPlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8462C2B016403002F6544 /* RadioPlaylistResponse.swift */; };
+		58A8462F2B016653002F6544 /* PlaylistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8462E2B016653002F6544 /* PlaylistVC.swift */; };
+		58A846312B016664002F6544 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A846302B016664002F6544 /* PlaylistViewModel.swift */; };
 		58BBD8652AFCEFB500DB65BD /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8642AFCEFB500DB65BD /* SearchVC.swift */; };
 		58BBD8672AFCEFC200DB65BD /* RecentSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */; };
 		58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */; };
@@ -41,10 +47,12 @@
 /* Begin PBXFileReference section */
 		582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
 		58563FE72AFE772900ADECE1 /* AlamofireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireService.swift; sourceTree = "<group>"; };
-		58563FE92AFE7EAA00ADECE1 /* SearchSongManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSongManager.swift; sourceTree = "<group>"; };
+		58563FE92AFE7EAA00ADECE1 /* DeezerAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeezerAPIManager.swift; sourceTree = "<group>"; };
 		58563FEC2AFE7F7700ADECE1 /* SearchTrackResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTrackResponse.swift; sourceTree = "<group>"; };
 		58563FEE2AFE7FAF00ADECE1 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		58563FFA2AFFC13000ADECE1 /* WorkItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkItem.swift; sourceTree = "<group>"; };
+		58563FFC2AFFCBAC00ADECE1 /* RadioResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioResponse.swift; sourceTree = "<group>"; };
+		58563FFE2AFFCD2100ADECE1 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		586E1FF72AFABCF800B1D914 /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MusicCollectionViewCell.swift; path = Music/Home/Cells/MusicCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		586E20022AFAD65800B1D914 /* PopularSongsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSongsTableViewCell.swift; sourceTree = "<group>"; };
 		587FC4E92AFA54AC00D6B976 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +64,10 @@
 		587FC5012AFA558900D6B976 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		587FC5032AFA55B300D6B976 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		587FC5082AFA592500D6B976 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		58A8462A2B00C4CB002F6544 /* DiscoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
+		58A8462C2B016403002F6544 /* RadioPlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlaylistResponse.swift; sourceTree = "<group>"; };
+		58A8462E2B016653002F6544 /* PlaylistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistVC.swift; sourceTree = "<group>"; };
+		58A846302B016664002F6544 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		58BBD8642AFCEFB500DB65BD /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesView.swift; sourceTree = "<group>"; };
 		58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
@@ -102,7 +114,7 @@
 		58563FE62AFE770400ADECE1 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				58563FE92AFE7EAA00ADECE1 /* SearchSongManager.swift */,
+				58563FE92AFE7EAA00ADECE1 /* DeezerAPIManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -111,6 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				58563FEC2AFE7F7700ADECE1 /* SearchTrackResponse.swift */,
+				58563FFC2AFFCBAC00ADECE1 /* RadioResponse.swift */,
+				58A8462C2B016403002F6544 /* RadioPlaylistResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -163,6 +177,10 @@
 				58BBD8622AFCDE1B00DB65BD /* Cells */,
 				587FC5012AFA558900D6B976 /* HomeVC.swift */,
 				587FC5032AFA55B300D6B976 /* HomeView.swift */,
+				58563FFE2AFFCD2100ADECE1 /* HomeViewModel.swift */,
+				58A8462A2B00C4CB002F6544 /* DiscoverVC.swift */,
+				58A8462E2B016653002F6544 /* PlaylistVC.swift */,
+				58A846302B016664002F6544 /* PlaylistViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -328,15 +346,21 @@
 				58563FFB2AFFC13000ADECE1 /* WorkItem.swift in Sources */,
 				58BBD8652AFCEFB500DB65BD /* SearchVC.swift in Sources */,
 				58BBD8672AFCEFC200DB65BD /* RecentSearchesView.swift in Sources */,
-				58563FEA2AFE7EAA00ADECE1 /* SearchSongManager.swift in Sources */,
+				58A8462D2B016403002F6544 /* RadioPlaylistResponse.swift in Sources */,
+				58563FFD2AFFCBAC00ADECE1 /* RadioResponse.swift in Sources */,
+				58563FEA2AFE7EAA00ADECE1 /* DeezerAPIManager.swift in Sources */,
 				58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */,
+				58A8462F2B016653002F6544 /* PlaylistVC.swift in Sources */,
 				83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */,
 				587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */,
 				83ABE1BB2AFD25EC00AA4146 /* PlayerUIView.swift in Sources */,
+				58563FFF2AFFCD2100ADECE1 /* HomeViewModel.swift in Sources */,
 				836F4D722AFF5BD4008BE3FA /* SearchTableViewCell.swift in Sources */,
+				58A846312B016664002F6544 /* PlaylistViewModel.swift in Sources */,
 				836F4D742AFF6685008BE3FA /* PlayerViewModel.swift in Sources */,
 				83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */,
 				83ABE1B92AFD25DA00AA4146 /* PlayerVC.swift in Sources */,
+				58A8462B2B00C4CB002F6544 /* DiscoverVC.swift in Sources */,
 				587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */,
 				586E20032AFAD65800B1D914 /* PopularSongsTableViewCell.swift in Sources */,
 				587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */,
