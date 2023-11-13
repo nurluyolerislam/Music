@@ -32,9 +32,27 @@ class DeezerAPIManager {
         }
     }
     
+    func getGenresLisits(onSuccess: @escaping (GenresMusicResponse?)->(Void), onError: @escaping (String)->(Void)) {
+        AlamofireService.shared.fetch(path: baseURL + Endpoint.genre.rawValue) { (response: GenresMusicResponse) in
+            onSuccess(response)
+        } onError: { error in
+            onError(error.localizedDescription)
+        }
+    }
+    
+    func getGenresLisitsArtist(id:String, onSuccess: @escaping (GenresArtistListsResponse?)->(Void), onError: @escaping (String)->(Void)) {
+        AlamofireService.shared.fetch(path: baseURL + "genre/" + id + "/artists" ) { (response: GenresArtistListsResponse) in
+            onSuccess(response)
+        } onError: { error in
+            onError(error.localizedDescription)
+        }
+    }
+    
 }
 
 enum Endpoint: String {
     case search = "search/track?q="
     case radio = "radio"
+    case genre = "genre"
+   
 }

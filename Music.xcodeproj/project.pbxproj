@@ -42,6 +42,10 @@
 		83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B42AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift */; };
 		83ABE1B92AFD25DA00AA4146 /* PlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B82AFD25DA00AA4146 /* PlayerVC.swift */; };
 		83ABE1BB2AFD25EC00AA4146 /* PlayerUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1BA2AFD25EC00AA4146 /* PlayerUIView.swift */; };
+		83C234CC2B0227FA00F3FF5F /* GenresMusicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234CB2B0227FA00F3FF5F /* GenresMusicResponse.swift */; };
+		83C234CE2B022EC300F3FF5F /* GenresArtistLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234CD2B022EC300F3FF5F /* GenresArtistLists.swift */; };
+		83C234D02B02309500F3FF5F /* GenreArtistsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234CF2B02309500F3FF5F /* GenreArtistsVC.swift */; };
+		83C234D22B02311800F3FF5F /* GenreArtistsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234D12B02311800F3FF5F /* GenreArtistsVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +84,10 @@
 		83ABE1B42AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		83ABE1B82AFD25DA00AA4146 /* PlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVC.swift; sourceTree = "<group>"; };
 		83ABE1BA2AFD25EC00AA4146 /* PlayerUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerUIView.swift; sourceTree = "<group>"; };
+		83C234CB2B0227FA00F3FF5F /* GenresMusicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresMusicResponse.swift; sourceTree = "<group>"; };
+		83C234CD2B022EC300F3FF5F /* GenresArtistLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresArtistLists.swift; sourceTree = "<group>"; };
+		83C234CF2B02309500F3FF5F /* GenreArtistsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreArtistsVC.swift; sourceTree = "<group>"; };
+		83C234D12B02311800F3FF5F /* GenreArtistsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreArtistsVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +133,8 @@
 				58563FEC2AFE7F7700ADECE1 /* SearchTrackResponse.swift */,
 				58563FFC2AFFCBAC00ADECE1 /* RadioResponse.swift */,
 				58A8462C2B016403002F6544 /* RadioPlaylistResponse.swift */,
+				83C234CB2B0227FA00F3FF5F /* GenresMusicResponse.swift */,
+				83C234CD2B022EC300F3FF5F /* GenresArtistLists.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -181,6 +191,8 @@
 				58A8462A2B00C4CB002F6544 /* DiscoverVC.swift */,
 				58A8462E2B016653002F6544 /* PlaylistVC.swift */,
 				58A846302B016664002F6544 /* PlaylistViewModel.swift */,
+				83C234CF2B02309500F3FF5F /* GenreArtistsVC.swift */,
+				83C234D12B02311800F3FF5F /* GenreArtistsVM.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -350,8 +362,10 @@
 				58563FFD2AFFCBAC00ADECE1 /* RadioResponse.swift in Sources */,
 				58563FEA2AFE7EAA00ADECE1 /* DeezerAPIManager.swift in Sources */,
 				58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */,
+				83C234CC2B0227FA00F3FF5F /* GenresMusicResponse.swift in Sources */,
 				58A8462F2B016653002F6544 /* PlaylistVC.swift in Sources */,
 				83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */,
+				83C234CE2B022EC300F3FF5F /* GenresArtistLists.swift in Sources */,
 				587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */,
 				83ABE1BB2AFD25EC00AA4146 /* PlayerUIView.swift in Sources */,
 				58563FFF2AFFCD2100ADECE1 /* HomeViewModel.swift in Sources */,
@@ -359,6 +373,7 @@
 				58A846312B016664002F6544 /* PlaylistViewModel.swift in Sources */,
 				836F4D742AFF6685008BE3FA /* PlayerViewModel.swift in Sources */,
 				83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */,
+				83C234D02B02309500F3FF5F /* GenreArtistsVC.swift in Sources */,
 				83ABE1B92AFD25DA00AA4146 /* PlayerVC.swift in Sources */,
 				58A8462B2B00C4CB002F6544 /* DiscoverVC.swift in Sources */,
 				587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */,
@@ -366,6 +381,7 @@
 				587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */,
 				83ABE1AE2AFCE9E100AA4146 /* ProfileVC.swift in Sources */,
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
+				83C234D22B02311800F3FF5F /* GenreArtistsVM.swift in Sources */,
 				582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */,
 				58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */,
 				58563FED2AFE7F7800ADECE1 /* SearchTrackResponse.swift in Sources */,

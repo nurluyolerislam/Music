@@ -8,6 +8,7 @@
 protocol HomeViewModelProtocol: AnyObject {
     func getData()
     var data: RadioResponse? { get set }
+    var dataGenres: GenresMusicResponse? { get set }
 }
 
 protocol HomeViewModelDelegate: AnyObject {
@@ -16,11 +17,13 @@ protocol HomeViewModelDelegate: AnyObject {
 
 final class HomeViewModel: HomeViewModelProtocol {
     var data: RadioResponse?
+    var dataGenres: GenresMusicResponse?
     let manager = DeezerAPIManager()
     weak var delegate: HomeViewModelDelegate?
     
     init() {
         getData()
+        getDataGenres()
     }
     
     func getData() {
@@ -31,5 +34,14 @@ final class HomeViewModel: HomeViewModelProtocol {
             print(error)
         }
 
+    }
+    
+    func getDataGenres() {
+        manager.getGenresLisits { data in
+            self.dataGenres = data
+            self.delegate?.updateUI()
+        } onError: { error in
+            print(error)
+        }
     }
 }

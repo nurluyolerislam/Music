@@ -27,6 +27,8 @@ class PlaylistVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Play List"
+        navigationItem.backButtonTitle = "Discover"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -88,6 +90,16 @@ class PlaylistVC: UITableViewController {
         
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let data = viewModel.data {
+            if let track = data.data?[indexPath.row] {
+                navigationController?.pushViewController(PlayerVC(track: track), animated: true)
+            }
+        }
+        
+     
     }
     
 

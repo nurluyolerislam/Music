@@ -88,6 +88,6 @@ final class ProfileFavoriteTableViewCell: UITableViewCell {
         addSubview(containerView)
         containerView.fillSuperview()
         containerView.addSubview(stackView)
-        stackView.fillSuperview(padding: .init(top: 10, bottom: 10))
+        stackView.fillSuperview(padding: .init(top: 10, leading: 20, bottom: 10,trailing: 20))
     }
 }

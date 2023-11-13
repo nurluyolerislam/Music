@@ -117,8 +117,12 @@ class HomeVC: UIViewController {
     }
     
     @objc func browseButtonTapped() {
-        navigationController?.pushViewController(DiscoverVC(viewModel: viewModel), animated: true)
+        let discoverVC = DiscoverVC(viewModel: viewModel)
+        navigationController?.pushViewController(discoverVC, animated: true)
+
     }
+
+
     
     @objc func exploreButtonTapped(){
         print("DEBUG: exploreButton tapped")
@@ -154,7 +158,7 @@ extension HomeVC: UICollectionViewDataSource {
             return 5
             
         case homeView.personalizedCollectionView:
-            return personalizedCards.count
+            return 5
             
         default:
             return 0
@@ -185,10 +189,25 @@ extension HomeVC: UICollectionViewDataSource {
             return cell
         case homeView.personalizedCollectionView:
             let cell = homeView.personalizedCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
+            
                                                                                for: indexPath) as! MusicCollectionViewCell
-            let card = personalizedCards[indexPath.row]
-            cell.imageView.image = card.image
-            cell.label.text = card.firstLabelText
+
+            if let response = viewModel.dataGenres {
+                if let genresData = response.data {
+                    let genresLists = genresData[indexPath.row]
+                    
+                    if let imageURL = genresLists.pictureXl {
+                        cell.imageView.kf.setImage(with: URL(string: imageURL)!)
+                    }
+                    
+                    if let name = genresLists.name {
+                        cell.label.text = name
+                    }
+                }
+            }
+//            let card = personalizedCards[indexPath.row]
+//            cell.imageView.image = card.image
+//            cell.label.text = card.firstLabelText
             return cell
         default:
             return UICollectionViewCell()
@@ -214,7 +233,19 @@ extension HomeVC: UICollectionViewDelegate {
                 }
             
         case homeView.personalizedCollectionView:
-            print("DEBUG: personalizedCollectionView's \(personalizedCards[indexPath.row].firstLabelText) tapped")
+            if let response = viewModel.dataGenres {
+                if let genres = response.data {
+                    let genre = genres[indexPath.row]
+                    
+                    if let genresID = genre.id {
+                        let id = String(genresID)
+                        
+                        navigationController?.pushViewController(GenreArtistsVC(genreId: id, manager: viewModel.manager), animated: true)
+                        
+                    }
+                }
+            }
+        
         default:
             print("DEBUG: Unrecognized collection view tapped")
         }
@@ -225,5 +256,6 @@ extension HomeVC: UICollectionViewDelegate {
 extension HomeVC: HomeViewModelDelegate {
     func updateUI() {
         homeView.discoverCollectionView.reloadData()
+        homeView.personalizedCollectionView.reloadData()
     }
 }

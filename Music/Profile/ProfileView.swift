@@ -110,6 +110,6 @@ final class ProfileView : UIView{
                          leading: segenmtedControl.leadingAnchor,
                          bottom: safeAreaLayoutGuide.bottomAnchor,
                          trailing: safeAreaLayoutGuide.trailingAnchor,
-                         padding: .init(top: 20, leading: 20, trailing: 20))
+                         padding: .init(top: 20))
     }
 }

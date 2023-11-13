@@ -1,27 +1,25 @@
 //
-//  DiscoverVC.swift
+//  GenreArtistsVC.swift
 //  Music
 //
-//  Created by Erislam Nurluyol on 12.11.2023.
+//  Created by Yaşar Duman on 13.11.2023.
 //
 
 import UIKit
 
-class DiscoverVC: UICollectionViewController {
+class GenreArtistsVC: UICollectionViewController {
     
     //MARK: - Variables
-    let viewModel: HomeViewModel?
+    let viewModel: GenreArtistsVM?
     
     
     //MARK: - Initializers
-    init(viewModel: HomeViewModel?) {
-        self.viewModel = viewModel
+    init(genreId: String, manager: DeezerAPIManager) {
+        self.viewModel = GenreArtistsVM(genreId: genreId, manager: manager)
         
         let layout = UICollectionViewFlowLayout()
-        print("init discover")
+     
         super.init(collectionViewLayout: layout)
-        useLayoutToLayoutNavigationTransitions = true
-        print(useLayoutToLayoutNavigationTransitions)
         collectionView.register(MusicCollectionViewCell.self, forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
     }
     
@@ -29,14 +27,10 @@ class DiscoverVC: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("deinit discover")
-    }
-    
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-   
+        viewModel?.delegate = self
         title = "Discover"
         navigationItem.backButtonTitle = "Home"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backButtonPressed))
@@ -49,7 +43,10 @@ class DiscoverVC: UICollectionViewController {
     
     @objc func backButtonPressed() {
         print("tapped back button")
-        navigationController?.popViewController(animated: true)
+        let homeVC = HomeVC()
+        homeVC.modalPresentationStyle = .fullScreen
+        present(homeVC, animated: true, completion: nil)
+
     }
     
     
@@ -80,7 +77,7 @@ class DiscoverVC: UICollectionViewController {
                     cell.imageView.kf.setImage(with: URL(string: imageURL)!)
                 }
                 
-                if let title = playlist.title {
+                if let title = playlist.name {
                     cell.label.text = title
                 }
             }
@@ -135,12 +132,18 @@ class DiscoverVC: UICollectionViewController {
     }
 }
 
-extension DiscoverVC: UICollectionViewDelegateFlowLayout {
+extension GenreArtistsVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.frame.width - 60) / 3, height: (view.frame.width - 60) / 3)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(leading: 20, trailing: 20)
+    }
+}
+
+extension GenreArtistsVC : GenreArtistsVMDelegate {
+    func updateUI() {
+        collectionView.reloadData()
     }
 }
