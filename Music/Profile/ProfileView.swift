@@ -59,7 +59,22 @@ final class ProfileView : UIView{
         return tableView
     }()
     
-
+    lazy var createPlaylistButton: UIButton = {
+        let button = UIButton(configuration: .bordered())
+        button.configuration?.cornerStyle = .capsule
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .label
+        return button
+    }()
+    
+    lazy var createPlaylistPopup: CreatePlaylistPopupVC = {
+        let popup = CreatePlaylistPopupVC()
+        popup.modalPresentationStyle  = .overFullScreen
+        popup.modalTransitionStyle    = .crossDissolve
+        return popup
+    }()
+    
+    
     //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,6 +98,7 @@ final class ProfileView : UIView{
         configureHeaderStackView()
         configureSegenmtedControl()
         configurePlaylistTableView()
+        configureCreatePlaylistButton()
     }
     
     private func configureHeaderStackView(){
@@ -113,5 +129,14 @@ final class ProfileView : UIView{
                          padding: .init(top: 20,
                                         leading: 20,
                                        trailing: 20))
+    }
+    
+    private func configureCreatePlaylistButton() {
+        addSubview(createPlaylistButton)
+        createPlaylistButton.anchor(bottom: safeAreaLayoutGuide.bottomAnchor,
+                                    trailing: safeAreaLayoutGuide.trailingAnchor,
+                                    padding: .init(bottom: 20,
+                                                   trailing: 20),
+                                    size: .init(width: 30, height: 30))
     }
 }

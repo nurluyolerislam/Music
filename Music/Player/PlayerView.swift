@@ -1,5 +1,5 @@
 //
-//  PlayerUIView.swift
+//  PlayerView.swift
 //  Music
 //
 //  Created by Yaşar Duman on 9.11.2023.
@@ -8,7 +8,7 @@
 import UIKit
 import MediaPlayer
 
-class PlayerUIView: UIView {
+class PlayerView: UIView {
     
     //MARK: - UI Elements
     lazy var containerVStack: UIStackView = {
@@ -39,7 +39,7 @@ class PlayerUIView: UIView {
     
     lazy var textAndLikeContainer: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [textVStack,
-                                                   likeImage])
+                                                   iconsStackView])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalCentering
@@ -54,13 +54,36 @@ class PlayerUIView: UIView {
         stack.axis = .vertical
         return stack
     }()
-    lazy var likeImage: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "heart",withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))
-        image.anchor(size: .init(width: 30, height: 30))
-        image.tintColor = .label
-        image.isUserInteractionEnabled = true
-        return image
+    
+    lazy var iconsStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [
+            addToPlaylistButton,
+            likeButton
+        ])
+        stack.axis = .horizontal
+        stack.spacing = 10
+        return stack
+    }()
+    
+    lazy var addToPlaylistButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "text.badge.plus"), for: .normal)
+        button.tintColor = .label
+        return button
+    }()
+    
+    var addToPlaylistPopup: AddToPlaylistPopupVC = {
+        let popup = AddToPlaylistPopupVC()
+        popup.modalPresentationStyle  = .overFullScreen
+        popup.modalTransitionStyle    = .crossDissolve
+        return popup
+    }()
+    
+    lazy var likeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.tintColor = .label
+        return button
     }()
     
     lazy var songTitle: UILabel = {

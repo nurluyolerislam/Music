@@ -102,8 +102,7 @@ extension GenresVC: UICollectionViewDelegate {
                     let genre = genres[indexPath.row]
                     
                     if let genreID = genre.id {
-                        let id = String(genreID)
-                        let genresVC = GenreArtistsVC(genreId: id, manager: viewModel.manager)
+                        let genresVC = GenreArtistsVC(genreId: genreID.description, manager: viewModel.manager)
                         genresVC.title = genre.name
                         navigationController?.pushViewController(genresVC, animated: true)
                     }

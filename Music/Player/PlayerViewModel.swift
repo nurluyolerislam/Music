@@ -6,6 +6,8 @@
 //
 
 import AVFoundation
+import FirebaseFirestore
+import FirebaseAuth
 
 final class PlayerViewModel {
     
@@ -28,6 +30,70 @@ final class PlayerViewModel {
             self.playerItem = nil
             self.player = nil
         }
+    }
+    
+    func addTrackToFavorites(completion: @escaping (Bool) -> Void) {
+        let data = [
+            "id" : track.id!,
+            "title" : track.title!,
+            "preview" : track.preview!,
+            "artist" : [
+                "name" : track.artist!.name
+            ],
+            "album" : [
+                "title" : track.album!.title!,
+                "cover_xl" : track.album!.coverXl!
+            ]
+        ] as [String : Any]
+        
+        Firestore.firestore()
+            .collection("UsersInfo")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("favorites")
+            .document(track.id!.description)
+            .setData(data) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                self.isFavorited { bool in
+                    completion(bool)
+                }
+            }
+    }
+    
+    func removeTrackFromFavorites(completion: @escaping (Bool) -> Void) {
+        Firestore.firestore()
+            .collection("UsersInfo")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("favorites")
+            .document(track.id!.description)
+            .delete() { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                self.isFavorited { bool in
+                    completion(bool)
+                }
+            }
+    }
+    
+    func isFavorited(completion: @escaping (Bool) -> Void) {
+        Firestore.firestore()
+            .collection("UsersInfo")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("favorites")
+            .document(track.id!.description)
+            .getDocument { snapshot, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                if let snapshot = snapshot {
+                    completion(snapshot.exists)
+                }
+            }
     }
 
     

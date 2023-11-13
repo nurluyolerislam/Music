@@ -7,11 +7,11 @@
 
 // MARK: - RadioResponse
 struct RadioResponse: Codable {
-    let data: [RadioPlaylist]?
+    let data: [Playlist]?
 }
 
 // MARK: - Datum
-struct RadioPlaylist: Codable {
+struct Playlist: Codable {
     let id: Int
     let title: String?
     let picture: String?
