@@ -154,6 +154,8 @@ class PlayerVC: UIViewController {
     
     @objc func likeImageTapped() {
         print("tapped like")
+        
+        
     }
     
   
