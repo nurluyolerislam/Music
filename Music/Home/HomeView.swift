@@ -65,7 +65,7 @@ class HomeView: UIView {
     
     lazy var discoverCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 120, height: 120)
+        layout.itemSize = CGSize(width: 100, height: 100)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
@@ -103,7 +103,7 @@ class HomeView: UIView {
     
     lazy var personalizedCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 160, height: 160)
+        layout.itemSize = CGSize(width: 100, height: 100)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
@@ -177,7 +177,7 @@ class HomeView: UIView {
                                       padding: .init(top: 20,
                                                      leading: 20,
                                                      trailing: 20),
-                                      size: .init(heightSize: 120))
+                                      size: .init(heightSize: 100))
     }
     
     private func configurePersonalizedStackView() {
@@ -198,7 +198,7 @@ class HomeView: UIView {
                                           padding: .init(top: 20,
                                                          leading: 20,
                                                          trailing: 20),
-                                          size: .init(heightSize: 160))
+                                          size: .init(heightSize: 100))
     }
     
     private func configurePopularSongsLabel() {
@@ -215,7 +215,8 @@ class HomeView: UIView {
                                      leading: safeAreaLayoutGuide.leadingAnchor,
                                      bottom: safeAreaLayoutGuide.bottomAnchor,
                                      trailing: safeAreaLayoutGuide.trailingAnchor,
-                                     padding: .init(leading: 20,
+                                     padding: .init(top: 20,
+                                        leading: 20,
                                                     trailing: 20))
     }
     

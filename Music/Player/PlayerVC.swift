@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import AVFoundation
+import CoreMedia.CMTime
 import Kingfisher
 
 class PlayerVC: UIViewController {
@@ -14,7 +14,6 @@ class PlayerVC: UIViewController {
     //MARK: - Variables
     lazy var playerUIView = PlayerUIView()
     var viewModel: PlayerViewModel?
-//    var player: AVPlayer?
     var currentDuration: CMTime = .init(seconds: 0, preferredTimescale: 1)
     
     

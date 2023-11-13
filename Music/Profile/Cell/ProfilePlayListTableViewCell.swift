@@ -82,6 +82,7 @@ final class ProfilePlayListTableViewCell: UITableViewCell {
         addSubview(containerView)
         containerView.fillSuperview()
         containerView.addSubview(containerHStackView)
-        containerHStackView.fillSuperview(padding: .init(top: 10,leading: 20, bottom: 10, trailing: 20))
+        containerHStackView.fillSuperview(padding: .init(top: 10,
+                                                         trailing: 20))
     }
 }

@@ -22,6 +22,7 @@ final class PlayerViewModel {
         if let previewURL = track.preview {
             self.playerItem = AVPlayerItem(url: URL(string: previewURL)!)
             self.player = AVPlayer(playerItem: playerItem)
+            self.player?.volume = 0.5
         } else {
             print("DEBUG: Track's preview url did not found")
             self.playerItem = nil

@@ -168,7 +168,7 @@ class PlayerUIView: UIView {
         let slider = UISlider()
         slider.minimumValue = 0
         slider.maximumValue = 10
-        slider.value = 10
+        slider.value = 5
         return slider
     }()
     

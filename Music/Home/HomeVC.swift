@@ -14,47 +14,6 @@ protocol HomeVCProtocol: AnyObject {
 
 class HomeVC: UIViewController {
     
-    //MARK: - Mocks
-    let discoverCards : [MusicCollectionViewCellModel] = [
-        .init(image: UIImage(named: "profileImage")!,
-              firstLabelText: "Chill out",
-              secondLabelText: "Study with"),
-        .init(image: UIImage(named: "profileImage")!,
-              firstLabelText: "Get jazzy",
-              secondLabelText: "Enjoy a rainy"),
-        .init(image: UIImage(named: "profileImage")!,
-              firstLabelText: "Soundtrack",
-              secondLabelText: "Rock out with")
-    ]
-    
-    let personalizedCards : [MusicCollectionViewCellModel] = [
-        .init(image: UIImage(named: "profileImage")!,
-              firstLabelText: "Your top played",
-              secondLabelText: "Discover new artists"),
-        .init(image: UIImage(named: "profileImage")!,
-              firstLabelText: "Best of",
-              secondLabelText: "Office music for"),
-        .init(image: UIImage(named: "profileImage")!,
-              firstLabelText: "Best of",
-              secondLabelText: "Office music for"),
-        .init(image: UIImage(named: "profileImage")!,
-              firstLabelText: "Best of",
-              secondLabelText: "Office music for")
-    ]
-    
-    let popularSongs: [PopularSongsTableViewCellModel] = [
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "California living vibes",
-              albumName: "Trending tracks by Tom"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "On the top charts",
-              albumName: "Recommended tracks by Alma"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas")
-    ]
-    
-    
     //MARK: - Variables
     lazy var homeView = HomeView()
     weak var delegate: HomeVCProtocol?
@@ -73,13 +32,18 @@ class HomeVC: UIViewController {
         viewModel.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     //MARK: - Configuration Methods
     private func configureUI() {
         configureNavigationBar()
     }
     
     private func configureNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
+        title = "Home"
     }
     
     
@@ -89,14 +53,15 @@ class HomeVC: UIViewController {
                                                  forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
         homeView.personalizedCollectionView.register(MusicCollectionViewCell.self,
                                                      forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
-        homeView.popularSongsTableView.register(PopularSongsTableViewCell.self,
-                                                forCellReuseIdentifier: PopularSongsTableViewCell.reuseID)
+        homeView.popularSongsTableView.register(ProfileFavoriteTableViewCell.self,
+                                                forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
         
         homeView.discoverCollectionView.delegate = self
         homeView.personalizedCollectionView.delegate = self
-        homeView.popularSongsTableView.dataSource = self
+        homeView.popularSongsTableView.delegate = self
         homeView.discoverCollectionView.dataSource = self
         homeView.personalizedCollectionView.dataSource = self
+        homeView.popularSongsTableView.dataSource = self
     }
     
     //MARK: - Targets
@@ -125,7 +90,8 @@ class HomeVC: UIViewController {
 
     
     @objc func exploreButtonTapped(){
-        print("DEBUG: exploreButton tapped")
+        let genresVC = GenresVC(viewModel: viewModel)
+        navigationController?.pushViewController(genresVC, animated: true)
     }
     
     
@@ -134,16 +100,37 @@ class HomeVC: UIViewController {
 extension HomeVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return popularSongs.count
+        if let popularSongsResponse = viewModel.popularSongsResponse {
+            if let tracks = popularSongsResponse.data {
+                return tracks.count
+            }
+        }
+        
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = homeView.popularSongsTableView.dequeueReusableCell(withIdentifier: PopularSongsTableViewCell.reuseID) as! PopularSongsTableViewCell
-        let song = popularSongs[indexPath.row]
+        let cell = homeView.popularSongsTableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID, for: indexPath) as! ProfileFavoriteTableViewCell
         
-        cell.songImageView.image = song.image
-        cell.songNameLabel.text = song.songName
-        cell.albumNameLabel.text = song.albumName
+        if let response = viewModel.popularSongsResponse {
+            if let tracks = response.data {
+                let track = tracks[indexPath.row]
+                
+                if let songName = track.title {
+                    cell.songNameLabel.text = songName
+                }
+                
+                if let album = track.album {
+                    if let imageURL = album.coverXl {
+                        cell.songImageView.kf.setImage(with: URL(string: imageURL))
+                    }
+                    
+                    if let albumName = album.title {
+                        cell.recommendationReason.text = albumName
+                    }
+                }
+            }
+        }
         
         return cell
     }
@@ -172,7 +159,7 @@ extension HomeVC: UICollectionViewDataSource {
             let cell = homeView.discoverCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
                                                                            for: indexPath) as! MusicCollectionViewCell
             
-            if let response = viewModel.data {
+            if let response = viewModel.radioResponse {
                 if let playlists = response.data {
                     let playlist = playlists[indexPath.row]
                     
@@ -192,7 +179,7 @@ extension HomeVC: UICollectionViewDataSource {
             
                                                                                for: indexPath) as! MusicCollectionViewCell
 
-            if let response = viewModel.dataGenres {
+            if let response = viewModel.genresResponse {
                 if let genresData = response.data {
                     let genresLists = genresData[indexPath.row]
                     
@@ -205,9 +192,6 @@ extension HomeVC: UICollectionViewDataSource {
                     }
                 }
             }
-//            let card = personalizedCards[indexPath.row]
-//            cell.imageView.image = card.image
-//            cell.label.text = card.firstLabelText
             return cell
         default:
             return UICollectionViewCell()
@@ -222,25 +206,30 @@ extension HomeVC: UICollectionViewDelegate {
         switch collectionView {
         case homeView.discoverCollectionView:
             
-                if let response = viewModel.data {
+                if let response = viewModel.radioResponse {
                     if let playlists = response.data {
                         let playlist = playlists[indexPath.row]
                         
                         if let playlistURL = playlist.tracklist {
-                            navigationController?.pushViewController(PlaylistVC(playlistURL: playlistURL, manager: viewModel.manager), animated: true)
+                            let playlistVC = PlaylistVC(playlistURL: playlistURL, manager: viewModel.manager)
+                            playlistVC.title = playlist.title
+                            navigationController?.isNavigationBarHidden = false
+                            navigationController?.pushViewController(playlistVC, animated: true)
                         }
                     }
                 }
             
         case homeView.personalizedCollectionView:
-            if let response = viewModel.dataGenres {
+            if let response = viewModel.genresResponse {
                 if let genres = response.data {
                     let genre = genres[indexPath.row]
                     
                     if let genresID = genre.id {
                         let id = String(genresID)
-                        
-                        navigationController?.pushViewController(GenreArtistsVC(genreId: id, manager: viewModel.manager), animated: true)
+                        let genresArtistsVC = GenreArtistsVC(genreId: id, manager: viewModel.manager)
+                        genresArtistsVC.title = genre.name
+                        navigationController?.isNavigationBarHidden = false
+                        navigationController?.pushViewController(genresArtistsVC, animated: true)
                         
                     }
                 }
@@ -253,9 +242,29 @@ extension HomeVC: UICollectionViewDelegate {
     
 }
 
+extension HomeVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+            
+            if let response = viewModel.popularSongsResponse {
+                
+                if let songs = response.data {
+                    
+                    let song = songs[indexPath.row]
+                    let vc = PlayerVC(track: song)
+                    vc.modalPresentationStyle = .pageSheet
+                    self.present(vc, animated: true)
+                    
+                }
+            }
+        
+    }
+}
+
 extension HomeVC: HomeViewModelDelegate {
     func updateUI() {
         homeView.discoverCollectionView.reloadData()
         homeView.personalizedCollectionView.reloadData()
+        homeView.popularSongsTableView.reloadData()
     }
 }
