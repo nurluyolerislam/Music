@@ -14,12 +14,12 @@ class PlayerUIView: UIView {
     lazy var containerVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             songImage,
-            textVStack,
+            textAndLikeContainer,
             sliderVStack,
             playerControlsHstack,
             sliderVolumeHStack
         ])
-        stack.setCustomSpacing(35, after: textVStack)
+        stack.setCustomSpacing(25, after: textAndLikeContainer)
         stack.setCustomSpacing(25, after: sliderVStack)
         stack.setCustomSpacing(25, after: playerControlsHstack)
         stack.axis = .vertical
@@ -37,6 +37,15 @@ class PlayerUIView: UIView {
         return image
     }()
     
+    lazy var textAndLikeContainer: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [textVStack,
+                                                   likeImage])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .equalCentering
+        return stack
+    }()
+    
     lazy var textVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             songTitle,
@@ -44,6 +53,14 @@ class PlayerUIView: UIView {
         ])
         stack.axis = .vertical
         return stack
+    }()
+    lazy var likeImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "heart",withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))
+        image.anchor(size: .init(width: 30, height: 30))
+        image.tintColor = .label
+        image.isUserInteractionEnabled = true
+        return image
     }()
     
     lazy var songTitle: UILabel = {

@@ -58,6 +58,11 @@ class PlayerVC: UIViewController {
         playerUIView.volumeDownButton.addTarget(self, action: #selector(volumeDownPressed), for: .touchUpInside)
         playerUIView.volumeUpButton.addTarget(self, action: #selector(volumeUpPressed), for: .touchUpInside)
         playerUIView.volumeSlider.addTarget(self, action: #selector(sliderVolumeChanged(_:)), for: .valueChanged)
+        
+        let likeImageGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                   action: #selector(likeImageTapped))
+        playerUIView.likeImage.addGestureRecognizer(likeImageGestureRecognizer)
+        
     }
     
     
@@ -91,6 +96,11 @@ class PlayerVC: UIViewController {
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 40,
                                                            weight: .regular)),
                                          for: .normal)
+    }
+    
+    func adjustVolume(delta: Float) {
+        let newVolume = max(0.0, min((viewModel?.player?.volume ?? 0.0) + delta, 1.0))
+        viewModel?.player?.volume = newVolume
     }
     
     //MARK: - @Actions
@@ -142,10 +152,13 @@ class PlayerVC: UIViewController {
         adjustVolume(delta: 0.1)
     }
     
-    func adjustVolume(delta: Float) {
-        let newVolume = max(0.0, min((viewModel?.player?.volume ?? 0.0) + delta, 1.0))
-        viewModel?.player?.volume = newVolume
+    @objc func likeImageTapped() {
+        print("tapped like")
     }
+    
+  
+    
+    
     
     // MARK: - FormatTime Function
     func formatTime(seconds: Int) -> String {
@@ -155,3 +168,7 @@ class PlayerVC: UIViewController {
     }
     
 }
+
+
+
+
