@@ -10,6 +10,7 @@ import FirebaseAuth
 
 protocol AddToPlaylistPopupVMDelegate: AnyObject {
     func updateUI()
+    func popupDismiss()
 }
 
 class AddToPlaylistPopupVM {
@@ -39,6 +40,12 @@ class AddToPlaylistPopupVM {
     }
     
     func addTrackToPlaylist(track: Track, playlistID: String) {
+        let playlistRef = Firestore.firestore()
+            .collection("UsersInfo")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("playlists")
+            .document(playlistID)
+        
         let data = [
             "id" : track.id!,
             "title" : track.title!,
@@ -51,13 +58,38 @@ class AddToPlaylistPopupVM {
                 "cover_xl" : track.album!.coverXl!
             ]
         ] as [String : Any]
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("playlists")
-            .document(playlistID)
+        
+        playlistRef
             .collection("tracks")
             .document(track.id!.description)
-            .setData(data)
+            .getDocument(){ snapshot, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                guard let snapshot = snapshot else {
+                    return
+                }
+                
+                if snapshot.exists {
+                    return
+                } else {
+                    playlistRef
+                        .collection("tracks")
+                        .document(track.id!.description)
+                        .setData(data) { [weak self] error in
+                            guard let self = self else { return }
+                            
+                            if let error = error {
+                                print(error.localizedDescription)
+                            }
+                            
+                            playlistRef.updateData(["trackCount" : FieldValue.increment(1.0)])
+                            
+                            delegate?.popupDismiss()
+                        }
+                }
+            }
+            
     }
 }

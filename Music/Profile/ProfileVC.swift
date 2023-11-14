@@ -32,6 +32,17 @@ final class ProfileVC: UIViewController {
         configureNavigationBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        switch profileView.segenmtedControl.selectedSegmentIndex {
+        case 0:
+            viewModel.getPlaylists()
+        case 1:
+            viewModel.getFavoriteTracks()
+        default: return
+        }
+    }
+    
     //MARK: - UI Configuration
     private func configureNavigationBar() {
         navigationController?.isNavigationBarHidden = true
@@ -50,9 +61,11 @@ final class ProfileVC: UIViewController {
         case 0:
             profileView.tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
             viewModel.getPlaylists()
+            profileView.createPlaylistButton.isHidden = false
         case 1:
             profileView.tableView.register(ProfileFavoriteTableViewCell.self, forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
             viewModel.getFavoriteTracks()
+            profileView.createPlaylistButton.isHidden = true
         default:
             break;
         }
@@ -94,18 +107,12 @@ extension ProfileVC: UITableViewDataSource {
             }
             let playlist = viewModel.playlists[indexPath.row]
             
-            if let imageURL = playlist.image {
-                cell.songImageView.kf.setImage(with: URL(string: imageURL))
-            }
-            
             if let title = playlist.title {
                 cell.playListName.text = title
             }
             
-            if let tracks = playlist.tracks {
-                cell.numberOfSound.text = "\(tracks.count) Tracks"
-            } else {
-                cell.numberOfSound.text = "0 Tracks"
+            if let trackCount = playlist.trackCount {
+                cell.numberOfSound.text = "\(trackCount) Tracks"
             }
             
             return cell
@@ -160,6 +167,31 @@ extension ProfileVC: UITableViewDelegate {
             
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        switch profileView.segenmtedControl.selectedSegmentIndex {
+        case 0:
+            let removePlaylist = UIContextualAction(style: .destructive,
+                                                    title: "Remove") { [weak self] action, view, bool in
+                guard let self = self else { return }
+                let playlist = viewModel.playlists[indexPath.row]
+                viewModel.removePlaylist(playlist: playlist)
+            }
+            return UISwipeActionsConfiguration(actions: [removePlaylist])
+            
+        case 1:
+            let removeFromFavoritesAction = UIContextualAction(style: .destructive,
+                                                               title: "Remove") { [weak self] action, view, bool in
+                guard let self = self else { return }
+                let track = viewModel.favoriteTracks[indexPath.row]
+                viewModel.removeTrackFromFavorites(track: track)
+            }
+            return UISwipeActionsConfiguration(actions: [removeFromFavoritesAction])
+            
+        default:
+            return nil
+        }
     }
 }
 

@@ -131,10 +131,8 @@ extension AddToPlaylistPopupVC: UITableViewDataSource {
             cell.playListName.text = title
         }
         
-        if let tracks = playlist.tracks {
-            cell.numberOfSound.text = "\(tracks.count.description) Tracks"
-        } else {
-            cell.numberOfSound.text = "0 Tracks"
+        if let trackCount = playlist.trackCount {
+            cell.numberOfSound.text = "\(trackCount) Tracks"
         }
         
         return cell
@@ -163,5 +161,9 @@ extension AddToPlaylistPopupVC: UITableViewDelegate {
 extension AddToPlaylistPopupVC: AddToPlaylistPopupVMDelegate {
     func updateUI() {
         tableView.reloadData()
+    }
+    
+    func popupDismiss() {
+        dismissVC()
     }
 }

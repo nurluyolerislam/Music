@@ -42,7 +42,8 @@ final class ProfilePlayListTableViewCell: UITableViewCell {
     lazy var songImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.anchor(size: .init(width: 50, height: 50))
-        imageView.image = UIImage(named: "profileImage")
+        imageView.image = UIImage(systemName: "music.note.list")
+        imageView.tintColor = .systemPink
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true

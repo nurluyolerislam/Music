@@ -18,10 +18,6 @@ class ProfileVM {
     var favoriteTracks: [Track] = []
     weak var delegate: ProfileVMDelegate?
     
-    init() {
-        getPlaylists()
-    }
-    
     func getPlaylists () {
         Firestore.firestore()
             .collection("UsersInfo")
@@ -32,19 +28,15 @@ class ProfileVM {
                 if let error = error {
                     print(error.localizedDescription)
                 }
-         
-                
                 
                 guard let documents = snapshot?.documents else { return }
                 let playlists = documents.compactMap({try? $0.data(as: UserPlaylist.self)})
                 self.playlists = playlists
                 
-                
-                
                 delegate?.updateUI()
             }
     }
-
+    
     
     func getFavoriteTracks () {
         Firestore.firestore()
@@ -66,7 +58,8 @@ class ProfileVM {
     
     func createNewPlaylist(playlistName: String) {
         let data = [
-            "title" : playlistName
+            "title" : playlistName,
+            "trackCount" : 0
         ] as [String : Any]
         
         Firestore.firestore()
@@ -84,5 +77,40 @@ class ProfileVM {
             }
     }
     
+    func removeTrackFromFavorites(track: Track) {
+        Firestore.firestore()
+            .collection("UsersInfo")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("favorites")
+            .document(track.id!.description)
+            .delete() { [weak self] error in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                getFavoriteTracks()
+                delegate?.updateUI()
+            }
+    }
+    
+    func removePlaylist(playlist: UserPlaylist) {
+        Firestore.firestore()
+            .collection("UsersInfo")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("playlists")
+            .document(playlist.title!)
+            .delete() { [weak self] error in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                getPlaylists()
+                delegate?.updateUI()
+            }
+    }
     
 }
