@@ -13,6 +13,7 @@ protocol ProfileVMDelegate: AnyObject {
     func createPlaylistPopupDismiss()
 }
 
+
 class ProfileVM {
     var playlists: [UserPlaylist] = []
     var favoriteTracks: [Track] = []
