@@ -51,6 +51,7 @@ class SearchVC: UIViewController {
     private func addDelegatesAndDataSources() {
         viewModel.recentSearchesDelegate = self
         recentSearchesView.recentSearchesTableView.dataSource = self
+        recentSearchesView.recentSearchesTableView.delegate = self
     }
     
 }
@@ -76,7 +77,7 @@ extension SearchVC: UISearchResultsUpdating {
     
 }
 
-extension SearchVC: UITableViewDataSource {
+extension SearchVC: UITableViewDataSource , UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.recentSearches.count
     }
@@ -90,6 +91,18 @@ extension SearchVC: UITableViewDataSource {
                 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let searchText = viewModel.recentSearches[indexPath.row]
+        
+        print("------->>>>>> DEBUG: \(searchText)")
+    
+        searchController.searchBar.text = searchText
+        searchController.searchBar.becomeFirstResponder()
+    }
+    
+    
     
     
 }
