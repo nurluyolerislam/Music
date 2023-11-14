@@ -103,7 +103,7 @@ extension ProfileVC: UITableViewDataSource {
             }
             
             if let tracks = playlist.tracks {
-                cell.numberOfSound.text = "\(tracks.count.description) Tracks"
+                cell.numberOfSound.text = "\(tracks.count) Tracks"
             } else {
                 cell.numberOfSound.text = "0 Tracks"
             }

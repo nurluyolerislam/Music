@@ -8,7 +8,10 @@
 import UIKit
 import MediaPlayer
 
+
 class PlayerView: UIView {
+    
+   
     
     //MARK: - UI Elements
     lazy var containerVStack: UIStackView = {
@@ -72,12 +75,12 @@ class PlayerView: UIView {
         return button
     }()
     
-    var addToPlaylistPopup: AddToPlaylistPopupVC = {
-        let popup = AddToPlaylistPopupVC()
-        popup.modalPresentationStyle  = .overFullScreen
-        popup.modalTransitionStyle    = .crossDissolve
-        return popup
-    }()
+//    var addToPlaylistPopup: AddToPlaylistPopupVC = {
+//        let popup = AddToPlaylistPopupVC()
+//        popup.modalPresentationStyle  = .overFullScreen
+//        popup.modalTransitionStyle    = .crossDissolve
+//        return popup
+//    }()
     
     lazy var likeButton: UIButton = {
         let button = UIButton()
@@ -238,5 +241,4 @@ class PlayerView: UIView {
                                               leading: 20,
                                               trailing: 20))
     }
-    
 }

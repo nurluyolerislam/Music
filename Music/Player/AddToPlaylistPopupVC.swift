@@ -12,6 +12,7 @@ class AddToPlaylistPopupVC: UIViewController {
     // MARK: - Properties
     lazy var viewModel = AddToPlaylistPopupVM()
     lazy var containerView  = AlertContainerView()
+    var track: Track?
     
     //MARK: - UI Elements
     lazy var titleLabel: TitleLabel = {
@@ -31,7 +32,8 @@ class AddToPlaylistPopupVC: UIViewController {
         return button
     }()
     
-    init() {
+    init(tackk: Track) {
+        self.track = tackk
         super.init(nibName: nil, bundle: nil)
         tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
         tableView.dataSource = self
@@ -141,7 +143,19 @@ extension AddToPlaylistPopupVC: UITableViewDataSource {
 
 extension AddToPlaylistPopupVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("DEBUG: AddToPlaylistPopupVC TableView \(indexPath.row). index tapped")
+        let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID) as! ProfilePlayListTableViewCell
+        
+        let playlist = viewModel.playlists[indexPath.row]
+        
+        print("DEBUG: AddToPlaylistPopupVC TableView \(String(describing: playlist.title)). index tapped")
+        
+     
+        if let title = playlist.title {
+            viewModel.addTrackToPlaylist(track: track!, playlistID: title)
+        }
+        
+        
+        
     }
 }
 

@@ -32,13 +32,19 @@ class ProfileVM {
                 if let error = error {
                     print(error.localizedDescription)
                 }
+         
+                
                 
                 guard let documents = snapshot?.documents else { return }
                 let playlists = documents.compactMap({try? $0.data(as: UserPlaylist.self)})
                 self.playlists = playlists
+                
+                
+                
                 delegate?.updateUI()
             }
     }
+
     
     func getFavoriteTracks () {
         Firestore.firestore()
@@ -67,7 +73,8 @@ class ProfileVM {
             .collection("UsersInfo")
             .document(Auth.auth().currentUser!.uid)
             .collection("playlists")
-            .addDocument(data: data) { [weak self] error in
+            .document(playlistName)
+            .setData(data) { [weak self] error in
                 guard let self = self else { return }
                 if let error = error {
                     print(error.localizedDescription)
@@ -76,4 +83,6 @@ class ProfileVM {
                 delegate?.createPlaylistPopupDismiss()
             }
     }
+    
+    
 }

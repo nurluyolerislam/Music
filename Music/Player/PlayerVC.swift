@@ -9,6 +9,7 @@ import UIKit
 import CoreMedia.CMTime
 import Kingfisher
 
+
 class PlayerVC: UIViewController {
     
     //MARK: - Variables
@@ -71,7 +72,9 @@ class PlayerVC: UIViewController {
         playerView.volumeDownButton.addTarget(self, action: #selector(volumeDownPressed), for: .touchUpInside)
         playerView.volumeUpButton.addTarget(self, action: #selector(volumeUpPressed), for: .touchUpInside)
         playerView.volumeSlider.addTarget(self, action: #selector(sliderVolumeChanged(_:)), for: .valueChanged)
+        
         playerView.addToPlaylistButton.addTarget(self, action: #selector(addToPlaylistButtonTapped), for: .touchUpInside)
+        
         playerView.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     }
     
@@ -163,7 +166,13 @@ class PlayerVC: UIViewController {
     }
     
     @objc func addToPlaylistButtonTapped(){
-        present(playerView.addToPlaylistPopup, animated: true)
+        let track = viewModel!.track
+        
+        let popup = AddToPlaylistPopupVC(tackk: track)
+        popup.modalPresentationStyle  = .overFullScreen
+        popup.modalTransitionStyle    = .crossDissolve
+        print("------->>>>>> DEBUG: add playlist ")
+        present(popup, animated: true)
     }
     
     @objc func likeButtonTapped() {
