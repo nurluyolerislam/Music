@@ -5,125 +5,64 @@
 //  Created by Erislam Nurluyol on 13.11.2023.
 //
 
-import FirebaseFirestore
-import FirebaseAuth
-
 protocol ProfileVMDelegate: AnyObject {
     func updateUI()
-    func createPlaylistPopupDismiss()
+    func dismissCreatePlaylistPopup()
 }
 
-
 class ProfileVM {
-    var playlists: [UserPlaylist] = []
-    var favoriteTracks: [Track] = []
+    var playlists: [UserPlaylist]?
+    var userFavoriteTracks: [Track]?
     weak var delegate: ProfileVMDelegate?
+    lazy var firestoreManager = FirestoreManager()
     
-    func getPlaylists () {
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("playlists")
-            .getDocuments { [weak self] snapshot, error in
-                guard let self = self else { return }
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                guard let documents = snapshot?.documents else { return }
-                let playlists = documents.compactMap({try? $0.data(as: UserPlaylist.self)})
-                self.playlists = playlists
-                
-                delegate?.updateUI()
-            }
+    func getUserPlaylists () {
+        firestoreManager.getUserPlaylists { [weak self] playlists in
+            guard let self = self else { return }
+            self.playlists = playlists
+            delegate?.updateUI()
+        } onError: { error in
+            print(error)
+        }
     }
     
-    
-    func getFavoriteTracks () {
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("favorites")
-            .getDocuments { [weak self] snapshot, error in
-                guard let self = self else { return }
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                guard let documents = snapshot?.documents else { return }
-                let tracks = documents.compactMap({try? $0.data(as: Track.self)})
-                self.favoriteTracks = tracks
-                delegate?.updateUI()
-            }
+    func getUserFavoriteTracks () {
+        firestoreManager.getUserFavoriteTracks { [weak self] tracks in
+            guard let self = self else { return }
+            self.userFavoriteTracks = tracks
+            delegate?.updateUI()
+        } onError: { error in
+            print(error)
+        }
     }
     
     func createNewPlaylist(playlistName: String) {
-        let data = [
-            "title" : playlistName,
-            "trackCount" : 0
-        ] as [String : Any]
-        
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("playlists")
-            .document(playlistName)
-            .setData(data) { [weak self] error in
-                guard let self = self else { return }
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                getPlaylists()
-                delegate?.createPlaylistPopupDismiss()
-            }
+        firestoreManager.createNewPlaylist(playlistName: playlistName) { [weak self] in
+            guard let self = self else { return }
+            getUserPlaylists()
+            delegate?.dismissCreatePlaylistPopup()
+        } onErorr: { error in
+            print(error)
+        }
     }
     
     func removeTrackFromFavorites(track: Track) {
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("favorites")
-            .document(track.id!.description)
-            .delete() { [weak self] error in
-                guard let self = self else { return }
-                
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                getFavoriteTracks()
-                delegate?.updateUI()
-            }
+        firestoreManager.removeTrackFromFavorites(track: track) { [weak self] in
+            guard let self = self else { return }
+            getUserFavoriteTracks()
+            delegate?.updateUI()
+        } onErorr: { error in
+            print(error)
+        }
     }
     
     func removePlaylist(playlist: UserPlaylist) {
-        let ref = Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("playlists")
-            .document(playlist.title!)
-        
-        ref.collection("tracks").getDocuments { snapshot, error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            snapshot?.documents.forEach { document in
-                document.reference.delete()
-            }
+        firestoreManager.removePlaylist(playlist: playlist) { [weak self] in
+            guard let self = self else { return }
+            self.getUserPlaylists()
+            self.delegate?.updateUI()
+        } onErorr: { error in
+            print(error)
         }
-        
-        ref
-            .delete() { [weak self] error in
-                guard let self = self else { return }
-                
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                getPlaylists()
-                delegate?.updateUI()
-            }
     }
-    
 }

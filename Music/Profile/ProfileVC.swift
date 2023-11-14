@@ -39,9 +39,9 @@ final class ProfileVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
-            viewModel.getPlaylists()
+            viewModel.getUserPlaylists()
         case 1:
-            viewModel.getFavoriteTracks()
+            viewModel.getUserFavoriteTracks()
         default: return
         }
     }
@@ -75,11 +75,11 @@ final class ProfileVC: UIViewController {
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
             profileView.tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
-            viewModel.getPlaylists()
+            viewModel.getUserPlaylists()
             profileView.createPlaylistButton.isHidden = false
         case 1:
             profileView.tableView.register(ProfileFavoriteTableViewCell.self, forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
-            viewModel.getFavoriteTracks()
+            viewModel.getUserFavoriteTracks()
             profileView.createPlaylistButton.isHidden = true
         default:
             break;
@@ -103,58 +103,63 @@ extension ProfileVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
-            return viewModel.playlists.count
-            
+            if let playlists = viewModel.playlists {
+                return playlists.count
+            }
         case 1:
-            return viewModel.favoriteTracks.count
+            if let userFavoriteTracks = viewModel.userFavoriteTracks {
+                return userFavoriteTracks.count
+            }
             
         default:
             return 0
         }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
-            guard let cell = profileView.tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID, for: indexPath) as? ProfilePlayListTableViewCell else {
-                return UITableViewCell()
-            }
-            let playlist = viewModel.playlists[indexPath.row]
+            let cell = profileView.tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID) as! ProfilePlayListTableViewCell
             
-            if let title = playlist.title {
-                cell.playListName.text = title
+            if let playlists = viewModel.playlists {
+                let playlist = playlists[indexPath.row]
+                if let title = playlist.title {
+                    cell.playListName.text = title
+                }
+                if let trackCount = playlist.trackCount {
+                    cell.numberOfSound.text = "\(trackCount) Tracks"
+                }
             }
-            
-            if let trackCount = playlist.trackCount {
-                cell.numberOfSound.text = "\(trackCount) Tracks"
-            }
-            
             return cell
             
         case 1:
-            guard let cell = profileView.tableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID, for: indexPath) as? ProfileFavoriteTableViewCell else {
-                return UITableViewCell()
-            }
-            let track = viewModel.favoriteTracks[indexPath.row]
+            let cell = profileView.tableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID) as! ProfileFavoriteTableViewCell
             
-            if let artist = track.artist {
-                if let artistName = artist.name {
-                    if let songName = track.title {
+            if let userFavoriteTracks = viewModel.userFavoriteTracks {
+                let track = userFavoriteTracks[indexPath.row]
+                
+                if let artist = track.artist,
+                   let songName = track.title {
+                    if let artistName = artist.name {
                         cell.songNameLabel.text = "\(artistName) - \(songName)"
+                    }
+                }
+                
+                if let album = track.album {
+                    if let imageURL = album.coverXl {
+                        cell.songImageView.kf.setImage(with: URL(string: imageURL))
+                    }
+                    
+                    if let albumName = album.title {
+                        cell.recommendationReason.text = albumName
                     }
                 }
             }
             
-            if let album = track.album {
-                if let imageURL = album.coverXl {
-                    cell.songImageView.kf.setImage(with: URL(string: imageURL))
-                }
-                
-                if let albumName = album.title {
-                    cell.recommendationReason.text = albumName
-                }
-            }
+            
+            
             
             return cell
         default:
@@ -169,21 +174,24 @@ extension ProfileVC: UITableViewDelegate {
         
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
-            let playlist = viewModel.playlists[indexPath.row]
-            
-            let playlistVC = PlaylistVC(userPlaylist: playlist)
-            playlistVC.title = playlist.title
-            navigationController?.pushViewController(playlistVC, animated: true)
+            if let playlists = viewModel.playlists {
+                let playlist = playlists[indexPath.row]
+                let playlistVC = PlaylistVC(userPlaylist: playlist, firestoreManager: viewModel.firestoreManager)
+                playlistVC.title = playlist.title
+                navigationController?.pushViewController(playlistVC, animated: true)
+            }
             
         case 1:
-            let song = viewModel.favoriteTracks[indexPath.row]
-            let vc = PlayerVC(track: song)
-            vc.modalPresentationStyle = .pageSheet
-            self.present(vc, animated: true)
+            if let userFavoriteTracks = viewModel.userFavoriteTracks {
+                let track = userFavoriteTracks[indexPath.row]
+                let vc = PlayerVC(track: track)
+                vc.viewModel?.delegate = self
+                vc.modalPresentationStyle = .pageSheet
+                self.present(vc, animated: true)
+            }
             
         default:
             return
-            
         }
         
     }
@@ -194,8 +202,10 @@ extension ProfileVC: UITableViewDelegate {
             let removePlaylist = UIContextualAction(style: .destructive,
                                                     title: "Remove") { [weak self] action, view, bool in
                 guard let self = self else { return }
-                let playlist = viewModel.playlists[indexPath.row]
-                viewModel.removePlaylist(playlist: playlist)
+                if let playlists = viewModel.playlists {
+                    let playlist = playlists[indexPath.row]
+                    viewModel.removePlaylist(playlist: playlist)
+                }
             }
             return UISwipeActionsConfiguration(actions: [removePlaylist])
             
@@ -203,8 +213,10 @@ extension ProfileVC: UITableViewDelegate {
             let removeFromFavoritesAction = UIContextualAction(style: .destructive,
                                                                title: "Remove") { [weak self] action, view, bool in
                 guard let self = self else { return }
-                let track = viewModel.favoriteTracks[indexPath.row]
-                viewModel.removeTrackFromFavorites(track: track)
+                if let userFavoriteTracks = viewModel.userFavoriteTracks {
+                    let track = userFavoriteTracks[indexPath.row]
+                    viewModel.removeTrackFromFavorites(track: track)
+                }
             }
             return UISwipeActionsConfiguration(actions: [removeFromFavoritesAction])
             
@@ -219,7 +231,15 @@ extension ProfileVC: ProfileVMDelegate {
         profileView.tableView.reloadData()
     }
     
-    func createPlaylistPopupDismiss() {
+    func dismissCreatePlaylistPopup() {
         profileView.createPlaylistPopup.dismiss(animated: true)
+    }
+}
+
+extension ProfileVC: PlayerVMDelegate {
+    func updateFavorites() {
+        if profileView.segenmtedControl.selectedSegmentIndex == 1 {
+            viewModel.getUserFavoriteTracks()
+        }
     }
 }

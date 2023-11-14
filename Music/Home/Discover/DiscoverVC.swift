@@ -105,7 +105,7 @@ extension DiscoverVC: UICollectionViewDelegate {
                     let playlist = playlists[indexPath.row]
                     
                     if let playlistURL = playlist.tracklist {
-                        let playlistVC = PlaylistVC(playlistURL: playlistURL, manager: viewModel.manager)
+                        let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: viewModel.manager)
                         playlistVC.title = playlist.title
                         navigationController?.pushViewController(playlistVC, animated: true)
                     }

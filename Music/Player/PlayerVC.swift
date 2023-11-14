@@ -31,6 +31,7 @@ class PlayerVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     //MARK: - Lifecycle
     override func loadView() {
         super.loadView()
@@ -53,9 +54,9 @@ class PlayerVC: UIViewController {
     }
     
     private func configureLikeImage() {
-        viewModel?.isFavorited() { [weak self] bool in
+        viewModel?.checkTrackFavorited() { [weak self] isFavorited in
             guard let self = self else { return }
-            if bool {
+            if isFavorited {
                 playerView.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             } else {
                 playerView.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -175,20 +176,28 @@ class PlayerVC: UIViewController {
     }
     
     @objc func likeButtonTapped() {
-        viewModel?.isFavorited() { [weak self] bool in
+        viewModel?.toggleLikeStatus() { [weak self] isFavorited in
             guard let self = self else { return }
-            if bool {
-                viewModel?.removeTrackFromFavorites() { [weak self] bool in
-                    guard let self = self else { return }
-                    playerView.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-                }
+            if isFavorited {
+                playerView.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             } else {
-                viewModel?.addTrackToFavorites() { [weak self] bool in
-                    guard let self = self else { return }
-                    playerView.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                }
+                playerView.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             }
         }
+//        viewModel?.isFavorited() { [weak self] bool in
+//            guard let self = self else { return }
+//            if bool {
+//                viewModel?.removeTrackFromFavorites() { [weak self] bool in
+//                    guard let self = self else { return }
+//                    playerView.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+//                }
+//            } else {
+//                viewModel?.addTrackToFavorites() { [weak self] bool in
+//                    guard let self = self else { return }
+//                    playerView.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//                }
+//            }
+//        }
     }
     
   

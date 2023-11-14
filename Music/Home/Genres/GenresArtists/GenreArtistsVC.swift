@@ -95,7 +95,7 @@ extension GenreArtistsVC: UICollectionViewDelegate {
                     let artist = artists[indexPath.row]
                     
                     if let playlistURL = artist.tracklist {
-                        let playlistVC = PlaylistVC(playlistURL: playlistURL, manager: viewModel.manager)
+                        let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: viewModel.manager)
                         playlistVC.title = artist.name
                         navigationController?.pushViewController(playlistVC, animated: true)
                     }

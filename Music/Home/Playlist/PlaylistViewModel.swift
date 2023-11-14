@@ -5,9 +5,6 @@
 //  Created by Erislam Nurluyol on 12.11.2023.
 //
 
-import FirebaseFirestore
-import FirebaseAuth
-
 protocol PlaylistViewModelProtocol: AnyObject {
     func getRadioPlaylist(playlistURL: String)
     var tracks: [Track]? { get set }
@@ -19,20 +16,24 @@ protocol PlaylistViewModelDelegate: AnyObject {
 
 final class PlaylistViewModel: PlaylistViewModelProtocol {
     var tracks: [Track]?
-    var manager: DeezerAPIManager?
+    var userPlaylist: UserPlaylist?
+    var deezerAPIManager: DeezerAPIManager?
+    var firestoreManager: FirestoreManager?
     weak var delegate: PlaylistViewModelDelegate?
     
-    init(playlistURL: String, manager: DeezerAPIManager) {
-        self.manager = manager
+    init(playlistURL: String, deezerAPIManager: DeezerAPIManager) {
+        self.deezerAPIManager = deezerAPIManager
         getRadioPlaylist(playlistURL: playlistURL)
     }
     
-    init(userplaylist: UserPlaylist) {
+    init(userplaylist: UserPlaylist, firestoreManager: FirestoreManager) {
+        self.userPlaylist = userplaylist
+        self.firestoreManager = firestoreManager
         getUserPlaylist(playlist: userplaylist)
     }
     
     func getRadioPlaylist(playlistURL: String) {
-        manager?.getRadioPlaylist(playlistURL: playlistURL) { data in
+        deezerAPIManager?.getRadioPlaylist(playlistURL: playlistURL) { data in
             if let tracks = data?.data {
                 self.tracks = tracks
             }
@@ -44,26 +45,23 @@ final class PlaylistViewModel: PlaylistViewModelProtocol {
     }
     
     func getUserPlaylist(playlist: UserPlaylist) {
-        
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("playlists")
-            .document(playlist.title!)
-            .collection("tracks")
-            .getDocuments { [weak self] snapshot, error in
-                
-                guard let self = self else { return }
-                
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                guard let documents = snapshot?.documents else { return }
-                let tracks = documents.compactMap({try? $0.data(as: Track.self)})
-                self.tracks = tracks
-                
-                delegate?.updateUI()
-            }
+        firestoreManager?.getUserPlaylist(playlist: playlist) { tracks in
+            self.tracks = tracks
+            self.delegate?.updateUI()
+        } onError: { error in
+            print(error)
+        }
     }
+    
+    func removeTrackFromPlaylist(track: Track) {
+        if let userPlaylist = userPlaylist {
+            firestoreManager?.removeTrackFromPlaylist(track: track, userPlaylist: userPlaylist) { [weak self] in
+                guard let self = self else { return }
+                getUserPlaylist(playlist: userPlaylist)
+            } onErorr: { error in
+                print(error)
+            }
+        }
+    }
+    
 }

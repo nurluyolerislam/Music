@@ -79,31 +79,29 @@ extension SearchVC: UISearchResultsUpdating {
 
 extension SearchVC: UITableViewDataSource , UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.recentSearches.count
+        if let recentSearches = viewModel.recentSearches {
+            return recentSearches.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        
-        let searchText = viewModel.recentSearches[indexPath.row]
-        
-        cell.textLabel?.text = searchText
-                
+        if let recentSearches = viewModel.recentSearches {
+            let searchText = recentSearches[indexPath.row]
+            cell.textLabel?.text = searchText
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let searchText = viewModel.recentSearches[indexPath.row]
-        
-        print("------->>>>>> DEBUG: \(searchText)")
-    
-        searchController.searchBar.text = searchText
-        searchController.searchBar.becomeFirstResponder()
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let recentSearches = viewModel.recentSearches {
+            let searchText = recentSearches[indexPath.row]
+            searchController.searchBar.text = searchText
+            searchController.searchBar.becomeFirstResponder()
+        }
     }
-    
-    
-    
     
 }
 

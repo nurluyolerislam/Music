@@ -6,8 +6,10 @@
 //
 
 import AVFoundation
-import FirebaseFirestore
-import FirebaseAuth
+
+protocol PlayerVMDelegate: AnyObject {
+    func updateFavorites()
+}
 
 final class PlayerViewModel {
     
@@ -16,6 +18,8 @@ final class PlayerViewModel {
     var isPlaying = false
     let player: AVPlayer?
     let playerItem: AVPlayerItem?
+    let firestoreManager = FirestoreManager()
+    weak var delegate: PlayerVMDelegate?
     
     //MARK: - Initializers
     init(track: Track) {
@@ -32,69 +36,48 @@ final class PlayerViewModel {
         }
     }
     
-    func addTrackToFavorites(completion: @escaping (Bool) -> Void) {
-        let data = [
-            "id" : track.id!,
-            "title" : track.title!,
-            "preview" : track.preview!,
-            "artist" : [
-                "name" : track.artist!.name
-            ],
-            "album" : [
-                "title" : track.album!.title!,
-                "cover_xl" : track.album!.coverXl!
-            ]
-        ] as [String : Any]
-        
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("favorites")
-            .document(track.id!.description)
-            .setData(data) { error in
-                if let error = error {
-                    print(error.localizedDescription)
+    func toggleLikeStatus(completion: @escaping (Bool) -> Void) {
+        checkTrackFavorited { [weak self] isFavorited in
+            guard let self = self else { return }
+            if isFavorited {
+                removeTrackFromFavorites { [weak self] in
+                    guard let self = self else { return }
+                    completion(false)
+                    delegate?.updateFavorites()
                 }
-                
-                self.isFavorited { bool in
-                    completion(bool)
+            } else {
+                addTrackToFavorites { [weak self] in
+                    guard let self = self else { return }
+                    completion(true)
+                    delegate?.updateFavorites()
                 }
             }
+        }
     }
     
-    func removeTrackFromFavorites(completion: @escaping (Bool) -> Void) {
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("favorites")
-            .document(track.id!.description)
-            .delete() { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                self.isFavorited { bool in
-                    completion(bool)
-                }
-            }
+    func addTrackToFavorites(completion: @escaping () -> Void) {
+        firestoreManager.addTrackToFavorites(track: track) {
+            completion()
+        } onError: { error in
+            print(error)
+        }
     }
     
-    func isFavorited(completion: @escaping (Bool) -> Void) {
-        Firestore.firestore()
-            .collection("UsersInfo")
-            .document(Auth.auth().currentUser!.uid)
-            .collection("favorites")
-            .document(track.id!.description)
-            .getDocument { snapshot, error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-                
-                if let snapshot = snapshot {
-                    completion(snapshot.exists)
-                }
-            }
+    func removeTrackFromFavorites(completion: @escaping () -> Void) {
+        firestoreManager.removeTrackFromFavorites(track: track) {
+            completion()
+        } onErorr: { error in
+            print(error)
+        }
     }
-
+    
+    func checkTrackFavorited(completion: @escaping (Bool) -> Void) {
+        firestoreManager.checkTrackFavorited(track: track) { [weak self] exists in
+            guard let self = self else { return }
+            completion(exists)
+        } onError: { error in
+            print(error)
+        }
+    }
     
 }

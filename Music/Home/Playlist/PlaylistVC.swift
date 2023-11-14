@@ -15,15 +15,15 @@ class PlaylistVC: UIViewController {
     let viewModel: PlaylistViewModel
     
     //MARK: - Initializers
-    init(playlistURL: String, manager: DeezerAPIManager) {
-        self.viewModel = PlaylistViewModel(playlistURL: playlistURL, manager: manager)
+    init(playlistURL: String, deezerAPIManager: DeezerAPIManager) {
+        self.viewModel = PlaylistViewModel(playlistURL: playlistURL, deezerAPIManager: deezerAPIManager)
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
         addDelegatesAndDataSources()
     }
     
-    init(userPlaylist: UserPlaylist) {
-        self.viewModel = PlaylistViewModel(userplaylist: userPlaylist)
+    init(userPlaylist: UserPlaylist, firestoreManager: FirestoreManager) {
+        self.viewModel = PlaylistViewModel(userplaylist: userPlaylist, firestoreManager: firestoreManager)
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
         addDelegatesAndDataSources()
@@ -71,7 +71,7 @@ extension PlaylistVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
+        
         let cell = playlistView.tableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID, for: indexPath) as! ProfileFavoriteTableViewCell
         
         if let tracks = viewModel.tracks {
@@ -100,14 +100,27 @@ extension PlaylistVC: UITableViewDataSource {
 
 extension PlaylistVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if let tracks = viewModel.tracks {
             let track = tracks[indexPath.row]
             let vc = PlayerVC(track: track)
             vc.modalPresentationStyle = .pageSheet
             self.present(vc, animated: true)
         }
-        
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if let userPlaylist = viewModel.userPlaylist {
+            let removeTrack = UIContextualAction(style: .destructive,
+                                                 title: "Remove") { [weak self] action, view, bool in
+                guard let self = self else { return }
+                if let tracks = viewModel.tracks {
+                    let track = tracks[indexPath.row]
+                    viewModel.removeTrackFromPlaylist(track: track)
+                }
+            }
+            return UISwipeActionsConfiguration(actions: [removeTrack])
+        }
+        return nil
     }
 }
 

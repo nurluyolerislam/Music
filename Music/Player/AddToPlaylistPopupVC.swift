@@ -55,7 +55,7 @@ class AddToPlaylistPopupVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getPlaylists()
+        viewModel.getUserPlaylists()
     }
     
     // MARK: - UI Configuration
@@ -115,24 +115,29 @@ class AddToPlaylistPopupVC: UIViewController {
 
 extension AddToPlaylistPopupVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.playlists.count
+        if let playlists = viewModel.playlists {
+            return playlists.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID) as! ProfilePlayListTableViewCell
         
-        let playlist = viewModel.playlists[indexPath.row]
-        
-        if let imageURL = playlist.image {
-            cell.songImageView.kf.setImage(with: URL(string: imageURL))
-        }
-        
-        if let title = playlist.title {
-            cell.playListName.text = title
-        }
-        
-        if let trackCount = playlist.trackCount {
-            cell.numberOfSound.text = "\(trackCount) Tracks"
+        if let playlists = viewModel.playlists {
+            let playlist = playlists[indexPath.row]
+            
+            if let imageURL = playlist.image {
+                cell.songImageView.kf.setImage(with: URL(string: imageURL))
+            }
+            
+            if let title = playlist.title {
+                cell.playListName.text = title
+            }
+            
+            if let trackCount = playlist.trackCount {
+                cell.numberOfSound.text = "\(trackCount) Tracks"
+            }
         }
         
         return cell
@@ -141,18 +146,14 @@ extension AddToPlaylistPopupVC: UITableViewDataSource {
 
 extension AddToPlaylistPopupVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID) as! ProfilePlayListTableViewCell
         
-        let playlist = viewModel.playlists[indexPath.row]
-        
-        print("DEBUG: AddToPlaylistPopupVC TableView \(String(describing: playlist.title)). index tapped")
-        
-     
-        if let title = playlist.title {
-            viewModel.addTrackToPlaylist(track: track!, playlistID: title)
+        if let playlists = viewModel.playlists {
+            let playlist = playlists[indexPath.row]
+            
+            if let title = playlist.title {
+                viewModel.addTrackToPlaylist(track: track!, playlistID: title)
+            }
         }
-        
-        
         
     }
 }

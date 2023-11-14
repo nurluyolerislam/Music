@@ -43,6 +43,7 @@
 		58BBD8672AFCEFC200DB65BD /* RecentSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */; };
 		58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */; };
 		58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */; };
+		58DA64A52B03D5FA0097A954 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DA64A42B03D5FA0097A954 /* FirestoreManager.swift */; };
 		58EE9CCD2B029F7200CAAF8E /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EE9CCC2B029F7200CAAF8E /* ProfileVM.swift */; };
 		58EE9CCF2B02B94300CAAF8E /* UserPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EE9CCE2B02B94300CAAF8E /* UserPlaylist.swift */; };
 		836F4D722AFF5BD4008BE3FA /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836F4D712AFF5BD4008BE3FA /* SearchTableViewCell.swift */; };
@@ -121,6 +122,7 @@
 		58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesView.swift; sourceTree = "<group>"; };
 		58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVC.swift; sourceTree = "<group>"; };
+		58DA64A42B03D5FA0097A954 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		58EE9CCC2B029F7200CAAF8E /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		58EE9CCE2B02B94300CAAF8E /* UserPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlaylist.swift; sourceTree = "<group>"; };
 		836F4D712AFF5BD4008BE3FA /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				58563FE92AFE7EAA00ADECE1 /* DeezerAPIManager.swift */,
+				58DA64A42B03D5FA0097A954 /* FirestoreManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -293,8 +296,8 @@
 				582B6C5A2AFD325F00B74E8B /* TabBar */,
 				587FC5002AFA556E00D6B976 /* Home */,
 				58BBD8632AFCEF9900DB65BD /* Search */,
-				83ABE1B72AFD258800AA4146 /* Player */,
 				83ABE1AC2AFCE96A00AA4146 /* Profile */,
+				83ABE1B72AFD258800AA4146 /* Player */,
 				83C234D52B026FC500F3FF5F /* Custom Components */,
 				587FC5062AFA56A100D6B976 /* Supporting Files */,
 			);
@@ -614,6 +617,7 @@
 				836F4D742AFF6685008BE3FA /* PlayerViewModel.swift in Sources */,
 				83ABE1B02AFCE9F700AA4146 /* ProfileView.swift in Sources */,
 				83C234D02B02309500F3FF5F /* GenreArtistsVC.swift in Sources */,
+				58DA64A52B03D5FA0097A954 /* FirestoreManager.swift in Sources */,
 				83ABE1B92AFD25DA00AA4146 /* PlayerVC.swift in Sources */,
 				83C234EC2B0270C800F3FF5F /* UIViewController+Ext.swift in Sources */,
 				587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */,
