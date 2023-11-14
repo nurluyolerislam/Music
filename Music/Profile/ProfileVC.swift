@@ -23,17 +23,20 @@ final class ProfileVC: UIViewController {
     }
     
     //MARK: - Lifecycle
+    override func loadView() {
+        super.loadView()
+        view = profileView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = profileView
-        profileView.tableView.dataSource = self
-        profileView.tableView.delegate = self
-        configureSegmentedControll()
-        configureNavigationBar()
+        addDelegatesAndDataSources()
+        configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
             viewModel.getPlaylists()
@@ -44,14 +47,26 @@ final class ProfileVC: UIViewController {
     }
     
     //MARK: - UI Configuration
+    private func configureUI() {
+        configureNavigationBar()
+        configureSegmentedControll()
+    }
+    
     private func configureNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
+        title = "Profile"
     }
     
     private func configureSegmentedControll(){
         profileView.segenmtedControl.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
         profileView.createPlaylistButton.addTarget(self, action: #selector(createPlaylistButtonTapped), for: .touchUpInside)
         profileView.createPlaylistPopup.createButton.addTarget(self, action: #selector(createPlaylistPopupCreateButtonTapped), for: .touchUpInside)
+    }
+    
+    
+    //MARK: - Helper Functions
+    private func addDelegatesAndDataSources() {
+        profileView.tableView.dataSource = self
+        profileView.tableView.delegate = self
     }
     
     
@@ -154,7 +169,11 @@ extension ProfileVC: UITableViewDelegate {
         
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
-            return
+            let playlist = viewModel.playlists[indexPath.row]
+            
+            let playlistVC = PlaylistVC(userPlaylist: playlist)
+            playlistVC.title = playlist.title
+            navigationController?.pushViewController(playlistVC, animated: true)
             
         case 1:
             let song = viewModel.favoriteTracks[indexPath.row]

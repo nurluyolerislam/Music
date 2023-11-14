@@ -213,7 +213,6 @@ extension HomeVC: UICollectionViewDelegate {
                         if let playlistURL = playlist.tracklist {
                             let playlistVC = PlaylistVC(playlistURL: playlistURL, manager: viewModel.manager)
                             playlistVC.title = playlist.title
-                            navigationController?.isNavigationBarHidden = false
                             navigationController?.pushViewController(playlistVC, animated: true)
                         }
                     }
@@ -227,7 +226,6 @@ extension HomeVC: UICollectionViewDelegate {
                     if let genresID = genre.id {
                         let genresArtistsVC = GenreArtistsVC(genreId: genresID.description, manager: viewModel.manager)
                         genresArtistsVC.title = genre.name
-                        navigationController?.isNavigationBarHidden = false
                         navigationController?.pushViewController(genresArtistsVC, animated: true)
                         
                     }

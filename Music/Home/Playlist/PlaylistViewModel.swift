@@ -5,9 +5,12 @@
 //  Created by Erislam Nurluyol on 12.11.2023.
 //
 
+import FirebaseFirestore
+import FirebaseAuth
+
 protocol PlaylistViewModelProtocol: AnyObject {
-    func getData()
-    var data: RadioPlaylistResponse? { get set }
+    func getRadioPlaylist(playlistURL: String)
+    var tracks: [Track]? { get set }
 }
 
 protocol PlaylistViewModelDelegate: AnyObject {
@@ -15,24 +18,52 @@ protocol PlaylistViewModelDelegate: AnyObject {
 }
 
 final class PlaylistViewModel: PlaylistViewModelProtocol {
-    let playlistURL: String
-    var data: RadioPlaylistResponse?
-    let manager: DeezerAPIManager
+    var tracks: [Track]?
+    var manager: DeezerAPIManager?
     weak var delegate: PlaylistViewModelDelegate?
     
     init(playlistURL: String, manager: DeezerAPIManager) {
-        self.playlistURL = playlistURL
         self.manager = manager
-        getData()
+        getRadioPlaylist(playlistURL: playlistURL)
     }
     
-    func getData() {
-        manager.getRadioPlaylist(playlistURL: self.playlistURL) { data in
-            self.data = data
+    init(userplaylist: UserPlaylist) {
+        getUserPlaylist(playlist: userplaylist)
+    }
+    
+    func getRadioPlaylist(playlistURL: String) {
+        manager?.getRadioPlaylist(playlistURL: playlistURL) { data in
+            if let tracks = data?.data {
+                self.tracks = tracks
+            }
             self.delegate?.updateUI()
         } onError: { error in
             print(error)
         }
-
+        
+    }
+    
+    func getUserPlaylist(playlist: UserPlaylist) {
+        
+        Firestore.firestore()
+            .collection("UsersInfo")
+            .document(Auth.auth().currentUser!.uid)
+            .collection("playlists")
+            .document(playlist.title!)
+            .collection("tracks")
+            .getDocuments { [weak self] snapshot, error in
+                
+                guard let self = self else { return }
+                
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                guard let documents = snapshot?.documents else { return }
+                let tracks = documents.compactMap({try? $0.data(as: Track.self)})
+                self.tracks = tracks
+                
+                delegate?.updateUI()
+            }
     }
 }

@@ -9,37 +9,6 @@ import UIKit
 
 class SearchVC: UIViewController {
     
-    //MARK: - Mocks
-    let recentSearches: [SearchTableViewCellModel] = [
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Yerli Plaka - Ceza",
-              albumName: "Yerli Plaka"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "On the top charts",
-              albumName: "Recommended tracks by Alma"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas"),
-        .init(image: UIImage(named: "profileImage")!,
-              songName: "Enjoy together with friends",
-              albumName: "Tunes by Jonas&Jonas")
-    ]
-    
     //MARK: - Variables
     lazy var recentSearchesView = RecentSearchesView()
     lazy var viewModel = SearchViewModel()
@@ -66,6 +35,12 @@ class SearchVC: UIViewController {
         addDelegatesAndDataSources()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.getRecentSearches()
+    }
+    
+    
     //MARK: - Helper Functions
     private func configureNavigationBar() {
         navigationItem.title = "Song Search"
@@ -74,8 +49,7 @@ class SearchVC: UIViewController {
     }
     
     private func addDelegatesAndDataSources() {
-        recentSearchesView.recentSearchesTableView.register(SearchTableViewCell.self,
-                                                          forCellReuseIdentifier: SearchTableViewCell.reuseID)
+        viewModel.recentSearchesDelegate = self
         recentSearchesView.recentSearchesTableView.dataSource = self
     }
     
@@ -94,6 +68,7 @@ extension SearchVC: UISearchResultsUpdating {
                 guard let self = self else { return }
                 viewModel.searchText = query
                 viewModel.getData()
+                viewModel.updateRecentSearches(searchText: query)
             }
         }
         
@@ -103,19 +78,25 @@ extension SearchVC: UISearchResultsUpdating {
 
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recentSearches.count
+        return viewModel.recentSearches.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = recentSearchesView.recentSearchesTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reuseID) as! SearchTableViewCell
-        let song = recentSearches[indexPath.row]
+        let cell = UITableViewCell()
         
-        cell.songImageView.image = song.image
-        cell.songNameLabel.text = song.songName
-        cell.albumNameLabel.text = song.albumName
+        let searchText = viewModel.recentSearches[indexPath.row]
         
+        cell.textLabel?.text = searchText
+                
         return cell
     }
     
     
+}
+
+
+extension SearchVC: RecentSearchesDelegate {
+    func updateRecentSearches() {
+        recentSearchesView.recentSearchesTableView.reloadData()
+    }
 }

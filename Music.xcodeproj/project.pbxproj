@@ -10,6 +10,7 @@
 		580719E52B02C4F900B77045 /* CreatePlaylistPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E42B02C4F900B77045 /* CreatePlaylistPopupVC.swift */; };
 		580719E72B02D24F00B77045 /* AddToPlaylistPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E62B02D24F00B77045 /* AddToPlaylistPopupVC.swift */; };
 		580719E92B02D34B00B77045 /* AddToPlaylistPopupVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E82B02D34B00B77045 /* AddToPlaylistPopupVM.swift */; };
+		580719EB2B038FA600B77045 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719EA2B038FA600B77045 /* User.swift */; };
 		581CF2242B02395800E08ADA /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2232B02395800E08ADA /* DiscoverVC.swift */; };
 		581CF2262B02396A00E08ADA /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2252B02396A00E08ADA /* DiscoverView.swift */; };
 		581CF2282B023DC600E08ADA /* GenresVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2272B023DC600E08ADA /* GenresVC.swift */; };
@@ -87,6 +88,7 @@
 		580719E42B02C4F900B77045 /* CreatePlaylistPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistPopupVC.swift; sourceTree = "<group>"; };
 		580719E62B02D24F00B77045 /* AddToPlaylistPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistPopupVC.swift; sourceTree = "<group>"; };
 		580719E82B02D34B00B77045 /* AddToPlaylistPopupVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistPopupVM.swift; sourceTree = "<group>"; };
+		580719EA2B038FA600B77045 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		581CF2232B02395800E08ADA /* DiscoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
 		581CF2252B02396A00E08ADA /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		581CF2272B023DC600E08ADA /* GenresVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresVC.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				83C234CB2B0227FA00F3FF5F /* GenresMusicResponse.swift */,
 				83C234CD2B022EC300F3FF5F /* GenresArtistLists.swift */,
 				58EE9CCE2B02B94300CAAF8E /* UserPlaylist.swift */,
+				580719EA2B038FA600B77045 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				580719E92B02D34B00B77045 /* AddToPlaylistPopupVM.swift in Sources */,
 				581CF2282B023DC600E08ADA /* GenresVC.swift in Sources */,
 				58A8462D2B016403002F6544 /* RadioPlaylistResponse.swift in Sources */,
+				580719EB2B038FA600B77045 /* User.swift in Sources */,
 				58EE9CCD2B029F7200CAAF8E /* ProfileVM.swift in Sources */,
 				83C234E82B02708700F3FF5F /* AlertContainerView.swift in Sources */,
 				58563FFD2AFFCBAC00ADECE1 /* RadioResponse.swift in Sources */,

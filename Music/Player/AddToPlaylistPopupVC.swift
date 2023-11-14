@@ -32,8 +32,8 @@ class AddToPlaylistPopupVC: UIViewController {
         return button
     }()
     
-    init(tackk: Track) {
-        self.track = tackk
+    init(tack: Track) {
+        self.track = tack
         super.init(nibName: nil, bundle: nil)
         tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
         tableView.dataSource = self

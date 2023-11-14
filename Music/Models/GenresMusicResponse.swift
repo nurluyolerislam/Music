@@ -28,5 +28,3 @@ struct GenresPlayList: Codable {
         case type
     }
 }
-
-

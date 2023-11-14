@@ -38,7 +38,10 @@ class DiscoverVC: UIViewController {
         configureUI()
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
     //MARK: - Helper Functions
     private func configureUI() {
         configureNavigationBar()
@@ -46,7 +49,6 @@ class DiscoverVC: UIViewController {
     
     private func configureNavigationBar() {
         title = "Discover"
-        navigationController?.isNavigationBarHidden = false
     }
     
     private func addDelegatesAndDataSources() {

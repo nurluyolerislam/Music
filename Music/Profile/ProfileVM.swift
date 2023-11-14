@@ -96,11 +96,23 @@ class ProfileVM {
     }
     
     func removePlaylist(playlist: UserPlaylist) {
-        Firestore.firestore()
+        let ref = Firestore.firestore()
             .collection("UsersInfo")
             .document(Auth.auth().currentUser!.uid)
             .collection("playlists")
             .document(playlist.title!)
+        
+        ref.collection("tracks").getDocuments { snapshot, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            snapshot?.documents.forEach { document in
+                document.reference.delete()
+            }
+        }
+        
+        ref
             .delete() { [weak self] error in
                 guard let self = self else { return }
                 

@@ -168,10 +168,9 @@ class PlayerVC: UIViewController {
     @objc func addToPlaylistButtonTapped(){
         let track = viewModel!.track
         
-        let popup = AddToPlaylistPopupVC(tackk: track)
+        let popup = AddToPlaylistPopupVC(tack: track)
         popup.modalPresentationStyle  = .overFullScreen
         popup.modalTransitionStyle    = .crossDissolve
-        print("------->>>>>> DEBUG: add playlist ")
         present(popup, animated: true)
     }
     

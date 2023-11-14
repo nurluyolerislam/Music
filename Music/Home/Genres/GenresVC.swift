@@ -37,6 +37,11 @@ class GenresVC: UIViewController {
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
+    
     
     //MARK: - Helper Functions
     private func configureUI() {
@@ -45,7 +50,6 @@ class GenresVC: UIViewController {
     
     private func configureNavigationBar() {
         title = "Genres"
-        navigationController?.isNavigationBarHidden = false
     }
     
     private func addDelegatesAndDataSources() {
