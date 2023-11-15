@@ -5,7 +5,11 @@
 //  Created by Erislam Nurluyol on 13.11.2023.
 //
 
+import UIKit
+import FirebaseStorage
+
 protocol ProfileVMDelegate: AnyObject {
+    func updateUserPhoto(imageURL: URL)
     func updateUserName()
     func updateTableView()
     func dismissCreatePlaylistPopup()
@@ -83,6 +87,43 @@ class ProfileVM {
         }
     }
     
+    func uploadUserPhoto(imageData: UIImage) {
+        let storageRefernce = Storage.storage().reference()
+
+        let imageData = imageData.jpegData(compressionQuality: 0.8)
+        
+        guard imageData != nil else{
+            return
+        }
+        
+        let fileRef = storageRefernce.child("Media/\(ApplicationVariables.currentUserID ?? "").jpg")
+        
+        fileRef.putData(imageData!, metadata: nil) { meta, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            self.fetchUserPhoto()
+        }
+    }
+    
+    func fetchUserPhoto() {
+        let storageRef = Storage.storage().reference()
+        
+        let fileRef = storageRef.child("Media/\(ApplicationVariables.currentUserID ?? "").jpg")
+        fileRef.downloadURL { [weak self] url, error in
+            guard let self else {return}
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            
+            guard let url else {return}
+            self.delegate?.updateUserPhoto(imageURL: url)
+          
+        }
+    }
+    
     func logout(completion: @escaping () -> Void ) {
         firebaseAuthManager.signOut {
             completion()
@@ -90,5 +131,7 @@ class ProfileVM {
             print(error)
         }
     }
+    
+    
     
 }

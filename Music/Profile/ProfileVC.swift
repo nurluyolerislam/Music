@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileVC: UIViewController {
+final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate{
     // MARK: - Properties
     lazy var profileView = ProfileView()
     lazy var viewModel = ProfileVM()
@@ -37,6 +37,8 @@ final class ProfileVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getUserName()
+        viewModel.fetchUserPhoto()
+        
         navigationController?.isNavigationBarHidden = true
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
@@ -63,6 +65,8 @@ final class ProfileVC: UIViewController {
         profileView.createPlaylistPopup.createButton.addTarget(self, action: #selector(createPlaylistPopupCreateButtonTapped), for: .touchUpInside)
         
         profileView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        
+        profileView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
     }
     
     
@@ -100,13 +104,25 @@ final class ProfileVC: UIViewController {
         }
     }
     
+    @objc func  editButtonTapped() {
+        print("------->>>>>> DEBUG: ")
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = .photoLibrary
+        present(pickerController, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        viewModel.uploadUserPhoto(imageData: (image!))
+        self.dismiss(animated: true)
+}
+    
     @objc func logoutButtonTapped(){
         viewModel.logout {
             let loginVC = LoginVC()
             let nav = UINavigationController(rootViewController: loginVC)
             self.view.window?.rootViewController = nav
-//            nav.modalPresentationStyle = .fullScreen
-//            self.present(nav, animated: true, completion: nil)
         }
     }
     
@@ -241,6 +257,11 @@ extension ProfileVC: UITableViewDelegate {
 }
 
 extension ProfileVC: ProfileVMDelegate {
+    func updateUserPhoto(imageURL: URL) {
+        profileView.userImage.kf.setImage(with: imageURL)
+    }
+    
+    
     func updateUserName() {
         profileView.userName.text = viewModel.userName
     }

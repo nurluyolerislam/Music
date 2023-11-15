@@ -85,6 +85,7 @@
 		83C235202B02789400F3FF5F /* a1.json in Resources */ = {isa = PBXBuildFile; fileRef = 83C2351E2B02789400F3FF5F /* a1.json */; };
 		83C235212B02789400F3FF5F /* a2.json in Resources */ = {isa = PBXBuildFile; fileRef = 83C2351F2B02789400F3FF5F /* a2.json */; };
 		83C235232B0278FC00F3FF5F /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C235222B0278FC00F3FF5F /* UIColor+Ext.swift */; };
+		83EB85942B04F43E0070359B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83EB85932B04F43E0070359B /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -175,6 +176,7 @@
 				83C2351A2B02769700F3FF5F /* FirebaseFirestore in Frameworks */,
 				83C235182B02769700F3FF5F /* FirebaseAuth in Frameworks */,
 				58563FE42AFE76F000ADECE1 /* Alamofire in Frameworks */,
+				83EB85942B04F43E0070359B /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,6 +526,7 @@
 				83C235172B02769700F3FF5F /* FirebaseAuth */,
 				83C235192B02769700F3FF5F /* FirebaseFirestore */,
 				83C2351C2B02783900F3FF5F /* Lottie */,
+				83EB85932B04F43E0070359B /* FirebaseStorage */,
 			);
 			productName = Music;
 			productReference = 587FC4E92AFA54AC00D6B976 /* Music.app */;
@@ -929,6 +932,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 83C2351B2B02783900F3FF5F /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		83EB85932B04F43E0070359B /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83C234FD2B02745F00F3FF5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
