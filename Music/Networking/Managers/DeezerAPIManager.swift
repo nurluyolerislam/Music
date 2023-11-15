@@ -54,5 +54,4 @@ enum Endpoint: String {
     case search = "search/track?q="
     case radio = "radio"
     case genre = "genre"
-   
 }

@@ -24,7 +24,7 @@ class ProfileVM {
     
     func getUserPlaylists () {
         firestoreManager.getUserPlaylists { [weak self] playlists in
-            guard let self = self else { return }
+            guard let self else { return }
             self.playlists = playlists
             delegate?.updateUI()
         } onError: { error in
@@ -34,8 +34,8 @@ class ProfileVM {
     
     func getUserFavoriteTracks () {
         firestoreManager.getUserFavoriteTracks { [weak self] tracks in
-            guard let self = self else { return }
-            self.userFavoriteTracks = tracks
+            guard let self else { return }
+            userFavoriteTracks = tracks
             delegate?.updateUI()
         } onError: { error in
             print(error)
@@ -44,7 +44,7 @@ class ProfileVM {
     
     func createNewPlaylist(playlistName: String) {
         firestoreManager.createNewPlaylist(playlistName: playlistName) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             getUserPlaylists()
             delegate?.dismissCreatePlaylistPopup()
         } onErorr: { error in
@@ -54,7 +54,7 @@ class ProfileVM {
     
     func removeTrackFromFavorites(track: Track) {
         firestoreManager.removeTrackFromFavorites(track: track) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             getUserFavoriteTracks()
             delegate?.updateUI()
         } onErorr: { error in
@@ -64,9 +64,9 @@ class ProfileVM {
     
     func removePlaylist(playlist: UserPlaylist) {
         firestoreManager.removePlaylist(playlist: playlist) { [weak self] in
-            guard let self = self else { return }
-            self.getUserPlaylists()
-            self.delegate?.updateUI()
+            guard let self else { return }
+            getUserPlaylists()
+            delegate?.updateUI()
         } onErorr: { error in
             print(error)
         }

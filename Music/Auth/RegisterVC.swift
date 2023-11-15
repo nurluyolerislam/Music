@@ -16,7 +16,7 @@ class RegisterVC: UIViewController {
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
     private lazy var passwordTextField    = CustomTextField(fieldType: .password)
     private lazy var repasswordTextField  = CustomTextField(fieldType: .password)
-    private lazy var signUpButton         = MusicButton( bgColor:MusicColor.playButonBG ,color: MusicColor.playButonBG, title: "Sign Up", fontSize: .big)
+    private lazy var signUpButton         = MusicButton( bgColor: .authButtonBackground ,color: .authButtonBackground, title: "Sign Up", fontSize: .big)
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var signInButton         = MusicButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
@@ -163,18 +163,19 @@ class RegisterVC: UIViewController {
         }
         
         authVM?.register(userName: userName, email: email, password: password) { [weak self] success, error in
-            guard let self = self else { return }
+            guard let self else { return }
 
             if success {
-                self.presentAlert(title: "Alert!", message: "Registration Successful 🥳", buttonTitle: "Ok")
-                self.dismiss(animated: true) {
+                presentAlert(title: "Alert!", message: "Registration Successful 🥳", buttonTitle: "Ok")
+                dismiss(animated: true) { [weak self] in
+                    guard let self else { return }
                     
                     let tabBar = MainTabBarVC()
                     tabBar.modalPresentationStyle = .fullScreen
-                    self.present(tabBar, animated: true, completion: nil)
+                    present(tabBar, animated: true, completion: nil)
                 }
             } else {
-                self.presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
+                presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }
         }
     }

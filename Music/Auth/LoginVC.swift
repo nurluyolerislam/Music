@@ -13,10 +13,10 @@ class LoginVC: UIViewController {
     private let HeadLabel            = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
     private lazy var passwordTextField    = CustomTextField(fieldType: .password)
-    private lazy var signInButton         = MusicButton( bgColor:MusicColor.playButonBG ,color: MusicColor.playButonBG , title: "Sign In", fontSize: .big)
+    private lazy var signInButton         = MusicButton( bgColor: .authButtonBackground ,color: .authButtonBackground , title: "Sign In", fontSize: .big)
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var newUserButton        = MusicButton( bgColor:.clear ,color: .label, title: "Sign Up.", fontSize: .small)
-    private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: MusicColor.playButonBG , title: "Forgot password?", fontSize: .small)
+    private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: .authButtonBackground , title: "Forgot password?", fontSize: .small)
     
     private lazy var stackView            = UIStackView()
     private let authVM : AuthVM?     = AuthVM()
@@ -137,18 +137,18 @@ class LoginVC: UIViewController {
         }
         
         authVM?.login(email: email, password: password) { [weak self]  success, error in
-            guard let self = self else { return }
+            guard let self else { return }
 
             if success {
-                self.presentAlert(title: "Alert!", message: "Entry Successful 🥳", buttonTitle: "Ok")
-                self.dismiss(animated: true) {
+                presentAlert(title: "Alert!", message: "Entry Successful 🥳", buttonTitle: "Ok")
+                dismiss(animated: true) {
                     
                     let tabBar = MainTabBarVC()
                     tabBar.modalPresentationStyle = .fullScreen
                     self.present(tabBar, animated: true, completion: nil)
                 }   
             } else {
-                self.presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
+                presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }
         }
     }

@@ -228,10 +228,9 @@ class FirestoreManager {
         }
     }
     
-    
     func logout(onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
         do {
-            try Auth.auth().signOut()       
+            try Auth.auth().signOut()
             onSuccess()
         } catch  {
             print(error.localizedDescription + "errorr logout")
@@ -239,6 +238,4 @@ class FirestoreManager {
         }
     }
     
-    
 }
-

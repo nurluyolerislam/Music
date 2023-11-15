@@ -112,7 +112,7 @@ extension PlaylistVC: UITableViewDelegate {
         if let userPlaylist = viewModel.userPlaylist {
             let removeTrack = UIContextualAction(style: .destructive,
                                                  title: "Remove") { [weak self] action, view, bool in
-                guard let self = self else { return }
+                guard let self else { return }
                 if let tracks = viewModel.tracks {
                     let track = tracks[indexPath.row]
                     viewModel.removeTrackFromPlaylist(track: track)

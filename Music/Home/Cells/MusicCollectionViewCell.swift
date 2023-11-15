@@ -70,9 +70,3 @@ class MusicCollectionViewCell: UICollectionViewCell {
     }
     
 }
-
-struct MusicCollectionViewCellModel {
-    let image: UIImage
-    let firstLabelText: String
-    let secondLabelText: String
-}

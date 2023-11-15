@@ -37,13 +37,13 @@ final class ProfileVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-//        switch profileView.segenmtedControl.selectedSegmentIndex {
-//        case 0:
-//            viewModel.getUserPlaylists()
-//        case 1:
-//            viewModel.getUserFavoriteTracks()
-//        default: return
-//        }
+        switch profileView.segenmtedControl.selectedSegmentIndex {
+        case 0:
+            viewModel.getUserPlaylists()
+        case 1:
+            viewModel.getUserFavoriteTracks()
+        default: return
+        }
     }
     
     //MARK: - UI Configuration
@@ -213,7 +213,7 @@ extension ProfileVC: UITableViewDelegate {
         case 0:
             let removePlaylist = UIContextualAction(style: .destructive,
                                                     title: "Remove") { [weak self] action, view, bool in
-                guard let self = self else { return }
+                guard let self else { return }
                 if let playlists = viewModel.playlists {
                     let playlist = playlists[indexPath.row]
                     viewModel.removePlaylist(playlist: playlist)
@@ -224,7 +224,7 @@ extension ProfileVC: UITableViewDelegate {
         case 1:
             let removeFromFavoritesAction = UIContextualAction(style: .destructive,
                                                                title: "Remove") { [weak self] action, view, bool in
-                guard let self = self else { return }
+                guard let self else { return }
                 if let userFavoriteTracks = viewModel.userFavoriteTracks {
                     let track = userFavoriteTracks[indexPath.row]
                     viewModel.removeTrackFromFavorites(track: track)

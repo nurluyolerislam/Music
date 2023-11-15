@@ -5,7 +5,7 @@
 //  Created by Erislam Nurluyol on 7.11.2023.
 //
 
-import UIKit
+import UIKit.UIView
 
 extension UIView{
     

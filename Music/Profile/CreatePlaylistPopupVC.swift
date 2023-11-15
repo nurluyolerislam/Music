@@ -9,7 +9,7 @@ import UIKit
 
 class CreatePlaylistPopupVC: UIViewController {
     
-    // MARK: - Properties
+    //MARK: - UI Elements
     lazy var containerView  = AlertContainerView()
     
     lazy var titleLabel: TitleLabel = {
@@ -17,6 +17,7 @@ class CreatePlaylistPopupVC: UIViewController {
         label.text = "Create a New Playlist"
         return label
     }()
+    
     lazy var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Playlist name..."
@@ -43,9 +44,8 @@ class CreatePlaylistPopupVC: UIViewController {
         return stackView
     }()
     
-    let padding: CGFloat = 20
     
-    // MARK: - View Lifecycle
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
@@ -53,7 +53,7 @@ class CreatePlaylistPopupVC: UIViewController {
         
     }
     
-    // MARK: - UI Configurati on
+    //MARK: - Configuration Methods
     private func configureUI() {
         configureContainerView()
         configureTitleLabel()
@@ -97,8 +97,10 @@ class CreatePlaylistPopupVC: UIViewController {
                                               trailing: 20))
     }
     
+    
     // MARK: - Actions
     @objc func dismissVC() {
         dismiss(animated: true)
     }
+    
 }

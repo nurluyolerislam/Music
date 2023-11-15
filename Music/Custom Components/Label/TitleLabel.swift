@@ -8,11 +8,10 @@ import UIKit
 
 class TitleLabel: UILabel {
     
-    // MARK: - Initialization
+    //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configure()
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -21,13 +20,12 @@ class TitleLabel: UILabel {
     
     convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
         self.init(frame: .zero)
-        
         self.textAlignment = textAlignment
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
     }
     
-    // MARK: - Configuration
-    private func configure() {
+    //MARK: - Configuration Methods
+    private func configureUI() {
         textColor                                 = .label
         adjustsFontSizeToFitWidth                 = true
         minimumScaleFactor                        = 0.9

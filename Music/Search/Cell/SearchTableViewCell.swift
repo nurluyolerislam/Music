@@ -104,9 +104,3 @@ class SearchTableViewCell: UITableViewCell {
         }
     }
 }
-
-struct SearchTableViewCellModel {
-    let image: UIImage
-    let songName: String
-    let albumName: String
-}

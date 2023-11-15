@@ -10,7 +10,7 @@
 		580719E52B02C4F900B77045 /* CreatePlaylistPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E42B02C4F900B77045 /* CreatePlaylistPopupVC.swift */; };
 		580719E72B02D24F00B77045 /* AddToPlaylistPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E62B02D24F00B77045 /* AddToPlaylistPopupVC.swift */; };
 		580719E92B02D34B00B77045 /* AddToPlaylistPopupVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E82B02D34B00B77045 /* AddToPlaylistPopupVM.swift */; };
-		580719EB2B038FA600B77045 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719EA2B038FA600B77045 /* User.swift */; };
+		58107B2A2B04C804008CE0D6 /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58107B292B04C804008CE0D6 /* Int+Ext.swift */; };
 		581CF2242B02395800E08ADA /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2232B02395800E08ADA /* DiscoverVC.swift */; };
 		581CF2262B02396A00E08ADA /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2252B02396A00E08ADA /* DiscoverView.swift */; };
 		581CF2282B023DC600E08ADA /* GenresVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2272B023DC600E08ADA /* GenresVC.swift */; };
@@ -82,14 +82,14 @@
 		83C2351D2B02783900F3FF5F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 83C2351C2B02783900F3FF5F /* Lottie */; };
 		83C235202B02789400F3FF5F /* a1.json in Resources */ = {isa = PBXBuildFile; fileRef = 83C2351E2B02789400F3FF5F /* a1.json */; };
 		83C235212B02789400F3FF5F /* a2.json in Resources */ = {isa = PBXBuildFile; fileRef = 83C2351F2B02789400F3FF5F /* a2.json */; };
-		83C235232B0278FC00F3FF5F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C235222B0278FC00F3FF5F /* Constants.swift */; };
+		83C235232B0278FC00F3FF5F /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C235222B0278FC00F3FF5F /* UIColor+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		580719E42B02C4F900B77045 /* CreatePlaylistPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistPopupVC.swift; sourceTree = "<group>"; };
 		580719E62B02D24F00B77045 /* AddToPlaylistPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistPopupVC.swift; sourceTree = "<group>"; };
 		580719E82B02D34B00B77045 /* AddToPlaylistPopupVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistPopupVM.swift; sourceTree = "<group>"; };
-		580719EA2B038FA600B77045 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		58107B292B04C804008CE0D6 /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
 		581CF2232B02395800E08ADA /* DiscoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
 		581CF2252B02396A00E08ADA /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		581CF2272B023DC600E08ADA /* GenresVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresVC.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		83C235142B02755E00F3FF5F /* OnboardingVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingVM.swift; sourceTree = "<group>"; };
 		83C2351E2B02789400F3FF5F /* a1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a1.json; sourceTree = "<group>"; };
 		83C2351F2B02789400F3FF5F /* a2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a2.json; sourceTree = "<group>"; };
-		83C235222B0278FC00F3FF5F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		83C235222B0278FC00F3FF5F /* UIColor+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +177,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		58107B2B2B04CCFE008CE0D6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				58563FE52AFE76FE00ADECE1 /* Services */,
+				58563FE62AFE770400ADECE1 /* Managers */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		581CF22F2B025D5800E08ADA /* Discover */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,7 +261,6 @@
 				83C234CB2B0227FA00F3FF5F /* GenresMusicResponse.swift */,
 				83C234CD2B022EC300F3FF5F /* GenresArtistLists.swift */,
 				58EE9CCE2B02B94300CAAF8E /* UserPlaylist.swift */,
-				580719EA2B038FA600B77045 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -285,12 +293,10 @@
 		587FC4EB2AFA54AC00D6B976 /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				58107B2B2B04CCFE008CE0D6 /* Networking */,
 				58563FF92AFFC12A00ADECE1 /* Utils */,
-				58563FEB2AFE7EC000ADECE1 /* Models */,
-				58563FE62AFE770400ADECE1 /* Managers */,
-				58563FE52AFE76FE00ADECE1 /* Services */,
 				587FC5072AFA58F800D6B976 /* Extensions */,
-				83C2350F2B02752B00F3FF5F /* Lottie */,
+				58563FEB2AFE7EC000ADECE1 /* Models */,
 				83C235082B0274CD00F3FF5F /* Onboarding */,
 				83C234F22B0271B000F3FF5F /* Auth */,
 				582B6C5A2AFD325F00B74E8B /* TabBar */,
@@ -334,10 +340,11 @@
 		587FC5072AFA58F800D6B976 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				83C235222B0278FC00F3FF5F /* Constants.swift */,
+				83C235222B0278FC00F3FF5F /* UIColor+Ext.swift */,
 				83C234ED2B0270CC00F3FF5F /* Validation + Ext.swift */,
 				83C234EB2B0270C800F3FF5F /* UIViewController+Ext.swift */,
 				587FC5082AFA592500D6B976 /* UIView+Ext.swift */,
+				58107B292B04C804008CE0D6 /* Int+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -465,6 +472,7 @@
 		83C235082B0274CD00F3FF5F /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				83C2350F2B02752B00F3FF5F /* LottieAnmations */,
 				83C235092B0274DA00F3FF5F /* OnboardingVC.swift */,
 				83C235142B02755E00F3FF5F /* OnboardingVM.swift */,
 				83C2350B2B0274F000F3FF5F /* SliderCell.swift */,
@@ -472,13 +480,13 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		83C2350F2B02752B00F3FF5F /* Lottie */ = {
+		83C2350F2B02752B00F3FF5F /* LottieAnmations */ = {
 			isa = PBXGroup;
 			children = (
 				83C2351F2B02789400F3FF5F /* a2.json */,
 				83C2351E2B02789400F3FF5F /* a1.json */,
 			);
-			path = Lottie;
+			path = LottieAnmations;
 			sourceTree = "<group>";
 		};
 		83C235162B02769700F3FF5F /* Frameworks */ = {
@@ -579,6 +587,7 @@
 				58563FEF2AFE7FAF00ADECE1 /* SearchViewModel.swift in Sources */,
 				58563FFB2AFFC13000ADECE1 /* WorkItem.swift in Sources */,
 				83C235152B02755E00F3FF5F /* OnboardingVM.swift in Sources */,
+				58107B2A2B04C804008CE0D6 /* Int+Ext.swift in Sources */,
 				58BBD8652AFCEFB500DB65BD /* SearchVC.swift in Sources */,
 				83C234E22B02707600F3FF5F /* SecondaryTitleLabel.swift in Sources */,
 				581CF2262B02396A00E08ADA /* DiscoverView.swift in Sources */,
@@ -587,7 +596,6 @@
 				580719E92B02D34B00B77045 /* AddToPlaylistPopupVM.swift in Sources */,
 				581CF2282B023DC600E08ADA /* GenresVC.swift in Sources */,
 				58A8462D2B016403002F6544 /* RadioPlaylistResponse.swift in Sources */,
-				580719EB2B038FA600B77045 /* User.swift in Sources */,
 				58EE9CCD2B029F7200CAAF8E /* ProfileVM.swift in Sources */,
 				83C234E82B02708700F3FF5F /* AlertContainerView.swift in Sources */,
 				58563FFD2AFFCBAC00ADECE1 /* RadioResponse.swift in Sources */,
@@ -597,7 +605,7 @@
 				83C234F82B0271C500F3FF5F /* ForgotPasswordVC.swift in Sources */,
 				58A8462F2B016653002F6544 /* PlaylistVC.swift in Sources */,
 				83C234F72B0271C500F3FF5F /* RegisterVC.swift in Sources */,
-				83C235232B0278FC00F3FF5F /* Constants.swift in Sources */,
+				83C235232B0278FC00F3FF5F /* UIColor+Ext.swift in Sources */,
 				83C2350A2B0274DA00F3FF5F /* OnboardingVC.swift in Sources */,
 				83C234DE2B02706E00F3FF5F /* MusicButton.swift in Sources */,
 				83C234FA2B0272D200F3FF5F /* AuthVM.swift in Sources */,

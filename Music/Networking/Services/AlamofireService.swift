@@ -18,7 +18,6 @@ final class AlamofireService: ServiceProtocol {
     private init() {}
     
     func fetch<T>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void) where T: Codable {
-        // Patlarsa AF.request(path, encoding: JSONEncoding.default)
         AF.request(path).validate().responseDecodable(of: T.self) { (response) in
             guard let model = response.value else {
                 print(response)

@@ -26,11 +26,11 @@ class SearchViewModel: SearchViewModelProtocol {
     
     // MARK: - Functions
     func getData() {
-        deezerAPIManager.getSearchResults(searchText: self.searchText) { [weak self] data in
-            guard let self = self else { return }
-            self.data = data
-            if let data = data {
-                self.changeResultsProtocol?.changeResults(data)
+        deezerAPIManager.getSearchResults(searchText: self.searchText) { [weak self] response in
+            guard let self else { return }
+            data = response
+            if let response = response {
+                self.changeResultsProtocol?.changeResults(response)
             }
         } onError: { error in
             print(error)
@@ -39,7 +39,7 @@ class SearchViewModel: SearchViewModelProtocol {
     
     func getRecentSearches() {
         firestoreManager.getRecentSearches { [weak self] recentSearches in
-            guard let self = self else { return }
+            guard let self else { return }
             self.recentSearches = recentSearches
             recentSearchesDelegate?.updateRecentSearches()
         } onError: { error in
@@ -49,7 +49,7 @@ class SearchViewModel: SearchViewModelProtocol {
     
     func updateRecentSearches(searchText: String) {
         firestoreManager.updateRecentSearches(searchText: searchText) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             getRecentSearches()
         } onError: { error in
             print(error)

@@ -75,13 +75,6 @@ class PlayerView: UIView {
         return button
     }()
     
-//    var addToPlaylistPopup: AddToPlaylistPopupVC = {
-//        let popup = AddToPlaylistPopupVC()
-//        popup.modalPresentationStyle  = .overFullScreen
-//        popup.modalTransitionStyle    = .crossDissolve
-//        return popup
-//    }()
-    
     lazy var likeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)

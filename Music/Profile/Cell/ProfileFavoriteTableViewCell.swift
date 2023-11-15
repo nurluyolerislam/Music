@@ -1,5 +1,5 @@
 //
-//  ProfileFavoreCell.swift
+//  ProfileFavoriteTableViewCell.swift
 //  Music
 //
 //  Created by Yaşar Duman on 9.11.2023.
@@ -11,7 +11,7 @@ import UIKit
 final class ProfileFavoriteTableViewCell: UITableViewCell {
     
     //MARK: - Variables
-    static let reuseID = "ProfileFavoreCell"
+    static let reuseID = "ProfileFavoriteTableViewCell"
     
     //MARK: - UI Elements
     private lazy var containerView: UIView = {

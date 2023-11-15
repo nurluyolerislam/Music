@@ -21,7 +21,6 @@ class CustomTextField: UITextField {
         self.authField = fieldType
         super.init(frame: .zero)
         
-        
         translatesAutoresizingMaskIntoConstraints = false
         
         self.backgroundColor      = .secondarySystemBackground

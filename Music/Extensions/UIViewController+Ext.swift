@@ -5,8 +5,7 @@
 //  Created by Yaşar Duman on 9.11.2023.
 //
 
-
-import UIKit
+import UIKit.UIViewController
 
 extension UIViewController {
     // MARK: - Custom Alerts
@@ -27,5 +26,4 @@ extension UIViewController {
         self.present(alertVC, animated: true)
         
     }
-    
 }

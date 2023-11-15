@@ -11,7 +11,7 @@ class ForgotPasswordVC: UIViewController {
     // MARK: - Properties
     private let HeadLabel            = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
-    private lazy var forgotPasswordButton = MusicButton( bgColor:MusicColor.playButonBG ,color:MusicColor.playButonBG, title: "Submit", fontSize: .big)
+    private lazy var forgotPasswordButton = MusicButton( bgColor: .authButtonBackground ,color: .authButtonBackground, title: "Submit", fontSize: .big)
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var signInButton         = MusicButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
@@ -98,13 +98,13 @@ class ForgotPasswordVC: UIViewController {
         }
         
         authVM?.resetPassword(email: email) { [weak self] success, error in
-            guard let self = self else { return }
+            guard let self else { return }
 
             if success {
-                self.presentAlert(title: "Alert!", message: "Password renewal request sent to your e-mail address 🥳", buttonTitle: "Ok")
-                self.navigationController?.popToRootViewController(animated: true)
+                presentAlert(title: "Alert!", message: "Password renewal request sent to your e-mail address 🥳", buttonTitle: "Ok")
+                navigationController?.popToRootViewController(animated: true)
             } else {
-                self.presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
+                presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
             }
         }
     }

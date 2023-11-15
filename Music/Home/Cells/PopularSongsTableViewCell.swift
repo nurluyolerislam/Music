@@ -110,9 +110,3 @@ class PopularSongsTableViewCell: UITableViewCell {
         }
     }
 }
-
-struct PopularSongsTableViewCellModel {
-    let image: UIImage
-    let songName: String
-    let albumName: String
-}

@@ -11,18 +11,19 @@ import UIKit
 class AlertVC: UIViewController {
     
     // MARK: - Properties
+    var alertTitle: String?
+    var message: String?
+    var buttonTitle: String?
+    
+    
+    //MARK: - UI Elements
     lazy var containerView  = AlertContainerView()
     lazy var titleLabel     = TitleLabel(textAlignment: .center, fontSize: 20)
     lazy var messageLabel   = BodyLabel(textAlignment: .center)
     lazy var actionButton   = MusicButton(bgColor: .systemPink, color: .systemPink, title: "Ok", systemImageName: "checkmark.circle")
     
-    var alertTitle: String?
-    var message: String?
-    var buttonTitle: String?
     
-    let padding: CGFloat = 20
-    
-    // MARK: - Initialization
+    //MARK: - Initializers
     init(title: String, message: String, buttonTitle: String) {
         super.init(nibName: nil, bundle: nil)
         
@@ -35,7 +36,7 @@ class AlertVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - View Lifecycle
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
@@ -45,6 +46,7 @@ class AlertVC: UIViewController {
         configureActionButton()
         configureMessageLabel()
     }
+    
     
     // MARK: - UI Configuration
     func configureContainerView() {

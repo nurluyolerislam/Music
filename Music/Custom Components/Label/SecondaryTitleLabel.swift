@@ -5,17 +5,14 @@
 //  Created by Yaşar Duman on 9.11.2023.
 //
 
-
-
 import UIKit
 
 class SecondaryTitleLabel: UILabel {
     
-    // MARK: - Initialization
+    //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configure()
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -24,12 +21,11 @@ class SecondaryTitleLabel: UILabel {
     
     convenience init(fontSize: CGFloat) {
         self.init(frame: .zero)
-        
         font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
     }
     
-    // MARK: - Configuration
-    private func configure() {
+    //MARK: - Configuration Methods
+    private func configureUI() {
         textColor                                 = .secondaryLabel
         adjustsFontForContentSizeCategory         = true
         adjustsFontSizeToFitWidth                 = true

@@ -66,7 +66,7 @@ extension SearchVC: UISearchResultsUpdating {
             resultVC.searchResultsView.searchResultsTableView.reloadData()
         } else {
             workItem.perform(after: 0.5) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 viewModel.searchText = query
                 viewModel.getData()
                 viewModel.updateRecentSearches(searchText: query)

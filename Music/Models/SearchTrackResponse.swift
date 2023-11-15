@@ -5,20 +5,13 @@
 //  Created by Erislam Nurluyol on 10.11.2023.
 //
 
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
-//
-//   let searchTrackResponse = try? JSONDecoder().decode(SearchTrackResponse.self, from: jsonData)
-
-import Foundation
-
 // MARK: - SearchTrackResponse
 struct SearchTrackResponse: Codable {
     let data: [Track]?
     let total: Int?
 }
 
-// MARK: - Datum
+// MARK: - Track
 struct Track: Codable {
     let id: Int?
     let readable: Bool?

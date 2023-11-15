@@ -16,8 +16,8 @@ class MusicButton: UIButton {
         case small
     }
     
-
-    // MARK: - Initialization
+    
+    //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -32,7 +32,7 @@ class MusicButton: UIButton {
         set(bgColor: bgColor ,color: color, title: title, fontSize: fontSize,  systemImageName: systemImageName, cornerStyle: cornerStyle)
     }
     
-    // MARK: - Configuration
+    //MARK: - Configuration Methods
     private func configure() {
         configuration = .tinted()
         configuration?.cornerStyle = .medium
@@ -40,6 +40,7 @@ class MusicButton: UIButton {
     }
     
     
+    //MARK: - Helper Functions
     func set(bgColor: UIColor ,color: UIColor, title: String, fontSize: FontSize, systemImageName: String?,cornerStyle: UIButton.Configuration.CornerStyle?) {
         configuration?.baseBackgroundColor = bgColor
         configuration?.baseForegroundColor = color

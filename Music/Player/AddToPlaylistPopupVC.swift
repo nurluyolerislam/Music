@@ -58,7 +58,8 @@ class AddToPlaylistPopupVC: UIViewController {
         viewModel.getUserPlaylists()
     }
     
-    // MARK: - UI Configuration
+    
+    //MARK: - Configuration Methods
     private func configureUI() {
         configureContainerView()
         configureTitleLabel()
@@ -105,13 +106,11 @@ class AddToPlaylistPopupVC: UIViewController {
     }
     
     
-    
     // MARK: - Actions
     @objc func dismissVC() {
         dismiss(animated: true)
     }
 }
-
 
 extension AddToPlaylistPopupVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -157,7 +156,6 @@ extension AddToPlaylistPopupVC: UITableViewDelegate {
         
     }
 }
-
 
 extension AddToPlaylistPopupVC: AddToPlaylistPopupVMDelegate {
     func updateUI() {
