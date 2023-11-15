@@ -37,13 +37,13 @@ final class ProfileVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        switch profileView.segenmtedControl.selectedSegmentIndex {
-        case 0:
-            viewModel.getUserPlaylists()
-        case 1:
-            viewModel.getUserFavoriteTracks()
-        default: return
-        }
+//        switch profileView.segenmtedControl.selectedSegmentIndex {
+//        case 0:
+//            viewModel.getUserPlaylists()
+//        case 1:
+//            viewModel.getUserFavoriteTracks()
+//        default: return
+//        }
     }
     
     //MARK: - UI Configuration
@@ -60,6 +60,8 @@ final class ProfileVC: UIViewController {
         profileView.segenmtedControl.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
         profileView.createPlaylistButton.addTarget(self, action: #selector(createPlaylistButtonTapped), for: .touchUpInside)
         profileView.createPlaylistPopup.createButton.addTarget(self, action: #selector(createPlaylistPopupCreateButtonTapped), for: .touchUpInside)
+        
+        profileView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
     }
     
     
@@ -96,6 +98,16 @@ final class ProfileVC: UIViewController {
             viewModel.createNewPlaylist(playlistName: playlistName)
         }
     }
+    
+    @objc func logoutButtonTapped(){
+        viewModel.logout {
+            let loginVC = LoginVC()
+            let nav = UINavigationController(rootViewController: loginVC)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
+    
 }
 
 // MARK: - UITableViewDataSource

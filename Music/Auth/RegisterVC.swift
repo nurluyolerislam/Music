@@ -16,7 +16,7 @@ class RegisterVC: UIViewController {
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
     private lazy var passwordTextField    = CustomTextField(fieldType: .password)
     private lazy var repasswordTextField  = CustomTextField(fieldType: .password)
-    private lazy var signUpButton         = MusicButton( bgColor:MovieColor.playButonBG ,color: MovieColor.playButonBG, title: "Sign Up", fontSize: .big)
+    private lazy var signUpButton         = MusicButton( bgColor:MusicColor.playButonBG ,color: MusicColor.playButonBG, title: "Sign Up", fontSize: .big)
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var signInButton         = MusicButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     

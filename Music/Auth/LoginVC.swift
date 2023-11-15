@@ -13,10 +13,10 @@ class LoginVC: UIViewController {
     private let HeadLabel            = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
     private lazy var passwordTextField    = CustomTextField(fieldType: .password)
-    private lazy var signInButton         = MusicButton( bgColor:MovieColor.playButonBG ,color: MovieColor.playButonBG , title: "Sign In", fontSize: .big)
+    private lazy var signInButton         = MusicButton( bgColor:MusicColor.playButonBG ,color: MusicColor.playButonBG , title: "Sign In", fontSize: .big)
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var newUserButton        = MusicButton( bgColor:.clear ,color: .label, title: "Sign Up.", fontSize: .small)
-    private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: MovieColor.playButonBG , title: "Forgot password?", fontSize: .small)
+    private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: MusicColor.playButonBG , title: "Forgot password?", fontSize: .small)
     
     private lazy var stackView            = UIStackView()
     private let authVM : AuthVM?     = AuthVM()

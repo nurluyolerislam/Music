@@ -16,6 +16,12 @@ class ProfileVM {
     weak var delegate: ProfileVMDelegate?
     lazy var firestoreManager = FirestoreManager()
     
+    
+    deinit{
+        print("------->>>>>> DEBUG: profile vm de init")
+    }
+    
+    
     func getUserPlaylists () {
         firestoreManager.getUserPlaylists { [weak self] playlists in
             guard let self = self else { return }
@@ -64,5 +70,14 @@ class ProfileVM {
         } onErorr: { error in
             print(error)
         }
+    }
+    
+    func logout(completion: @escaping () -> Void ) {
+        firestoreManager.logout {
+          completion()
+        } onError: { error in
+            print(error)
+        }
+
     }
 }

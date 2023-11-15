@@ -22,7 +22,7 @@ class SliderCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = MovieColor.playButonBG
+        label.textColor = MusicColor.playButonBG
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 20, weight: .black)
         return label

@@ -11,7 +11,9 @@ final class ProfileView : UIView{
   
     //MARK: - UI Elements
     private lazy var headerStackView: UIStackView = {
-        let stackView = UIStackView()
+        let stackView = UIStackView(arrangedSubviews: [userImage,
+                                                      userName,
+                                                       buttonStack])
         stackView.axis = .vertical
         stackView.spacing = 15
         stackView.alignment = .center
@@ -41,6 +43,23 @@ final class ProfileView : UIView{
         editButton.setTitle("Edit", for: .normal)
         editButton.tintColor = .label
         return editButton
+    }()
+    
+    lazy var logoutButton: UIButton = {
+       let editButton = UIButton(configuration: .tinted())
+       editButton.configuration?.cornerStyle = .capsule
+       editButton.setTitle("Logout", for: .normal)
+       editButton.configuration?.baseBackgroundColor = .systemRed
+        editButton.configuration?.baseForegroundColor = .systemRed
+       return editButton
+   }()
+    
+    lazy var buttonStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [editButton,
+                                                  logoutButton])
+        stack.spacing = 5
+        stack.axis = .horizontal
+        return stack
     }()
     
     lazy var segenmtedControl : UISegmentedControl = {
@@ -73,8 +92,7 @@ final class ProfileView : UIView{
         popup.modalTransitionStyle    = .crossDissolve
         return popup
     }()
-    
-    
+
     //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,14 +117,14 @@ final class ProfileView : UIView{
         configureSegenmtedControl()
         configurePlaylistTableView()
         configureCreatePlaylistButton()
+        
+       
     }
-    
+   
+
     private func configureHeaderStackView(){
         addSubview(headerStackView)
-        headerStackView.addArrangedSubview(userImage)
-        headerStackView.addArrangedSubview(userName)
-        headerStackView.addArrangedSubview(editButton)
-        
+ 
         headerStackView.anchor(top: safeAreaLayoutGuide.topAnchor,
                                leading: leadingAnchor,
                                trailing: trailingAnchor)

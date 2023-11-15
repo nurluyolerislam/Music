@@ -82,7 +82,7 @@ class SearchTableViewCell: UITableViewCell {
         addSubview(containerView)
         containerView.fillSuperview()
         containerView.addSubview(stackView)
-        stackView.fillSuperview(padding: .init(top: 10, bottom: 10))
+        stackView.fillSuperview(padding: .init(top: 10, bottom: 10, trailing: 40))
     }
     
     func updateUI(track: Track) {

@@ -11,7 +11,7 @@ class ForgotPasswordVC: UIViewController {
     // MARK: - Properties
     private let HeadLabel            = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
-    private lazy var forgotPasswordButton = MusicButton( bgColor:MovieColor.playButonBG ,color:MovieColor.playButonBG, title: "Submit", fontSize: .big)
+    private lazy var forgotPasswordButton = MusicButton( bgColor:MusicColor.playButonBG ,color:MusicColor.playButonBG, title: "Submit", fontSize: .big)
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var signInButton         = MusicButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
