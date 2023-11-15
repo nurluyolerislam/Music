@@ -75,7 +75,7 @@ final class PlayerViewModel {
     func removeTrackFromFavorites(completion: @escaping () -> Void) {
         firestoreManager.removeTrackFromFavorites(track: track) {
             completion()
-        } onErorr: { error in
+        } onError: { error in
             print(error)
         }
     }

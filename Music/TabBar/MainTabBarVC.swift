@@ -16,7 +16,6 @@ class MainTabBarVC: UITabBarController {
         lazy var searchVC = SearchVC()
         lazy var profileVC = ProfileVC()
         
-        homeVC.delegate = self
         homeVC.tabBarItem = UITabBarItem(title: "Home",
                                          image: UIImage(systemName: "house"),
                                          tag: 0)
@@ -38,10 +37,4 @@ class MainTabBarVC: UITabBarController {
         ]
     }
     
-}
-
-extension MainTabBarVC: HomeVCProtocol {
-    func profileImageTapped() {
-        selectedIndex = 2
-    }
 }

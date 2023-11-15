@@ -9,45 +9,26 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class AuthVM{
+    lazy var firebaseAuthManager = FirebaseAuthManager()
     // MARK: - Login
-    func login(email: String, password: String, completion: @escaping (Bool, String) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-            
-            if let error = error {
-                completion(false, error.localizedDescription)
-            } else {
-                completion(true, "Giriş başarılı.")
-            }
+    func login(email: String, password: String, completion: @escaping () -> Void) {
+        firebaseAuthManager.signIn(email: email, password: password) {
+            completion()
+        } onError: { error in
+            print(error.localizedDescription)
         }
     }
     
     // MARK: - Register
-    func register(userName: String, email: String, password: String, completion: @escaping (Bool, String) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                guard let user = result?.user else {
-                    print("registerdan donen kullanıcı yok")
-                    return
-                }
-                let fireStore = Firestore.firestore()
-                
-                let userDictionaray = [
-                    "userName" : userName
-                ] as! [String : Any]
-                
-                fireStore.collection("UsersInfo")
-                    .document(user.uid)
-                    .setData(userDictionaray) { error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        }
-                        
-                        completion(true,"Kayıt başarılı")
-                    }
-            }
+    func register(userName: String, email: String, password: String, completion: @escaping () -> Void) {
+        firebaseAuthManager.register(userName: userName,
+                                     email: email,
+                                     password: password) {
+            completion()
+        } onError: { error in
+            print(error)
         }
+
     }
     
     // MARK: - ForgotPassword

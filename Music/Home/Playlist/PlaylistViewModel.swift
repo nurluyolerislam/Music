@@ -58,7 +58,7 @@ final class PlaylistViewModel: PlaylistViewModelProtocol {
             firestoreManager?.removeTrackFromPlaylist(track: track, userPlaylist: userPlaylist) { [weak self] in
                 guard let self else { return }
                 getUserPlaylist(playlist: userPlaylist)
-            } onErorr: { error in
+            } onError: { error in
                 print(error)
             }
         }

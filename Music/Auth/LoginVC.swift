@@ -51,15 +51,15 @@ class LoginVC: UIViewController {
                               size: .init(width: 0, height: 50))
         
         passwordTextField.anchor(top: emailTextField.bottomAnchor,
-                              leading: view.leadingAnchor,
-                              trailing: view.trailingAnchor,
-                              padding: .init(top: 20, left: 20, bottom: 0, right: 20),
-                              size: .init(width: 0, height: 50))
+                                 leading: view.leadingAnchor,
+                                 trailing: view.trailingAnchor,
+                                 padding: .init(top: 20, left: 20, bottom: 0, right: 20),
+                                 size: .init(width: 0, height: 50))
     }
     
     private func configureForgotPassword(){
         forgotPasswordButton.tintColor = .systemPurple
-    
+        
         forgotPasswordButton.anchor(top: passwordTextField.bottomAnchor,
                                     trailing: passwordTextField.trailingAnchor,
                                     padding: .init(top: 10, left: 0, bottom: 0, right: 0))
@@ -88,7 +88,7 @@ class LoginVC: UIViewController {
         stackView.addArrangedSubview(newUserButton)
         
         infoLabel.text = "Don't have an account?"
- 
+        
         
         stackView.anchor(top: signInButton.bottomAnchor,
                          padding: .init(top: 5, left: 0, bottom: 0, right: 0))
@@ -132,28 +132,20 @@ class LoginVC: UIViewController {
                 presentAlert(title: "Alert!", message: "Password must contain at least 1 uppercase character", buttonTitle: "Ok")
                 return
             }
-         
+            
             return
         }
         
-        authVM?.login(email: email, password: password) { [weak self]  success, error in
+        authVM?.login(email: email, password: password) { [weak self] in
             guard let self else { return }
-
-            if success {
-                presentAlert(title: "Alert!", message: "Entry Successful 🥳", buttonTitle: "Ok")
-                dismiss(animated: true) {
-                    
-                    let tabBar = MainTabBarVC()
-                    tabBar.modalPresentationStyle = .fullScreen
-                    self.present(tabBar, animated: true, completion: nil)
-                }   
-            } else {
-                presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
-            }
+            presentAlert(title: "Alert!", message: "Entry Successful 🥳", buttonTitle: "Ok")
+            let mainTabBar = MainTabBarVC()
+            self.view.window?.rootViewController = mainTabBar
         }
     }
     
- // MARK: - ACTİON
+    
+    //MARK: - @Actions
     @objc private func didTapNewUser() {
         let vc = RegisterVC()
         self.navigationController?.pushViewController(vc, animated: true)

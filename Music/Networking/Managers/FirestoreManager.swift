@@ -6,12 +6,19 @@
 //
 
 import FirebaseFirestore
-import FirebaseAuth
 
 class FirestoreManager {
     private let currentUserRef = Firestore.firestore()
         .collection("UsersInfo")
-        .document(Auth.auth().currentUser!.uid)
+        .document(ApplicationVariables.currentUserID ?? "")
+    
+    func getUserName(onSuccess: @escaping (String) -> Void, onError: @escaping (String) -> Void) {
+        FirestoreService.shared.getField(reference: currentUserRef, fieldName: "userName") { (userName: String) in
+            onSuccess(userName)
+        } onError: { error in
+            onError(error.localizedDescription)
+        }
+    }
     
     func getUserPlaylist(playlist: UserPlaylist, onSuccess: @escaping ([Track]?)->(Void), onError: @escaping (String)-> Void) {
         let ref = currentUserRef.collection("playlists")
@@ -48,7 +55,7 @@ class FirestoreManager {
         }
     }
     
-    func removePlaylist(playlist: UserPlaylist, onSuccess: @escaping () -> Void, onErorr: @escaping (String) -> Void) {
+    func removePlaylist(playlist: UserPlaylist, onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
         let playlistRef = currentUserRef
             .collection("playlists")
             .document(playlist.title!)
@@ -59,15 +66,15 @@ class FirestoreManager {
         FirestoreService.shared.deleteDocument(reference: playlistRef) {
             onSuccess()
         } onError: { error in
-            onErorr(error.localizedDescription)
+            onError(error.localizedDescription)
         }
         
         FirestoreService.shared.deleteCollection(reference: tracksRef) { error in
-            onErorr(error.localizedDescription)
+            onError(error.localizedDescription)
         }
     }
     
-    func removeTrackFromFavorites(track: Track, onSuccess: @escaping () -> Void, onErorr: @escaping (String) -> Void) {
+    func removeTrackFromFavorites(track: Track, onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
         let ref = currentUserRef
             .collection("favorites")
             .document(track.id!.description)
@@ -75,11 +82,11 @@ class FirestoreManager {
         FirestoreService.shared.deleteDocument(reference: ref) {
             onSuccess()
         } onError: { error in
-            onErorr(error.localizedDescription)
+            onError(error.localizedDescription)
         }
     }
     
-    func createNewPlaylist(playlistName: String, onSuccess: @escaping () -> Void, onErorr: @escaping (String) -> Void) {
+    func createNewPlaylist(playlistName: String, onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
         let ref = currentUserRef
             .collection("playlists")
             .document(playlistName)
@@ -92,7 +99,7 @@ class FirestoreManager {
         FirestoreService.shared.setData(reference: ref, data: data) {
             onSuccess()
         } onError: { error in
-            onErorr(error.localizedDescription)
+            onError(error.localizedDescription)
         }
     }
     
@@ -183,7 +190,7 @@ class FirestoreManager {
         }
     }
     
-    func removeTrackFromPlaylist(track: Track, userPlaylist: UserPlaylist, onSuccess: @escaping () -> Void, onErorr: @escaping (String) -> Void) {
+    func removeTrackFromPlaylist(track: Track, userPlaylist: UserPlaylist, onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
         let playlistRef = currentUserRef
             .collection("playlists")
             .document(userPlaylist.title!)
@@ -196,10 +203,10 @@ class FirestoreManager {
             FirestoreService.shared.updateData(reference: playlistRef, data: ["trackCount" : FieldValue.increment(-1.0)]) {
                 onSuccess()
             } onError: { error in
-                onErorr(error.localizedDescription)
+                onError(error.localizedDescription)
             }
         } onError: { error in
-            onErorr(error.localizedDescription)
+            onError(error.localizedDescription)
         }
     }
     
@@ -224,16 +231,6 @@ class FirestoreManager {
         FirestoreService.shared.setData(reference: trackRef, data: data) {
             onSuccess()
         } onError: { error in
-            onError(error.localizedDescription)
-        }
-    }
-    
-    func logout(onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
-        do {
-            try Auth.auth().signOut()
-            onSuccess()
-        } catch  {
-            print(error.localizedDescription + "errorr logout")
             onError(error.localizedDescription)
         }
     }

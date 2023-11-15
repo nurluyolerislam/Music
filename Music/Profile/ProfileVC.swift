@@ -36,6 +36,7 @@ final class ProfileVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.getUserName()
         navigationController?.isNavigationBarHidden = true
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
@@ -103,8 +104,9 @@ final class ProfileVC: UIViewController {
         viewModel.logout {
             let loginVC = LoginVC()
             let nav = UINavigationController(rootViewController: loginVC)
-            nav.modalPresentationStyle = .fullScreen
-            self.present(nav, animated: true, completion: nil)
+            self.view.window?.rootViewController = nav
+//            nav.modalPresentationStyle = .fullScreen
+//            self.present(nav, animated: true, completion: nil)
         }
     }
     
@@ -239,7 +241,11 @@ extension ProfileVC: UITableViewDelegate {
 }
 
 extension ProfileVC: ProfileVMDelegate {
-    func updateUI() {
+    func updateUserName() {
+        profileView.userName.text = viewModel.userName
+    }
+    
+    func updateTableView() {
         profileView.tableView.reloadData()
     }
     

@@ -162,21 +162,13 @@ class RegisterVC: UIViewController {
         return
         }
         
-        authVM?.register(userName: userName, email: email, password: password) { [weak self] success, error in
+        authVM?.register(userName: userName,
+                         email: email,
+                         password: password) { [weak self] in
             guard let self else { return }
-
-            if success {
-                presentAlert(title: "Alert!", message: "Registration Successful 🥳", buttonTitle: "Ok")
-                dismiss(animated: true) { [weak self] in
-                    guard let self else { return }
-                    
-                    let tabBar = MainTabBarVC()
-                    tabBar.modalPresentationStyle = .fullScreen
-                    present(tabBar, animated: true, completion: nil)
-                }
-            } else {
-                presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
-            }
+            presentAlert(title: "Alert!", message: "Registration Successful 🥳", buttonTitle: "Ok")
+            let mainTabBar = MainTabBarVC()
+            self.view.window?.rootViewController = mainTabBar
         }
     }
     

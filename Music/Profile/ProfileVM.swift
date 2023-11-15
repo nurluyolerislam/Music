@@ -6,27 +6,38 @@
 //
 
 protocol ProfileVMDelegate: AnyObject {
-    func updateUI()
+    func updateUserName()
+    func updateTableView()
     func dismissCreatePlaylistPopup()
 }
 
 class ProfileVM {
+    
+    //MARK: - Variables
+    var userName: String?
     var playlists: [UserPlaylist]?
     var userFavoriteTracks: [Track]?
     weak var delegate: ProfileVMDelegate?
     lazy var firestoreManager = FirestoreManager()
+    lazy var firebaseAuthManager = FirebaseAuthManager()
     
     
-    deinit{
-        print("------->>>>>> DEBUG: profile vm de init")
+    //MARK: - Helper Functions
+    func getUserName() {
+        firestoreManager.getUserName { [weak self] userName in
+            guard let self else { return }
+            self.userName = userName
+            delegate?.updateUserName()
+        } onError: { error in
+            print(error)
+        }
     }
-    
     
     func getUserPlaylists () {
         firestoreManager.getUserPlaylists { [weak self] playlists in
             guard let self else { return }
             self.playlists = playlists
-            delegate?.updateUI()
+            delegate?.updateTableView()
         } onError: { error in
             print(error)
         }
@@ -36,7 +47,7 @@ class ProfileVM {
         firestoreManager.getUserFavoriteTracks { [weak self] tracks in
             guard let self else { return }
             userFavoriteTracks = tracks
-            delegate?.updateUI()
+            delegate?.updateTableView()
         } onError: { error in
             print(error)
         }
@@ -47,7 +58,7 @@ class ProfileVM {
             guard let self else { return }
             getUserPlaylists()
             delegate?.dismissCreatePlaylistPopup()
-        } onErorr: { error in
+        } onError: { error in
             print(error)
         }
     }
@@ -56,8 +67,8 @@ class ProfileVM {
         firestoreManager.removeTrackFromFavorites(track: track) { [weak self] in
             guard let self else { return }
             getUserFavoriteTracks()
-            delegate?.updateUI()
-        } onErorr: { error in
+            delegate?.updateTableView()
+        } onError: { error in
             print(error)
         }
     }
@@ -66,18 +77,18 @@ class ProfileVM {
         firestoreManager.removePlaylist(playlist: playlist) { [weak self] in
             guard let self else { return }
             getUserPlaylists()
-            delegate?.updateUI()
-        } onErorr: { error in
+            delegate?.updateTableView()
+        } onError: { error in
             print(error)
         }
     }
     
     func logout(completion: @escaping () -> Void ) {
-        firestoreManager.logout {
-          completion()
+        firebaseAuthManager.signOut {
+            completion()
         } onError: { error in
             print(error)
         }
-
     }
+    
 }

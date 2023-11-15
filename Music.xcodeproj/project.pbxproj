@@ -11,6 +11,8 @@
 		580719E72B02D24F00B77045 /* AddToPlaylistPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E62B02D24F00B77045 /* AddToPlaylistPopupVC.swift */; };
 		580719E92B02D34B00B77045 /* AddToPlaylistPopupVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580719E82B02D34B00B77045 /* AddToPlaylistPopupVM.swift */; };
 		58107B2A2B04C804008CE0D6 /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58107B292B04C804008CE0D6 /* Int+Ext.swift */; };
+		58107B2E2B04E3DC008CE0D6 /* ApplicationVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58107B2D2B04E3DC008CE0D6 /* ApplicationVariables.swift */; };
+		58107B302B04E935008CE0D6 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58107B2F2B04E935008CE0D6 /* FirebaseAuthManager.swift */; };
 		581CF2242B02395800E08ADA /* DiscoverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2232B02395800E08ADA /* DiscoverVC.swift */; };
 		581CF2262B02396A00E08ADA /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2252B02396A00E08ADA /* DiscoverView.swift */; };
 		581CF2282B023DC600E08ADA /* GenresVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF2272B023DC600E08ADA /* GenresVC.swift */; };
@@ -90,6 +92,8 @@
 		580719E62B02D24F00B77045 /* AddToPlaylistPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistPopupVC.swift; sourceTree = "<group>"; };
 		580719E82B02D34B00B77045 /* AddToPlaylistPopupVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylistPopupVM.swift; sourceTree = "<group>"; };
 		58107B292B04C804008CE0D6 /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
+		58107B2D2B04E3DC008CE0D6 /* ApplicationVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationVariables.swift; sourceTree = "<group>"; };
+		58107B2F2B04E935008CE0D6 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		581CF2232B02395800E08ADA /* DiscoverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverVC.swift; sourceTree = "<group>"; };
 		581CF2252B02396A00E08ADA /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		581CF2272B023DC600E08ADA /* GenresVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresVC.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 			children = (
 				58563FE92AFE7EAA00ADECE1 /* DeezerAPIManager.swift */,
 				58DA64A42B03D5FA0097A954 /* FirestoreManager.swift */,
+				58107B2F2B04E935008CE0D6 /* FirebaseAuthManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				58563FFA2AFFC13000ADECE1 /* WorkItem.swift */,
+				58107B2D2B04E3DC008CE0D6 /* ApplicationVariables.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -293,9 +299,9 @@
 		587FC4EB2AFA54AC00D6B976 /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				58107B2B2B04CCFE008CE0D6 /* Networking */,
 				58563FF92AFFC12A00ADECE1 /* Utils */,
 				587FC5072AFA58F800D6B976 /* Extensions */,
+				58107B2B2B04CCFE008CE0D6 /* Networking */,
 				58563FEB2AFE7EC000ADECE1 /* Models */,
 				83C235082B0274CD00F3FF5F /* Onboarding */,
 				83C234F22B0271B000F3FF5F /* Auth */,
@@ -618,6 +624,7 @@
 				83C2350E2B0274FA00F3FF5F /* OnboardingModel.swift in Sources */,
 				58563FFF2AFFCD2100ADECE1 /* HomeViewModel.swift in Sources */,
 				83C234F62B0271C500F3FF5F /* LoginVC.swift in Sources */,
+				58107B2E2B04E3DC008CE0D6 /* ApplicationVariables.swift in Sources */,
 				581CF22C2B02406C00E08ADA /* GenreArtistsView.swift in Sources */,
 				836F4D722AFF5BD4008BE3FA /* SearchTableViewCell.swift in Sources */,
 				581CF22A2B023E8F00E08ADA /* GenresView.swift in Sources */,
@@ -635,6 +642,7 @@
 				83C234D42B026E7100F3FF5F /* FirebaseService.swift in Sources */,
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
 				83C234D22B02311800F3FF5F /* GenreArtistsVM.swift in Sources */,
+				58107B302B04E935008CE0D6 /* FirebaseAuthManager.swift in Sources */,
 				83C234EE2B0270CC00F3FF5F /* Validation + Ext.swift in Sources */,
 				582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */,
 				58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */,

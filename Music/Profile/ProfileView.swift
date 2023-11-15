@@ -31,7 +31,7 @@ final class ProfileView : UIView{
     
      lazy var userName: UILabel = {
         let userName = UILabel()
-        userName.text = "Yaşar Duman"
+        userName.text = " "
         userName.font = UIFont.systemFont(ofSize: 20)
         userName.textColor = .label
         return userName

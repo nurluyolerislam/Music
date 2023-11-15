@@ -8,16 +8,12 @@
 import UIKit
 import Kingfisher
 
-protocol HomeVCProtocol: AnyObject {
-    func profileImageTapped()
-}
-
 class HomeVC: UIViewController {
     
     //MARK: - Variables
     lazy var homeView = HomeView()
-    weak var delegate: HomeVCProtocol?
     let viewModel = HomeViewModel()
+    
     
     //MARK: - Lifecycle
     override func loadView() {
@@ -36,6 +32,7 @@ class HomeVC: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
+    
     
     //MARK: - Configuration Methods
     private func configureUI() {
@@ -64,36 +61,25 @@ class HomeVC: UIViewController {
         homeView.popularSongsTableView.dataSource = self
     }
     
+    
     //MARK: - Targets
     private func addTargets() {
-        let profileImageGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                   action: #selector(profileImageTapped))
-        homeView.profileImage.addGestureRecognizer(profileImageGestureRecognizer)
-        
         homeView.browseButton.addTarget(self, action: #selector(browseButtonTapped), for: .touchUpInside)
-        
         homeView.exploreButton.addTarget(self, action: #selector(exploreButtonTapped), for: .touchUpInside)
     }
     
     
     //MARK: - @Actions
-    @objc func profileImageTapped() {
-        self.delegate?.profileImageTapped()
-    }
-    
     @objc func browseButtonTapped() {
         let discoverVC = DiscoverVC(viewModel: viewModel)
         navigationController?.pushViewController(discoverVC, animated: true)
-
+        
     }
-
-
     
     @objc func exploreButtonTapped(){
         let genresVC = GenresVC(viewModel: viewModel)
         navigationController?.pushViewController(genresVC, animated: true)
     }
-    
     
 }
 
@@ -105,7 +91,6 @@ extension HomeVC: UITableViewDataSource {
                 return tracks.count
             }
         }
-        
         return 0
     }
     
@@ -131,14 +116,12 @@ extension HomeVC: UITableViewDataSource {
                 }
             }
         }
-        
         return cell
     }
     
 }
 
 extension HomeVC: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case homeView.discoverCollectionView:
@@ -174,11 +157,12 @@ extension HomeVC: UICollectionViewDataSource {
             }
             
             return cell
+            
         case homeView.personalizedCollectionView:
             let cell = homeView.personalizedCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
-            
+                                                                               
                                                                                for: indexPath) as! MusicCollectionViewCell
-
+            
             if let response = viewModel.genresResponse {
                 if let genresData = response.data {
                     let genresLists = genresData[indexPath.row]
@@ -193,6 +177,7 @@ extension HomeVC: UICollectionViewDataSource {
                 }
             }
             return cell
+            
         default:
             return UICollectionViewCell()
         }
@@ -201,22 +186,21 @@ extension HomeVC: UICollectionViewDataSource {
 }
 
 extension HomeVC: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
         case homeView.discoverCollectionView:
             
-                if let response = viewModel.radioResponse {
-                    if let playlists = response.data {
-                        let playlist = playlists[indexPath.row]
-                        
-                        if let playlistURL = playlist.tracklist {
-                            let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: viewModel.manager)
-                            playlistVC.title = playlist.title
-                            navigationController?.pushViewController(playlistVC, animated: true)
-                        }
+            if let response = viewModel.radioResponse {
+                if let playlists = response.data {
+                    let playlist = playlists[indexPath.row]
+                    
+                    if let playlistURL = playlist.tracklist {
+                        let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: viewModel.manager)
+                        playlistVC.title = playlist.title
+                        navigationController?.pushViewController(playlistVC, animated: true)
                     }
                 }
+            }
             
         case homeView.personalizedCollectionView:
             if let response = viewModel.genresResponse {
@@ -231,9 +215,9 @@ extension HomeVC: UICollectionViewDelegate {
                     }
                 }
             }
-        
+            
         default:
-            print("DEBUG: Unrecognized collection view tapped")
+            return
         }
     }
     
@@ -241,20 +225,14 @@ extension HomeVC: UICollectionViewDelegate {
 
 extension HomeVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-            
-            if let response = viewModel.popularSongsResponse {
-                
-                if let songs = response.data {
-                    
-                    let song = songs[indexPath.row]
-                    let vc = PlayerVC(track: song)
-                    vc.modalPresentationStyle = .pageSheet
-                    self.present(vc, animated: true)
-                    
-                }
+        if let response = viewModel.popularSongsResponse {
+            if let songs = response.data {
+                let song = songs[indexPath.row]
+                let vc = PlayerVC(track: song)
+                vc.modalPresentationStyle = .pageSheet
+                self.present(vc, animated: true)
             }
-        
+        }
     }
 }
 

@@ -10,32 +10,6 @@ import UIKit
 class HomeView: UIView {
     
     //MARK: - UI Elements
-    lazy var welcomeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Good Afternoon, Erislam Nurluyol"
-        label.font = .boldSystemFont(ofSize: 16)
-        return label
-    }()
-    
-    lazy var profileImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "profileImage")
-        imageView.anchor(size: .init(width: 50, height: 50))
-        imageView.layer.cornerRadius = 25
-        imageView.clipsToBounds = true
-        imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
-    
-    lazy var headerStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            welcomeLabel,
-            profileImage
-        ])
-        stackView.axis = .horizontal
-        return stackView
-    }()
-    
     lazy var discoverLabel: UILabel = {
         let label = UILabel()
         label.text = "Discover new music"
@@ -141,7 +115,6 @@ class HomeView: UIView {
     //MARK: - Configuration Methods
     private func configureUI() {
         backgroundColor = .systemBackground
-        configureHeaderStackView()
         configureDiscoverStackView()
         configureDiscoverCollectionView()
         configurePersonalizedStackView()
@@ -150,18 +123,9 @@ class HomeView: UIView {
         configurePopularSongsTableView()
     }
     
-    private func configureHeaderStackView() {
-        addSubview(headerStackView)
-        headerStackView.anchor(top: safeAreaLayoutGuide.topAnchor,
-                               leading: safeAreaLayoutGuide.leadingAnchor,
-                               trailing: safeAreaLayoutGuide.trailingAnchor,
-                               padding: .init(leading: 20,
-                                              trailing: 20))
-    }
-    
     private func configureDiscoverStackView() {
         addSubview(discoverStackView)
-        discoverStackView.anchor(top: headerStackView.bottomAnchor,
+        discoverStackView.anchor(top: safeAreaLayoutGuide.topAnchor,
                                leading: safeAreaLayoutGuide.leadingAnchor,
                                trailing: safeAreaLayoutGuide.trailingAnchor,
                                padding: .init(top: 20,
