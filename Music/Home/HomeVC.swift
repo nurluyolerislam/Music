@@ -8,6 +8,12 @@
 import UIKit
 import Kingfisher
 
+// MARK: - HomeViewInterface
+protocol HomeViewInterface: AnyObject {
+    func showLoadingIndicator()
+    func dismissLoadingIndicator()
+}
+
 class HomeVC: UIViewController {
     
     //MARK: - Variables
@@ -26,6 +32,7 @@ class HomeVC: UIViewController {
         addDelegatesAndDataSources()
         configureUI()
         viewModel.delegate = self
+        viewModel.view = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -241,5 +248,18 @@ extension HomeVC: HomeViewModelDelegate {
         homeView.discoverCollectionView.reloadData()
         homeView.personalizedCollectionView.reloadData()
         homeView.popularSongsTableView.reloadData()
+    }
+}
+
+
+// MARK: - HomeViewInterface
+extension HomeVC: HomeViewInterface {
+    // Displays the loading indicator.
+    func showLoadingIndicator() {
+        showLoading()
+    }
+    // Dismisses the loading indicator.
+    func dismissLoadingIndicator() {
+        dismissLoading()
     }
 }

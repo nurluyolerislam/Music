@@ -43,6 +43,26 @@ class FirebaseAuthManager {
         }
     }
     
+    func googleSignIn(credential: AuthCredential, username: String, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+        Auth.auth().signIn(with: credential) { result, error in
+
+  
+            
+            let ref = Firestore.firestore().collection("UsersInfo").document((result?.user.uid)!)
+            
+            let data = [
+                "userName" : username
+            ] as! [String : Any]
+            
+            ApplicationVariables.currentUserID = result!.user.uid
+            FirestoreService.shared.setData(reference: ref, data: data) {
+                onSuccess()
+            } onError: { error in
+                onError(error)
+            }
+        }
+    }
+    
     func signOut(onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
         do {
             try Auth.auth().signOut()

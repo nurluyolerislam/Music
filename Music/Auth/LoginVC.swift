@@ -7,13 +7,16 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
+import FirebaseAuth
 
 class LoginVC: UIViewController {
     // MARK: - Properties
-    private let HeadLabel            = TitleLabel(textAlignment: .left, fontSize: 20)
+    private let HeadLabel                 = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
     private lazy var passwordTextField    = CustomTextField(fieldType: .password)
     private lazy var signInButton         = MusicButton( bgColor: .authButtonBackground ,color: .authButtonBackground , title: "Sign In", fontSize: .big)
+    private lazy var goggleSignInButton         = MusicButton( bgColor: UIColor.systemBlue ,color: UIColor.systemBlue , title: "Google Sign In", fontSize: .big, systemImageName: "hand.point.up.braille")
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var newUserButton        = MusicButton( bgColor:.clear ,color: .label, title: "Sign Up.", fontSize: .small)
     private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: .authButtonBackground , title: "Forgot password?", fontSize: .small)
@@ -24,13 +27,16 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubviewsExt(HeadLabel, emailTextField, passwordTextField, forgotPasswordButton, signInButton,stackView)
+        view.addSubviewsExt(HeadLabel, emailTextField, passwordTextField, forgotPasswordButton, signInButton, goggleSignInButton,stackView)
         
         configureHeadLabel()
         configureTextField()
         configureForgotPassword()
         configureSignIn()
         configureStackView()
+        
+        
+        
     }
     // MARK: - UI Configuration
     
@@ -69,6 +75,7 @@ class LoginVC: UIViewController {
     
     private func configureSignIn(){
         signInButton.configuration?.cornerStyle = .capsule
+        goggleSignInButton.configuration?.cornerStyle = .capsule
         
         signInButton.anchor(top: forgotPasswordButton.bottomAnchor,
                             leading: view.leadingAnchor,
@@ -76,7 +83,16 @@ class LoginVC: UIViewController {
                             padding: .init(top: 20, left: 20, bottom: 0, right: 20),
                             size: .init(width: 0, height: 50))
         
+        
+        goggleSignInButton.anchor(top: signInButton.bottomAnchor,
+                                  leading: view.leadingAnchor,
+                                  trailing: view.trailingAnchor,
+                                  padding: .init(top: 20, left: 20, bottom: 0, right: 20),
+                                  size: .init(width: 0, height: 50))
+        
+        
         signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        goggleSignInButton.addTarget(self, action: #selector(didTapGoogleSignIn), for: .touchUpInside)
     }
     
     
@@ -90,7 +106,7 @@ class LoginVC: UIViewController {
         infoLabel.text = "Don't have an account?"
         
         
-        stackView.anchor(top: signInButton.bottomAnchor,
+        stackView.anchor(top: goggleSignInButton.bottomAnchor,
                          padding: .init(top: 5, left: 0, bottom: 0, right: 0))
         
         stackView.centerXInSuperview()
@@ -144,6 +160,36 @@ class LoginVC: UIViewController {
         }
     }
     
+    @objc private func didTapGoogleSignIn() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self] result, error in
+            guard error == nil else {
+                return
+            }
+            
+            guard let user = result?.user,
+                  let idToken = user.idToken?.tokenString,
+                    let userName: String = user.profile?.name
+            else {
+                return
+            }
+            //print("------->>>>>> DEBUG: \(userName)")
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: user.accessToken.tokenString)
+            authVM?.signInGoogle(credential: credential,username: userName) {[weak self] in
+                guard let self else { return }
+                presentAlert(title: "Alert!", message: "Registration Successful 🥳", buttonTitle: "Ok")
+                let mainTabBar = MainTabBarVC()
+                self.view.window?.rootViewController = mainTabBar   
+            }
+        }
+    }
+        
+    
     
     //MARK: - @Actions
     @objc private func didTapNewUser() {
@@ -155,4 +201,9 @@ class LoginVC: UIViewController {
         let vc = ForgotPasswordVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+}
+
+
+#Preview{
+    LoginVC()
 }

@@ -7,6 +7,8 @@
 
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseCore
+import GoogleSignIn
 
 class AuthVM{
     lazy var firebaseAuthManager = FirebaseAuthManager()
@@ -47,6 +49,18 @@ class AuthVM{
                 completion(true, "Şifrenizi sıfırlamak için e-posta gönderildi.")
             }
         }
+    }
+    
+    func signInGoogle(credential: AuthCredential, username: String, completion: @escaping () -> Void) {
+    
+        firebaseAuthManager.googleSignIn(credential: credential, username: username) {
+            completion()
+        } onError: { error in
+            print(error)
+        }
+
+        
+        
     }
     
 }
