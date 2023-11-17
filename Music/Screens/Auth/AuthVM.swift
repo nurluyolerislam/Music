@@ -53,7 +53,7 @@ class AuthVM{
     
     func signInGoogle(credential: AuthCredential, username: String, completion: @escaping () -> Void) {
     
-        firebaseAuthManager.googleSignIn(credential: credential, username: username) {
+        firebaseAuthManager.signInWithCredential(credential: credential, username: username) {
             completion()
         } onError: { error in
             print(error)

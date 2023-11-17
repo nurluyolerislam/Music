@@ -202,8 +202,3 @@ class LoginVC: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
-
-
-#Preview{
-    LoginVC()
-}

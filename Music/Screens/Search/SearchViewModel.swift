@@ -54,7 +54,15 @@ class SearchViewModel: SearchViewModelProtocol {
         } onError: { error in
             print(error)
         }
-
+    }
+    
+    func clearRecentSearches() {
+        firestoreManager.clearRecentSearches { [weak self] in
+            guard let self else { return }
+            getRecentSearches()
+        } onError: { error in
+            print(error)
+        }
     }
     
 }

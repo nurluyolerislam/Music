@@ -10,17 +10,12 @@ protocol HomeViewModelProtocol: AnyObject {
     var radioResponse: RadioResponse? { get set }
     var genresResponse: GenresMusicResponse? { get set }
     var popularSongsResponse: RadioPlaylistResponse? { get set }
-    var view: HomeViewInterface? { get set }
 }
 
 protocol HomeViewModelDelegate: AnyObject {
     func updateUI()
-}
-
-
-final class HomeVM {
-    weak var view: HomeViewInterface?
-  
+    func showProgressView()
+    func dismissProgressView()
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
@@ -30,52 +25,46 @@ final class HomeViewModel: HomeViewModelProtocol {
     var popularSongsResponse: RadioPlaylistResponse?
     let manager = DeezerAPIManager()
     weak var delegate: HomeViewModelDelegate?
-    weak var view: HomeViewInterface?
     
     init() {
         getData()
         getDataGenres()
     }
     
-    func showLoadingView() {
-        view?.showLoadingIndicator()
-       }
-   
-    func hideLoadingView() {
-           view?.dismissLoadingIndicator()
-       }
-    
     func getData() {
-        showLoadingView()
+        delegate?.showProgressView()
         manager.getRadioPlaylists { data in
             self.radioResponse = data
             self.getPopularSongs(playlistURL: data?.data?.first?.tracklist ?? "")
             self.delegate?.updateUI()
+            self.delegate?.dismissProgressView()
         } onError: { error in
             print(error)
+            self.delegate?.dismissProgressView()
         }
-        hideLoadingView()
     }
     
     func getDataGenres() {
-        showLoadingView()
+        delegate?.showProgressView()
         manager.getGenresLisits { data in
             self.genresResponse = data
             self.delegate?.updateUI()
+            self.delegate?.dismissProgressView()
         } onError: { error in
             print(error)
+            self.delegate?.dismissProgressView()
         }
-        hideLoadingView()
     }
     
     func getPopularSongs(playlistURL: String) {
-        showLoadingView()
+        delegate?.showProgressView()
         manager.getRadioPlaylist(playlistURL: playlistURL) { data in
             self.popularSongsResponse = data
             self.delegate?.updateUI()
+            self.delegate?.dismissProgressView()
         } onError: { error in
             print(error)
+            self.delegate?.dismissProgressView()
         }
-        hideLoadingView()
     }
 }

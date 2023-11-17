@@ -8,12 +8,6 @@
 import UIKit
 import Kingfisher
 
-// MARK: - HomeViewInterface
-protocol HomeViewInterface: AnyObject {
-    func showLoadingIndicator()
-    func dismissLoadingIndicator()
-}
-
 class HomeVC: UIViewController {
     
     //MARK: - Variables
@@ -32,7 +26,6 @@ class HomeVC: UIViewController {
         addDelegatesAndDataSources()
         configureUI()
         viewModel.delegate = self
-        viewModel.view = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,13 +101,16 @@ extension HomeVC: UITableViewDataSource {
             if let tracks = response.data {
                 let track = tracks[indexPath.row]
                 
-                if let songName = track.title {
-                    cell.songNameLabel.text = songName
-                }
-                
                 if let album = track.album {
                     if let imageURL = album.coverXl {
                         cell.songImageView.kf.setImage(with: URL(string: imageURL))
+                    }
+                    
+                    if let artist = track.artist {
+                        if let artistName = artist.name,
+                           let songName = track.title {
+                            cell.songNameLabel.text = "\(artistName) - \(songName)"
+                        }
                     }
                     
                     if let albumName = album.title {
@@ -244,22 +240,17 @@ extension HomeVC: UITableViewDelegate {
 }
 
 extension HomeVC: HomeViewModelDelegate {
+    func showProgressView() {
+        showLoading()
+    }
+    
+    func dismissProgressView() {
+        dismissLoading()
+    }
+    
     func updateUI() {
         homeView.discoverCollectionView.reloadData()
         homeView.personalizedCollectionView.reloadData()
         homeView.popularSongsTableView.reloadData()
-    }
-}
-
-
-// MARK: - HomeViewInterface
-extension HomeVC: HomeViewInterface {
-    // Displays the loading indicator.
-    func showLoadingIndicator() {
-        showLoading()
-    }
-    // Dismisses the loading indicator.
-    func dismissLoadingIndicator() {
-        dismissLoading()
-    }
+    }    
 }

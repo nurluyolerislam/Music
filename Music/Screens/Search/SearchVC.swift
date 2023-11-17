@@ -31,6 +31,7 @@ class SearchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addTargets()
         configureNavigationBar()
         addDelegatesAndDataSources()
     }
@@ -42,6 +43,10 @@ class SearchVC: UIViewController {
     
     
     //MARK: - Helper Functions
+    private func addTargets() {
+        recentSearchesView.clearRecentSearchesButton.addTarget(self, action: #selector(clearRecentSearchesButtonTapped), for: .touchUpInside)
+    }
+    
     private func configureNavigationBar() {
         navigationItem.title = "Song Search"
         searchController.searchResultsUpdater = self
@@ -54,12 +59,16 @@ class SearchVC: UIViewController {
         recentSearchesView.recentSearchesTableView.delegate = self
     }
     
+    @objc func clearRecentSearchesButtonTapped(){
+        viewModel.clearRecentSearches()
+    }
+    
 }
 
 extension SearchVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let query = searchController.searchBar.text else {return}
+        guard let query = searchController.searchBar.text else { return }
         if query == "" {
             let resultVC = searchController.searchResultsController as! SearchResultsVC
             viewModel.data = nil

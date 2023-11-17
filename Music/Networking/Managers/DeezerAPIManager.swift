@@ -26,7 +26,10 @@ class DeezerAPIManager {
     
     func getRadioPlaylist(playlistURL: String, onSuccess: @escaping (RadioPlaylistResponse?)->(Void), onError: @escaping (String)->(Void)) {
         AlamofireService.shared.fetch(path: playlistURL) { (response: RadioPlaylistResponse) in
-            onSuccess(response)
+            let filteredTracks = response.data?.filter({$0.preview != nil || $0.preview != ""})
+            var fileteredResponse = response
+            fileteredResponse.data = filteredTracks
+            onSuccess(fileteredResponse)
         } onError: { error in
             onError(error.localizedDescription)
         }

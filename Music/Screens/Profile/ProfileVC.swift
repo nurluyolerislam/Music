@@ -32,13 +32,12 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
         super.viewDidLoad()
         addDelegatesAndDataSources()
         configureUI()
+        viewModel.getUserName()
+        viewModel.fetchUserPhoto()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getUserName()
-        viewModel.fetchUserPhoto()
-        
         navigationController?.isNavigationBarHidden = true
         switch profileView.segenmtedControl.selectedSegmentIndex {
         case 0:
@@ -257,6 +256,14 @@ extension ProfileVC: UITableViewDelegate {
 }
 
 extension ProfileVC: ProfileVMDelegate {
+    func showProgressView() {
+        showLoading()
+    }
+    
+    func dismissProgressView() {
+        dismissLoading()
+    }
+    
     func updateUserPhoto(imageURL: URL) {
         profileView.userImage.kf.setImage(with: imageURL)
     }

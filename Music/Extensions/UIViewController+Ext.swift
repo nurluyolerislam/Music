@@ -30,8 +30,18 @@ extension UIViewController {
     // MARK: - Loading Indicator
     // Shows a loading indicator view on top of the current view controller.
     func showLoading() {
-        let loadingViewController = MovieDataLoadingVC()
-        loadingViewController.showLoadingView()
+        let loadingViewController = UIViewController()
+        let containerView = UIView(frame: loadingViewController.view.bounds)
+        loadingViewController.view.addSubview(containerView)
+        containerView.backgroundColor = .systemBackground
+        containerView.alpha = 0
+        UIView.animate(withDuration: 0.05) {
+            containerView.alpha = 0.8
+        }
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        containerView.addSubview(activityIndicator)
+        activityIndicator.centerInSuperview()
+        activityIndicator.startAnimating()
         loadingViewController.modalPresentationStyle  = .overFullScreen
         loadingViewController.modalTransitionStyle    = .crossDissolve
         self.present(loadingViewController, animated: true)

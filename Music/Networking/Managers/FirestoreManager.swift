@@ -107,7 +107,7 @@ class FirestoreManager {
         let ref = currentUserRef
         
         FirestoreService.shared.getField(reference: ref, fieldName: "recentSearches") { (recentSearches: [String]) in
-            onSuccess(recentSearches)
+            onSuccess(recentSearches.reversed())
         } onError: { error in
             onError(error.localizedDescription)
         }
@@ -130,7 +130,7 @@ class FirestoreManager {
         
         getRecentSearches { recentSearches in
             if let recentSearches = recentSearches {
-                if recentSearches.count == 10 {
+                if recentSearches.count == 10 && !recentSearches.contains(searchText) {
                     let dataThatWillRemove = ["recentSearches" : FieldValue.arrayRemove([recentSearches.first])]
                     FirestoreService.shared.updateData(reference: ref, data: dataThatWillRemove) {
                     } onError: { error in
@@ -146,6 +146,16 @@ class FirestoreManager {
             }
         } onError: { error in
             onError(error)
+        }
+    }
+    
+    func clearRecentSearches(onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
+        let ref = currentUserRef
+        
+        FirestoreService.shared.updateData(reference: ref, data: ["recentSearches" : []]) {
+            onSuccess()
+        } onError: { error in
+            onError(error.localizedDescription)
         }
     }
     

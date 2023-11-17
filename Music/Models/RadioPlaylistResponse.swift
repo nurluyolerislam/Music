@@ -7,5 +7,5 @@
 
 // MARK: - RadioPlaylistResponse
 struct RadioPlaylistResponse: Codable {
-    let data: [Track]?
+    var data: [Track]?
 }

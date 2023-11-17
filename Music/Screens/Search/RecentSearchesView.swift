@@ -17,6 +17,25 @@ class RecentSearchesView: UIView {
         return label
     }()
     
+    lazy var clearRecentSearchesButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Clear All", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        return button
+    }()
+    
+    lazy var headerStackView: UIStackView = {
+        let spacer = UIView()
+        let stack = UIStackView(arrangedSubviews: [
+            recentSearchesLabel,
+            spacer,
+            clearRecentSearchesButton
+        ])
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        return stack
+    }()
+    
     lazy var recentSearchesTableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -37,15 +56,17 @@ class RecentSearchesView: UIView {
     //MARK: - Configuration Methods
     private func configureUI() {
         backgroundColor = .systemBackground
-        configureRecentSearchesLabel()
+        configureHeaderStackView()
         configureRecentSearchesTableView()
     }
     
-    private func configureRecentSearchesLabel() {
-        addSubview(recentSearchesLabel)
-        recentSearchesLabel.anchor(top: safeAreaLayoutGuide.topAnchor,
-                                   leading: safeAreaLayoutGuide.leadingAnchor,
-                                   padding: .init(leading: 20))
+    private func configureHeaderStackView() {
+        addSubview(headerStackView)
+        headerStackView.anchor(top: safeAreaLayoutGuide.topAnchor,
+                               leading: safeAreaLayoutGuide.leadingAnchor,
+                               trailing: safeAreaLayoutGuide.trailingAnchor,
+                               padding: .init(leading: 20,
+                                              trailing: 20))
     }
     
     private func configureRecentSearchesTableView() {

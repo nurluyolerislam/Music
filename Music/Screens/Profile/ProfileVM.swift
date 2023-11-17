@@ -5,14 +5,15 @@
 //  Created by Erislam Nurluyol on 13.11.2023.
 //
 
-import UIKit
-import FirebaseStorage
+import UIKit.UIImage
 
 protocol ProfileVMDelegate: AnyObject {
     func updateUserPhoto(imageURL: URL)
     func updateUserName()
     func updateTableView()
     func dismissCreatePlaylistPopup()
+    func showProgressView()
+    func dismissProgressView()
 }
 
 class ProfileVM {
@@ -24,16 +25,21 @@ class ProfileVM {
     weak var delegate: ProfileVMDelegate?
     lazy var firestoreManager = FirestoreManager()
     lazy var firebaseAuthManager = FirebaseAuthManager()
+    lazy var firebaseStorageManager = FirebaseStorageManager()
     
     
     //MARK: - Helper Functions
     func getUserName() {
+        delegate?.showProgressView()
         firestoreManager.getUserName { [weak self] userName in
             guard let self else { return }
             self.userName = userName
             delegate?.updateUserName()
-        } onError: { error in
+            delegate?.dismissProgressView()
+        } onError: { [weak self] error in
+            guard let self else { return }
             print(error)
+            delegate?.dismissProgressView()
         }
     }
     
@@ -88,40 +94,24 @@ class ProfileVM {
     }
     
     func uploadUserPhoto(imageData: UIImage) {
-        let storageRefernce = Storage.storage().reference()
-
-        let imageData = imageData.jpegData(compressionQuality: 0.8)
-        
-        guard imageData != nil else{
-            return
-        }
-        
-        let fileRef = storageRefernce.child("Media/\(ApplicationVariables.currentUserID ?? "").jpg")
-        
-        fileRef.putData(imageData!, metadata: nil) { meta, error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            self.fetchUserPhoto()
+        firebaseStorageManager.uploadImage(image: imageData) { [weak self] in
+            guard let self else { return }
+            fetchUserPhoto()
+        } onError: { error in
+            print(error)
         }
     }
     
     func fetchUserPhoto() {
-        let storageRef = Storage.storage().reference()
-        
-        let fileRef = storageRef.child("Media/\(ApplicationVariables.currentUserID ?? "").jpg")
-        fileRef.downloadURL { [weak self] url, error in
-            guard let self else {return}
-            
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            
-            guard let url else {return}
-            self.delegate?.updateUserPhoto(imageURL: url)
-          
+        delegate?.showProgressView()
+        firebaseStorageManager.fetchImage { [weak self] url in
+            guard let self else { return }
+            delegate?.updateUserPhoto(imageURL: url)
+            delegate?.dismissProgressView()
+        } onError: { error in
+            print(error)
         }
+        
     }
     
     func logout(completion: @escaping () -> Void ) {
