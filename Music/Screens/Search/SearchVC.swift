@@ -7,15 +7,15 @@
 
 import UIKit
 
-class SearchVC: UIViewController {
+final class SearchVC: UIViewController {
     
     //MARK: - Variables
-    lazy var recentSearchesView = RecentSearchesView()
-    lazy var viewModel = SearchViewModel()
-    lazy var workItem = WorkItem()
+    private lazy var recentSearchesView = RecentSearchesView()
+    private lazy var viewModel = SearchViewModel()
+    private lazy var workItem = WorkItem()
     
     //MARK: - UI Elements
-    lazy var searchController: UISearchController = {
+    private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: SearchResultsVC(viewModel: viewModel))
         searchController.searchBar.placeholder = "Search for songs, albums or artists"
         searchController.searchBar.backgroundImage = UIImage()

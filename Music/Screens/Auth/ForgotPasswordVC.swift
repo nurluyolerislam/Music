@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ForgotPasswordVC: UIViewController {
+final class ForgotPasswordVC: UIViewController {
     // MARK: - Properties
     private let HeadLabel            = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
@@ -16,7 +16,7 @@ class ForgotPasswordVC: UIViewController {
     private lazy var signInButton         = MusicButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
     private lazy var stackView            = UIStackView()
-    private let authVM : AuthVM?     = AuthVM()
+    private let authViewModel = AuthViewModel()
     
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
@@ -97,7 +97,7 @@ class ForgotPasswordVC: UIViewController {
             return
         }
         
-        authVM?.resetPassword(email: email) { [weak self] success, error in
+        authViewModel.resetPassword(email: email) { [weak self] success, error in
             guard let self else { return }
 
             if success {

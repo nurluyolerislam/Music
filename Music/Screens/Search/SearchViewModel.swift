@@ -13,7 +13,7 @@ protocol RecentSearchesDelegate: AnyObject {
     func updateRecentSearches()
 }
 
-class SearchViewModel: SearchViewModelProtocol {
+final class SearchViewModel: SearchViewModelProtocol {
     
     //MARK: - Properties
     var data: SearchTrackResponse?

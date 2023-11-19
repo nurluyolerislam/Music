@@ -8,7 +8,7 @@
 import FirebaseAuth
 import FirebaseFirestore
 
-class FirebaseAuthManager {
+final class FirebaseAuthManager {
     func signIn(email: String, password: String, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error { onError(error) }

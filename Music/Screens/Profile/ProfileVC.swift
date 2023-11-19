@@ -10,7 +10,7 @@ import UIKit
 final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate{
     // MARK: - Properties
     lazy var profileView = ProfileView()
-    lazy var viewModel = ProfileVM()
+    lazy var viewModel = ProfileViewModel()
     
     //MARK: - Initializers
     init() {
@@ -39,7 +39,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        switch profileView.segenmtedControl.selectedSegmentIndex {
+        switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
             viewModel.getUserPlaylists()
         case 1:
@@ -60,7 +60,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
     }
     
     private func configureSegmentedControll(){
-        profileView.segenmtedControl.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
+        profileView.segmentedControl.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
         profileView.createPlaylistButton.addTarget(self, action: #selector(createPlaylistButtonTapped), for: .touchUpInside)
         profileView.createPlaylistPopup.createButton.addTarget(self, action: #selector(createPlaylistPopupCreateButtonTapped), for: .touchUpInside)
         
@@ -79,7 +79,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
     
     //MARK: - @Actions
     @objc func segmentValueChanged() {
-        switch profileView.segenmtedControl.selectedSegmentIndex {
+        switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
             profileView.tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
             viewModel.getUserPlaylists()
@@ -116,7 +116,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
         let image = info[.originalImage] as? UIImage
         viewModel.uploadUserPhoto(imageData: (image!))
         self.dismiss(animated: true)
-}
+    }
     
     @objc func logoutButtonTapped(){
         viewModel.logout {
@@ -131,7 +131,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
 // MARK: - UITableViewDataSource
 extension ProfileVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch profileView.segenmtedControl.selectedSegmentIndex {
+        switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
             if let playlists = viewModel.playlists {
                 return playlists.count
@@ -149,18 +149,13 @@ extension ProfileVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch profileView.segenmtedControl.selectedSegmentIndex {
+        switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
             let cell = profileView.tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID) as! ProfilePlayListTableViewCell
             
-            if let playlists = viewModel.playlists {
-                let playlist = playlists[indexPath.row]
-                if let title = playlist.title {
-                    cell.playListName.text = title
-                }
-                if let trackCount = playlist.trackCount {
-                    cell.numberOfSound.text = "\(trackCount) Tracks"
-                }
+            if let userPlaylists = viewModel.playlists {
+                let userPlaylist = userPlaylists[indexPath.row]
+                cell.updateUI(userPlaylist: userPlaylist)
             }
             return cell
             
@@ -169,28 +164,8 @@ extension ProfileVC: UITableViewDataSource {
             
             if let userFavoriteTracks = viewModel.userFavoriteTracks {
                 let track = userFavoriteTracks[indexPath.row]
-                
-                if let artist = track.artist,
-                   let songName = track.title {
-                    if let artistName = artist.name {
-                        cell.songNameLabel.text = "\(artistName) - \(songName)"
-                    }
-                }
-                
-                if let album = track.album {
-                    if let imageURL = album.coverXl {
-                        cell.songImageView.kf.setImage(with: URL(string: imageURL))
-                    }
-                    
-                    if let albumName = album.title {
-                        cell.recommendationReason.text = albumName
-                    }
-                }
+                cell.updateUI(track: track)
             }
-            
-            
-            
-            
             return cell
         default:
             return UITableViewCell()
@@ -202,7 +177,7 @@ extension ProfileVC: UITableViewDataSource {
 extension ProfileVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        switch profileView.segenmtedControl.selectedSegmentIndex {
+        switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
             if let playlists = viewModel.playlists {
                 let playlist = playlists[indexPath.row]
@@ -227,7 +202,7 @@ extension ProfileVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        switch profileView.segenmtedControl.selectedSegmentIndex {
+        switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
             let removePlaylist = UIContextualAction(style: .destructive,
                                                     title: "Remove") { [weak self] action, view, bool in
@@ -256,7 +231,7 @@ extension ProfileVC: UITableViewDelegate {
     }
 }
 
-extension ProfileVC: ProfileVMDelegate {
+extension ProfileVC: ProfileViewModelDelegate {
     func showProgressView() {
         showLoading()
     }
@@ -283,9 +258,9 @@ extension ProfileVC: ProfileVMDelegate {
     }
 }
 
-extension ProfileVC: PlayerVMDelegate {
+extension ProfileVC: PlayerViewModelDelegate {
     func updateFavorites() {
-        if profileView.segenmtedControl.selectedSegmentIndex == 1 {
+        if profileView.segmentedControl.selectedSegmentIndex == 1 {
             viewModel.getUserFavoriteTracks()
         }
     }

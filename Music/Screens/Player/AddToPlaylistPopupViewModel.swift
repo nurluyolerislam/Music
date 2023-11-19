@@ -1,18 +1,18 @@
 //
-//  AddToPlaylistPopupVM.swift
+//  AddToPlaylistPopupViewModel.swift
 //  Music
 //
 //  Created by Erislam Nurluyol on 14.11.2023.
 //
 
-protocol AddToPlaylistPopupVMDelegate: AnyObject {
+protocol AddToPlaylistPopupViewModelDelegate: AnyObject {
     func updateUI()
     func popupDismiss()
 }
 
-class AddToPlaylistPopupVM {
+final class AddToPlaylistPopupViewModel {
     var playlists: [UserPlaylist]?
-    weak var delegate: AddToPlaylistPopupVMDelegate?
+    weak var delegate: AddToPlaylistPopupViewModelDelegate?
     lazy var firestoreManager = FirestoreManager()
     
     init() {

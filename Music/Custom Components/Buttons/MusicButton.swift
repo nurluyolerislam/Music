@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MusicButton: UIButton {
+final class MusicButton: UIButton {
     
     enum FontSize {
         case big

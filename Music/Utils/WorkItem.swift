@@ -8,7 +8,7 @@
 import Foundation
 
 ///  SearchBar'ın textDidChange methodunu her harf girişinde değil de, kullanıcı yazmayı bıraktığında tetiklemek için kullandığımız class.
-class WorkItem {
+final class WorkItem {
     
     private var pendingRequestWorkItem: DispatchWorkItem?
     

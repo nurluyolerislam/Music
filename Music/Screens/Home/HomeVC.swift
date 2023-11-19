@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import Kingfisher
 
-class HomeVC: UIViewController {
+final class HomeVC: UIViewController {
     
     //MARK: - Variables
     lazy var homeView = HomeView()
@@ -48,16 +47,16 @@ class HomeVC: UIViewController {
     private func addDelegatesAndDataSources() {
         homeView.discoverCollectionView.register(MusicCollectionViewCell.self,
                                                  forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
-        homeView.personalizedCollectionView.register(MusicCollectionViewCell.self,
+        homeView.genresCollectionView.register(MusicCollectionViewCell.self,
                                                      forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
         homeView.popularSongsTableView.register(ProfileFavoriteTableViewCell.self,
                                                 forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
         
         homeView.discoverCollectionView.delegate = self
-        homeView.personalizedCollectionView.delegate = self
+        homeView.genresCollectionView.delegate = self
         homeView.popularSongsTableView.delegate = self
         homeView.discoverCollectionView.dataSource = self
-        homeView.personalizedCollectionView.dataSource = self
+        homeView.genresCollectionView.dataSource = self
         homeView.popularSongsTableView.dataSource = self
     }
     
@@ -100,23 +99,7 @@ extension HomeVC: UITableViewDataSource {
         if let response = viewModel.popularSongsResponse {
             if let tracks = response.data {
                 let track = tracks[indexPath.row]
-                
-                if let album = track.album {
-                    if let imageURL = album.coverXl {
-                        cell.songImageView.kf.setImage(with: URL(string: imageURL))
-                    }
-                    
-                    if let artist = track.artist {
-                        if let artistName = artist.name,
-                           let songName = track.title {
-                            cell.songNameLabel.text = "\(artistName) - \(songName)"
-                        }
-                    }
-                    
-                    if let albumName = album.title {
-                        cell.recommendationReason.text = albumName
-                    }
-                }
+                cell.updateUI(track: track)
             }
         }
         return cell
@@ -130,7 +113,7 @@ extension HomeVC: UICollectionViewDataSource {
         case homeView.discoverCollectionView:
             return 5
             
-        case homeView.personalizedCollectionView:
+        case homeView.genresCollectionView:
             return 5
             
         default:
@@ -148,35 +131,21 @@ extension HomeVC: UICollectionViewDataSource {
             if let response = viewModel.radioResponse {
                 if let playlists = response.data {
                     let playlist = playlists[indexPath.row]
-                    
-                    if let imageURL = playlist.pictureXl {
-                        cell.imageView.kf.setImage(with: URL(string: imageURL)!)
-                    }
-                    
-                    if let title = playlist.title {
-                        cell.label.text = title
-                    }
+                    cell.updateUI(playlist: playlist)
                 }
             }
             
             return cell
             
-        case homeView.personalizedCollectionView:
-            let cell = homeView.personalizedCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
+        case homeView.genresCollectionView:
+            let cell = homeView.genresCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
                                                                                
                                                                                for: indexPath) as! MusicCollectionViewCell
             
             if let response = viewModel.genresResponse {
-                if let genresData = response.data {
-                    let genresLists = genresData[indexPath.row]
-                    
-                    if let imageURL = genresLists.pictureXl {
-                        cell.imageView.kf.setImage(with: URL(string: imageURL)!)
-                    }
-                    
-                    if let name = genresLists.name {
-                        cell.label.text = name
-                    }
+                if let genresPlaylists = response.data {
+                    let genresPlaylist = genresPlaylists[indexPath.row]
+                    cell.updateUI(genresPlaylist: genresPlaylist)
                 }
             }
             return cell
@@ -205,7 +174,7 @@ extension HomeVC: UICollectionViewDelegate {
                 }
             }
             
-        case homeView.personalizedCollectionView:
+        case homeView.genresCollectionView:
             if let response = viewModel.genresResponse {
                 if let genres = response.data {
                     let genre = genres[indexPath.row]
@@ -250,7 +219,7 @@ extension HomeVC: HomeViewModelDelegate {
     
     func updateUI() {
         homeView.discoverCollectionView.reloadData()
-        homeView.personalizedCollectionView.reloadData()
+        homeView.genresCollectionView.reloadData()
         homeView.popularSongsTableView.reloadData()
     }    
 }

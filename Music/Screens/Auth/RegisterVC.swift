@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class RegisterVC: UIViewController {
+final class RegisterVC: UIViewController {
     // MARK: - Properties
     private let HeadLabel            = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var userNameTextField    = CustomTextField(fieldType: .username)
@@ -21,7 +21,7 @@ class RegisterVC: UIViewController {
     private lazy var signInButton         = MusicButton( bgColor:.clear ,color: .label, title: "Sign In.", fontSize: .small)
     
     private lazy var stackView            = UIStackView()
-    private let authVM : AuthVM?     = AuthVM()
+    private let authViewModel = AuthViewModel()
     
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
@@ -162,7 +162,7 @@ class RegisterVC: UIViewController {
         return
         }
         
-        authVM?.register(userName: userName,
+        authViewModel.register(userName: userName,
                          email: email,
                          password: password) { [weak self] in
             guard let self else { return }

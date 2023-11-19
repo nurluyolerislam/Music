@@ -1,5 +1,5 @@
 //
-//  OnboardingVM.swift
+//  OnboardingViewModel.swift
 //  Music
 //
 //  Created by Yaşar Duman on 9.11.2023.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class OnboardingVM {
+final class OnboardingViewModel {
     let sliderData: [OnboardingItemModel] = [
         OnboardingItemModel(color: .onboardingDarkBackground, title: "Step into the Magic of Cinema", text: "Cineverse welcomes you to the enchanting world of cinema. Begin your journey by discovering the latest film news and captivating stories.", animationName: "a2"),
         

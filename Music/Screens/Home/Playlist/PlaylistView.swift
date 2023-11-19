@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlaylistView: UIView {
+final class PlaylistView: UIView {
     
     //MARK: - UI Elements
     lazy var tableView: UITableView = {
@@ -17,6 +17,8 @@ class PlaylistView: UIView {
         return tableView
     }()
     
+    
+    //MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()

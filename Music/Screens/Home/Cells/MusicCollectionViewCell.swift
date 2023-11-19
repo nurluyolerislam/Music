@@ -7,26 +7,26 @@
 
 import UIKit
 
-class MusicCollectionViewCell: UICollectionViewCell {
+final class MusicCollectionViewCell: UICollectionViewCell {
     
+    //MARK: - Reuse Identifier
     static let reuseID = "MusicCollectionViewCell"
     
+    
     //MARK: - UI Elements
-    lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: frame)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        
         let layer = UIView()
         layer.backgroundColor = .systemBackground
         layer.layer.opacity = 0.5
         imageView.addSubview(layer)
         layer.fillSuperview()
-        
         return imageView
     }()
     
-    lazy var label: UILabel = {
+    private lazy var label: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 20)
         label.textAlignment = .center
@@ -67,6 +67,38 @@ class MusicCollectionViewCell: UICollectionViewCell {
     private func configureLabel() {
         imageView.addSubview(label)
         label.centerInSuperview(size: .init(width: imageView.frame.width, height: imageView.frame.height))
+    }
+    
+    
+    //MARK: - Helper Functions
+    func updateUI(playlist: Playlist) {
+        if let imageURL = playlist.pictureXl {
+            imageView.kf.setImage(with: URL(string: imageURL))
+        }
+        
+        if let title = playlist.title {
+            label.text = title
+        }
+    }
+    
+    func updateUI(genresPlaylist: GenresPlayList) {
+        if let imageURL = genresPlaylist.pictureXl {
+            imageView.kf.setImage(with: URL(string: imageURL))
+        }
+        
+        if let name = genresPlaylist.name {
+            label.text = name
+        }
+    }
+    
+    func updateUI(artist: Artist) {
+        if let imageURL = artist.pictureXl {
+            imageView.kf.setImage(with: URL(string: imageURL))
+        }
+        
+        if let name = artist.name {
+            label.text = name
+        }
     }
     
 }

@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import Kingfisher
 
-class PlaylistVC: UIViewController {
+final class PlaylistVC: UIViewController {
     
     //MARK: - Variables
     let playlistView = PlaylistView()
@@ -76,22 +75,8 @@ extension PlaylistVC: UITableViewDataSource {
         
         if let tracks = viewModel.tracks {
             let track = tracks[indexPath.row]
-            
-            if let songName = track.title {
-                cell.songNameLabel.text = songName
-            }
-            
-            if let album = track.album {
-                if let imageURL = album.coverXl {
-                    cell.songImageView.kf.setImage(with: URL(string: imageURL))
-                }
-                
-                if let albumName = album.title {
-                    cell.recommendationReason.text = albumName
-                }
-            }
+            cell.updateUI(track: track)
         }
-        
         return cell
         
     }

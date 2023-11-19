@@ -9,7 +9,11 @@
 import UIKit
 import Lottie
 
-class SliderCell: UICollectionViewCell {
+final class SliderCell: UICollectionViewCell {
+    
+    //MARK: - Reuse Identifier
+    static let reuseID = "SliderCell"
+    
     
     //MARK: - UI Elements
     private lazy var lottieView: LottieAnimationView = {
@@ -19,7 +23,7 @@ class SliderCell: UICollectionViewCell {
         return lottieView
     }()
     
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .authButtonBackground
@@ -28,7 +32,7 @@ class SliderCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var textLabel: UILabel = {
+    private lazy var textLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
@@ -95,4 +99,14 @@ class SliderCell: UICollectionViewCell {
         lottieView.animation = LottieAnimation.named(animationName)
         lottieView.play()
     }
+    
+    
+    //MARK: - Helper Functions
+    func updateUI(sliderData: OnboardingItemModel) {
+        contentView.backgroundColor = sliderData.color
+        titleLabel.text = sliderData.title
+        textLabel.text = sliderData.text
+        animationSetup(animationName: sliderData.animationName)
+    }
+    
 }

@@ -10,7 +10,7 @@ import Firebase
 import GoogleSignIn
 import FirebaseAuth
 
-class LoginVC: UIViewController {
+final class LoginVC: UIViewController {
     // MARK: - Properties
     private let HeadLabel                 = TitleLabel(textAlignment: .left, fontSize: 20)
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
@@ -22,7 +22,7 @@ class LoginVC: UIViewController {
     private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: .authButtonBackground , title: "Forgot password?", fontSize: .small)
     
     private lazy var stackView            = UIStackView()
-    private let authVM : AuthVM?     = AuthVM()
+    private let authViewModel = AuthViewModel()
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -152,7 +152,7 @@ class LoginVC: UIViewController {
             return
         }
         
-        authVM?.login(email: email, password: password) { [weak self] in
+        authViewModel.login(email: email, password: password) { [weak self] in
             guard let self else { return }
             presentAlert(title: "Alert!", message: "Entry Successful 🥳", buttonTitle: "Ok")
             let mainTabBar = MainTabBarVC()
@@ -180,7 +180,7 @@ class LoginVC: UIViewController {
             //print("------->>>>>> DEBUG: \(userName)")
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                            accessToken: user.accessToken.tokenString)
-            authVM?.signInGoogle(credential: credential,username: userName) {[weak self] in
+            authViewModel.signInGoogle(credential: credential,username: userName) {[weak self] in
                 guard let self else { return }
                 presentAlert(title: "Alert!", message: "Registration Successful 🥳", buttonTitle: "Ok")
                 let mainTabBar = MainTabBarVC()

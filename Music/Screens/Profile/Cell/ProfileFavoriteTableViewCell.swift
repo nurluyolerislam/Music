@@ -10,8 +10,9 @@ import UIKit
 
 final class ProfileFavoriteTableViewCell: UITableViewCell {
     
-    //MARK: - Variables
+    //MARK: - Reuse Identifier
     static let reuseID = "ProfileFavoriteTableViewCell"
+    
     
     //MARK: - UI Elements
     private lazy var containerView: UIView = {
@@ -19,40 +20,37 @@ final class ProfileFavoriteTableViewCell: UITableViewCell {
         return view
     }()
     
-    lazy var songImageView: UIImageView = {
+    private lazy var songImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.anchor(size: .init(width: 50, height: 50))
-        imageView.image = UIImage(named: "profileImage")
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    lazy var songNameLabel: UILabel = {
+    private lazy var artistAndSongNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Colifornia living vibes"
         return label
     }()
     
-    lazy var recommendationReason: UILabel = {
+    private lazy var albumNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Trending tracks by Tom"
         label.textColor = .secondaryLabel
         return label
     }()
     
-    private lazy var vstackView: UIStackView = {
+    private lazy var vStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            songNameLabel,
-            recommendationReason
+            artistAndSongNameLabel,
+            albumNameLabel
         ])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         return stackView
     }()
     
-    lazy var playButton: UIButton = {
+    private lazy var playButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "play.fill"), for: .normal)
         button.tintColor = .label
@@ -63,7 +61,7 @@ final class ProfileFavoriteTableViewCell: UITableViewCell {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             songImageView,
-            vstackView,
+            vStackView,
             playButton
         ])
         stackView.setCustomSpacing(15, after: songImageView)
@@ -89,5 +87,24 @@ final class ProfileFavoriteTableViewCell: UITableViewCell {
         containerView.fillSuperview()
         containerView.addSubview(stackView)
         stackView.fillSuperview(padding: .init(top: 10, bottom: 10))
+    }
+    
+    func updateUI(track: Track) {
+        if let album = track.album {
+            if let albumImageURL = album.coverXl {
+                songImageView.kf.setImage(with: URL(string: albumImageURL))
+            }
+            
+            if let albumName = track.title {
+                albumNameLabel.text = albumName
+            }
+        }
+        
+        if let artist = track.artist,
+           let songName = track.title {
+            if let artistName = artist.name {
+                artistAndSongNameLabel.text = "\(artistName) - \(songName)"
+            }
+        }
     }
 }

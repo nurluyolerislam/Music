@@ -9,12 +9,10 @@ import UIKit
 import MediaPlayer
 
 
-class PlayerView: UIView {
-    
-   
+final class PlayerView: UIView {
     
     //MARK: - UI Elements
-    lazy var containerVStack: UIStackView = {
+    private lazy var containerVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             songImage,
             textAndLikeContainer,
@@ -40,7 +38,7 @@ class PlayerView: UIView {
         return image
     }()
     
-    lazy var textAndLikeContainer: UIStackView = {
+    private lazy var textAndLikeContainer: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [textVStack,
                                                    iconsStackView])
         stack.axis = .horizontal
@@ -49,7 +47,7 @@ class PlayerView: UIView {
         return stack
     }()
     
-    lazy var textVStack: UIStackView = {
+    private lazy var textVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             songTitle,
             artistName
@@ -58,7 +56,7 @@ class PlayerView: UIView {
         return stack
     }()
     
-    lazy var iconsStackView: UIStackView = {
+    private lazy var iconsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             addToPlaylistButton,
             likeButton
@@ -84,7 +82,6 @@ class PlayerView: UIView {
     
     lazy var songTitle: UILabel = {
         let label = UILabel()
-        label.text = "Song Name"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .label
         return label
@@ -92,13 +89,12 @@ class PlayerView: UIView {
     
     lazy var artistName: UILabel = {
         let label = UILabel()
-        label.text = "Artist Name"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .secondaryLabel
         return label
     }()
     
-    lazy var sliderVStack: UIStackView = {
+    private lazy var sliderVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             songSlider,
             timeHStack
@@ -115,7 +111,7 @@ class PlayerView: UIView {
         return slider
     }()
     
-    lazy var timeHStack: UIStackView = {
+    private lazy var timeHStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             timeLabelMin,
             timeLabelMax
@@ -133,11 +129,10 @@ class PlayerView: UIView {
     
     lazy var timeLabelMax: UILabel = {
         let label = UILabel()
-//        label.text = "0:30"
         return label
     }()
     
-    lazy var playerControlsHstack: UIStackView = {
+    private lazy var playerControlsHstack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             rewindButton,
             playButton,
@@ -175,7 +170,7 @@ class PlayerView: UIView {
         return button
     }()
     
-    lazy var sliderVolumeHStack: UIStackView = {
+    private lazy var sliderVolumeHStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             volumeDownButton,
             volumeSlider,

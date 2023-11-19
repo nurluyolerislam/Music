@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class TitleLabel: UILabel {
+final class TitleLabel: UILabel {
     
     //MARK: - Initializers
     override init(frame: CGRect) {

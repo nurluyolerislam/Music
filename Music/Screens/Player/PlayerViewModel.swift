@@ -7,7 +7,7 @@
 
 import AVFoundation
 
-protocol PlayerVMDelegate: AnyObject {
+protocol PlayerViewModelDelegate: AnyObject {
     func updateFavorites()
 }
 
@@ -25,7 +25,7 @@ final class PlayerViewModel {
     let playerItem: AVPlayerItem?
     var currentDuration: CMTime = .init(seconds: 0, preferredTimescale: 1)
     let firestoreManager = FirestoreManager()
-    weak var delegate: PlayerVMDelegate?
+    weak var delegate: PlayerViewModelDelegate?
     weak var playerDelegate: PlayerDelegate?
     
     //MARK: - Initializers

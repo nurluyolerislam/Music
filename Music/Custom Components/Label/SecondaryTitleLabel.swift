@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SecondaryTitleLabel: UILabel {
+final class SecondaryTitleLabel: UILabel {
     
     //MARK: - Initializers
     override init(frame: CGRect) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlertVC: UIViewController {
+final class AlertVC: UIViewController {
     
     // MARK: - Properties
     var alertTitle: String?

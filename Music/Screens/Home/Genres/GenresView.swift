@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GenresView: UIView {
+final class GenresView: UIView {
     
     //MARK: - UI Elements
     lazy var collectionView: UICollectionView = {

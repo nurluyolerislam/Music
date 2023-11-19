@@ -5,7 +5,7 @@
 //  Created by Erislam Nurluyol on 10.11.2023.
 //
 
-class DeezerAPIManager {
+final class DeezerAPIManager {
     private let baseURL:String = "https://api.deezer.com/"
     
     func getSearchResults(searchText: String, onSuccess: @escaping (SearchTrackResponse?)->(Void), onError: @escaping (String)->(Void)) {

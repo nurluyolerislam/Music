@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import Kingfisher
 
-class DiscoverVC: UIViewController {
+final class DiscoverVC: UIViewController {
     
     //MARK: - Variables
     lazy var discoverView = DiscoverView()
@@ -80,14 +79,7 @@ extension DiscoverVC: UICollectionViewDataSource {
             if let response = viewModel.radioResponse {
                 if let playlists = response.data {
                     let playlist = playlists[indexPath.row]
-                    
-                    if let imageURL = playlist.pictureXl {
-                        cell.imageView.kf.setImage(with: URL(string: imageURL)!)
-                    }
-                    
-                    if let title = playlist.title {
-                        cell.label.text = title
-                    }
+                    cell.updateUI(playlist: playlist)
                 }
             }
         }

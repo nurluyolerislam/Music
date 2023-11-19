@@ -55,7 +55,7 @@ final class ProfileView : UIView{
         return editButton
     }()
     
-    lazy var buttonStack: UIStackView = {
+    private lazy var buttonStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [editButton,
                                                    logoutButton])
         stack.spacing = 5
@@ -63,7 +63,7 @@ final class ProfileView : UIView{
         return stack
     }()
     
-    lazy var segenmtedControl : UISegmentedControl = {
+    lazy var segmentedControl : UISegmentedControl = {
         let segment = UISegmentedControl()
         segment.insertSegment(withTitle: "Playlists", at: 0, animated: true)
         segment.insertSegment(withTitle: "Favorites", at: 1, animated: true)
@@ -132,8 +132,8 @@ final class ProfileView : UIView{
     }
     
     private func configureSegenmtedControl(){
-        addSubview(segenmtedControl)
-        segenmtedControl.anchor(top: headerStackView.bottomAnchor,
+        addSubview(segmentedControl)
+        segmentedControl.anchor(top: headerStackView.bottomAnchor,
                                 leading: safeAreaLayoutGuide.leadingAnchor,
                                 trailing: safeAreaLayoutGuide.trailingAnchor,
                                 padding: .init(top: 20))
@@ -141,8 +141,8 @@ final class ProfileView : UIView{
     
     private func configurePlaylistTableView(){
         addSubview(tableView)
-        tableView.anchor(top: segenmtedControl.bottomAnchor,
-                         leading: segenmtedControl.leadingAnchor,
+        tableView.anchor(top: segmentedControl.bottomAnchor,
+                         leading: segmentedControl.leadingAnchor,
                          bottom: safeAreaLayoutGuide.bottomAnchor,
                          trailing: safeAreaLayoutGuide.trailingAnchor,
                          padding: .init(top: 20,

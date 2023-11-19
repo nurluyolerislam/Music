@@ -1,25 +1,25 @@
 //
-//  GenreArtistsVM.swift
+//  GenreArtistsViewModel.swift
 //  Music
 //
 //  Created by Yaşar Duman on 13.11.2023.
 //
 
-protocol GenreArtistsVMProtocol: AnyObject {
+protocol GenreArtistsViewModelProtocol: AnyObject {
     func getData()
     var data: GenresArtistListsResponse? { get set }
 }
 
-protocol GenreArtistsVMDelegate: AnyObject {
+protocol GenreArtistsViewModelDelegate: AnyObject {
     func updateUI()
 }
 
-final class GenreArtistsVM: GenreArtistsVMProtocol {
+final class GenreArtistsViewModel: GenreArtistsViewModelProtocol {
    
     let genreId: String
     var data: GenresArtistListsResponse?
     let manager: DeezerAPIManager
-    weak var delegate: GenreArtistsVMDelegate?
+    weak var delegate: GenreArtistsViewModelDelegate?
     
     init(genreId: String, manager: DeezerAPIManager) {
         self.genreId = genreId

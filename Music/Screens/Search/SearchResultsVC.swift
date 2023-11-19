@@ -13,7 +13,7 @@ protocol SearchViewModelProtocol: AnyObject {
     var data: SearchTrackResponse? { get set }
 }
 
-class SearchResultsVC: UIViewController {
+final class SearchResultsVC: UIViewController {
 
     //MARK: - Variables
     lazy var searchResultsView = SearchResultsView()
@@ -48,8 +48,8 @@ class SearchResultsVC: UIViewController {
     
     //MARK: - Helper Functionsı
     private func addDelegatesAndDataSources() {
-        searchResultsView.searchResultsTableView.register(SearchTableViewCell.self,
-                                                          forCellReuseIdentifier: SearchTableViewCell.reuseID)
+        searchResultsView.searchResultsTableView.register(ProfileFavoriteTableViewCell.self,
+                                                          forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
         searchResultsView.searchResultsTableView.dataSource = self
         searchResultsView.searchResultsTableView.delegate = self
         
@@ -90,14 +90,14 @@ extension SearchResultsVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = searchResultsView.searchResultsTableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.reuseID) as! SearchTableViewCell
+        let cell = searchResultsView.searchResultsTableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID) as! ProfileFavoriteTableViewCell
 
         if let response = viewModel.data {
-            if let songs = response.data {
-                cell.updateUI(track: songs[indexPath.row])
+            if let tracks = response.data {
+                let track = tracks[indexPath.row]
+                cell.updateUI(track: track)
             }
         }
-        
         return cell
     }
     

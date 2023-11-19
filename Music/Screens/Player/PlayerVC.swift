@@ -10,7 +10,7 @@ import CoreMedia.CMTime
 import Kingfisher
 
 
-class PlayerVC: UIViewController {
+final class PlayerVC: UIViewController {
     
     //MARK: - Variables
     lazy var playerView = PlayerView()

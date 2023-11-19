@@ -1,5 +1,5 @@
 //
-//  AuthVM.swift
+//  AuthViewModel.swift
 //  Music
 //
 //  Created by Yaşar Duman on 9.11.2023.
@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseCore
 import GoogleSignIn
 
-class AuthVM{
+final class AuthViewModel {
     lazy var firebaseAuthManager = FirebaseAuthManager()
     // MARK: - Login
     func login(email: String, password: String, completion: @escaping () -> Void) {

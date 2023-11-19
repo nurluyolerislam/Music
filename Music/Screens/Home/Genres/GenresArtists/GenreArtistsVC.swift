@@ -6,18 +6,17 @@
 //
 
 import UIKit
-import Kingfisher
 
-class GenreArtistsVC: UIViewController {
+final class GenreArtistsVC: UIViewController {
     
     //MARK: - Variables
     let genreArtistsView = GenreArtistsView()
-    let viewModel: GenreArtistsVM?
+    let viewModel: GenreArtistsViewModel?
     
     
     //MARK: - Initializers
     init(genreId: String, manager: DeezerAPIManager) {
-        self.viewModel = GenreArtistsVM(genreId: genreId, manager: manager)
+        self.viewModel = GenreArtistsViewModel(genreId: genreId, manager: manager)
         super.init(nibName: nil, bundle: nil)
         viewModel?.delegate = self
         addDelegatesAndDataSources()
@@ -67,18 +66,11 @@ extension GenreArtistsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID, for: indexPath) as! MusicCollectionViewCell
         
-        if let viewModel = viewModel {
+        if let viewModel {
             if let response = viewModel.data {
                 if let artists = response.data {
                     let artist = artists[indexPath.row]
-                    
-                    if let imageURL = artist.pictureXl {
-                        cell.imageView.kf.setImage(with: URL(string: imageURL)!)
-                    }
-                    
-                    if let artistName = artist.name {
-                        cell.label.text = artistName
-                    }
+                    cell.updateUI(artist: artist)
                 }
             }
         }
@@ -89,7 +81,7 @@ extension GenreArtistsVC: UICollectionViewDataSource {
 
 extension GenreArtistsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let viewModel = viewModel {
+        if let viewModel {
             if let response = viewModel.data {
                 if let artists = response.data {
                     let artist = artists[indexPath.row]
@@ -105,7 +97,7 @@ extension GenreArtistsVC: UICollectionViewDelegate {
     }
 }
 
-extension GenreArtistsVC: GenreArtistsVMDelegate {
+extension GenreArtistsVC: GenreArtistsViewModelDelegate {
     func updateUI() {
         genreArtistsView.collectionView.reloadData()
     }

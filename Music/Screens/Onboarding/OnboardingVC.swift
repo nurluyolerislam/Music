@@ -8,10 +8,9 @@
 
 import UIKit
 
-class OnboardingVC: UIViewController {
-    // MARK: - Data
+final class OnboardingVC: UIViewController {
     // MARK: - ViewModel
-    private var viewModel: OnboardingVM = OnboardingVM()
+    private var viewModel = OnboardingViewModel()
     
     // Data
     private var sliderData: [OnboardingItemModel] = []
@@ -24,14 +23,14 @@ class OnboardingVC: UIViewController {
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
         
-        
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.dataSource = self
         collection.delegate = self
-        collection.register(SliderCell.self, forCellWithReuseIdentifier: "cell")
+        collection.register(SliderCell.self, forCellWithReuseIdentifier: SliderCell.reuseID)
         collection.isPagingEnabled = true
         return collection
     }()
+    
     lazy var skipBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Skip", for: .normal)
@@ -193,12 +192,9 @@ extension OnboardingVC : UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? SliderCell {
-            cell.contentView.backgroundColor = sliderData[indexPath.item].color
-            cell.titleLabel.text = sliderData[indexPath.item].title
-            cell.textLabel.text = sliderData[indexPath.item].text
-            
-            cell.animationSetup(animationName: sliderData[indexPath.item].animationName)
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SliderCell.reuseID, for: indexPath) as? SliderCell {
+            let sliderData = sliderData[indexPath.item]
+            cell.updateUI(sliderData: sliderData)
             return cell
         }
         return UICollectionViewCell()

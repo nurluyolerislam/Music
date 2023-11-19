@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GenresVC: UIViewController {
+final class GenresVC: UIViewController {
     
     //MARK: - Variables
     lazy var genresView = GenresView()
@@ -77,22 +77,14 @@ extension GenresVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID, for: indexPath) as! MusicCollectionViewCell
         
-        if let viewModel = viewModel {
+        if let viewModel {
             if let response = viewModel.genresResponse {
-                if let genres = response.data {
-                    let genre = genres[indexPath.row]
-                    
-                    if let imageURL = genre.pictureXl {
-                        cell.imageView.kf.setImage(with: URL(string: imageURL)!)
-                    }
-                    
-                    if let genreName = genre.name {
-                        cell.label.text = genreName
-                    }
+                if let genresPlaylists = response.data {
+                    let genresPlaylist = genresPlaylists[indexPath.row]
+                    cell.updateUI(genresPlaylist: genresPlaylist)
                 }
             }
         }
-        
         return cell
     }
     

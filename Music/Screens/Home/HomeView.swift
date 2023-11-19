@@ -7,10 +7,10 @@
 
 import UIKit
 
-class HomeView: UIView {
+final class HomeView: UIView {
     
     //MARK: - UI Elements
-    lazy var discoverLabel: UILabel = {
+    private lazy var discoverLabel: UILabel = {
         let label = UILabel()
         label.text = "Discover new music"
         label.font = .boldSystemFont(ofSize: 24)
@@ -27,7 +27,7 @@ class HomeView: UIView {
         return button
     }()
     
-    lazy var discoverStackView: UIStackView = {
+    private lazy var discoverStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             discoverLabel,
             browseButton
@@ -48,9 +48,9 @@ class HomeView: UIView {
         return collectionView
     }()
     
-    lazy var personalizedLabel: UILabel = {
+    private lazy var genresLabel: UILabel = {
         let label = UILabel()
-        label.text = "Personalized for you"
+        label.text = "Genres"
         label.font = .boldSystemFont(ofSize: 24)
         return label
     }()
@@ -65,9 +65,9 @@ class HomeView: UIView {
         return button
     }()
     
-    lazy var personalizedStackView: UIStackView = {
+    private lazy var genresStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            personalizedLabel,
+            genresLabel,
             exploreButton
         ])
         stackView.axis = .horizontal
@@ -75,7 +75,7 @@ class HomeView: UIView {
         return stackView
     }()
     
-    lazy var personalizedCollectionView: UICollectionView = {
+    lazy var genresCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
         layout.minimumLineSpacing = 10
@@ -86,7 +86,7 @@ class HomeView: UIView {
         return collectionView
     }()
     
-    lazy var popularSongsLabel: UILabel = {
+    private lazy var popularSongsLabel: UILabel = {
         let label = UILabel()
         label.text = "Popular songs"
         label.font = .boldSystemFont(ofSize: 24)
@@ -117,8 +117,8 @@ class HomeView: UIView {
         backgroundColor = .systemBackground
         configureDiscoverStackView()
         configureDiscoverCollectionView()
-        configurePersonalizedStackView()
-        configurePersonalizedCollectionView()
+        configureGenresStackView()
+        configureGenresCollectionView()
         configurePopularSongsLabel()
         configurePopularSongsTableView()
     }
@@ -144,9 +144,9 @@ class HomeView: UIView {
                                       size: .init(heightSize: 100))
     }
     
-    private func configurePersonalizedStackView() {
-        addSubview(personalizedStackView)
-        personalizedStackView.anchor(top: discoverCollectionView.bottomAnchor,
+    private func configureGenresStackView() {
+        addSubview(genresStackView)
+        genresStackView.anchor(top: discoverCollectionView.bottomAnchor,
                                 leading: safeAreaLayoutGuide.leadingAnchor,
                                 trailing: safeAreaLayoutGuide.trailingAnchor,
                                 padding: .init(top: 20,
@@ -154,9 +154,9 @@ class HomeView: UIView {
                                                trailing: 20))
     }
     
-    private func configurePersonalizedCollectionView() {
-        addSubview(personalizedCollectionView)
-        personalizedCollectionView.anchor(top: personalizedStackView.bottomAnchor,
+    private func configureGenresCollectionView() {
+        addSubview(genresCollectionView)
+        genresCollectionView.anchor(top: genresStackView.bottomAnchor,
                                           leading: safeAreaLayoutGuide.leadingAnchor,
                                           trailing: safeAreaLayoutGuide.trailingAnchor,
                                           padding: .init(top: 20,
@@ -167,7 +167,7 @@ class HomeView: UIView {
     
     private func configurePopularSongsLabel() {
         addSubview(popularSongsLabel)
-        popularSongsLabel.anchor(top: personalizedCollectionView.bottomAnchor,
+        popularSongsLabel.anchor(top: genresCollectionView.bottomAnchor,
                                  leading: safeAreaLayoutGuide.leadingAnchor,
                                  padding: .init(top: 20,
                                                 leading: 20))

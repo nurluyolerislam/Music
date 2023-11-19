@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchResultsView: UIView {
+final class SearchResultsView: UIView {
     
     //MARK: - UI Elements
     lazy var searchResultsTableView: UITableView = {

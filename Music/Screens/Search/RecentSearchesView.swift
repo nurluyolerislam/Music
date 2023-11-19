@@ -7,10 +7,10 @@
 
 import UIKit
 
-class RecentSearchesView: UIView {
+final class RecentSearchesView: UIView {
     
     //MARK: - UI Elements
-    lazy var recentSearchesLabel: UILabel = {
+    private lazy var recentSearchesLabel: UILabel = {
         let label = UILabel()
         label.text = "Recent searches"
         label.font = .boldSystemFont(ofSize: 24)
@@ -24,7 +24,7 @@ class RecentSearchesView: UIView {
         return button
     }()
     
-    lazy var headerStackView: UIStackView = {
+    private lazy var headerStackView: UIStackView = {
         let spacer = UIView()
         let stack = UIStackView(arrangedSubviews: [
             recentSearchesLabel,

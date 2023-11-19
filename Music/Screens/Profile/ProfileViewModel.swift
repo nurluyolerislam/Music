@@ -1,5 +1,5 @@
 //
-//  ProfileVM.swift
+//  ProfileViewModel.swift
 //  Music
 //
 //  Created by Erislam Nurluyol on 13.11.2023.
@@ -7,7 +7,7 @@
 
 import UIKit.UIImage
 
-protocol ProfileVMDelegate: AnyObject {
+protocol ProfileViewModelDelegate: AnyObject {
     func updateUserPhoto(imageURL: URL)
     func updateUserName()
     func updateTableView()
@@ -16,13 +16,13 @@ protocol ProfileVMDelegate: AnyObject {
     func dismissProgressView()
 }
 
-class ProfileVM {
+final class ProfileViewModel {
     
     //MARK: - Variables
     var userName: String?
     var playlists: [UserPlaylist]?
     var userFavoriteTracks: [Track]?
-    weak var delegate: ProfileVMDelegate?
+    weak var delegate: ProfileViewModelDelegate?
     lazy var firestoreManager = FirestoreManager()
     lazy var firebaseAuthManager = FirebaseAuthManager()
     lazy var firebaseStorageManager = FirebaseStorageManager()

@@ -7,7 +7,7 @@
 
 import FirebaseFirestore
 
-class FirestoreManager {
+final class FirestoreManager {
     private let currentUserRef = Firestore.firestore()
         .collection("UsersInfo")
         .document(ApplicationVariables.currentUserID ?? "")

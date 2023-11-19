@@ -10,8 +10,9 @@ import UIKit
 
 final class ProfilePlayListTableViewCell: UITableViewCell {
     
-    //MARK: - Variables
+    //MARK: - Reuse Identifier
     static let reuseID = "ProfileAlbumTableViewCell"
+    
     
     //MARK: - UI Elements
     private lazy var containerView: UIView = {
@@ -19,27 +20,28 @@ final class ProfilePlayListTableViewCell: UITableViewCell {
         return view
     }()
     
-    lazy var textVStackView: UIStackView = {
+    private lazy var textVStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            playListName,
-            numberOfSound
+            playlistNameLabel,
+            trackCountLabel
         ])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         return stackView
     }()
+    
     private lazy var containerHStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            songImageView,
+            playlistImageView,
             textVStackView
         ])
-        stackView.setCustomSpacing(15, after: songImageView)
+        stackView.setCustomSpacing(15, after: playlistImageView)
         stackView.axis = .horizontal
         stackView.alignment = .center
         return stackView
     }()
     
-    lazy var songImageView: UIImageView = {
+    private lazy var playlistImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.anchor(size: .init(width: 50, height: 50))
         imageView.image = UIImage(systemName: "music.note.list")
@@ -50,16 +52,14 @@ final class ProfilePlayListTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    lazy var playListName: UILabel = {
+    private lazy var playlistNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Colifornia living vibes"
         label.textColor = .label
         return label
     }()
     
-    lazy var numberOfSound: UILabel = {
+    private lazy var trackCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "101 Tracks"
         label.textColor = .secondaryLabel
         return label
     }()
@@ -69,7 +69,6 @@ final class ProfilePlayListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -85,5 +84,17 @@ final class ProfilePlayListTableViewCell: UITableViewCell {
         containerView.addSubview(containerHStackView)
         containerHStackView.fillSuperview(padding: .init(top: 10,
                                                          trailing: 20))
+    }
+    
+    
+    //MARK: - Helper Functions
+    func updateUI(userPlaylist: UserPlaylist) {
+        if let title = userPlaylist.title {
+            playlistNameLabel.text = title
+        }
+        
+        if let trackCount = userPlaylist.trackCount {
+            trackCountLabel.text = "\(trackCount) Tracks"
+        }
     }
 }

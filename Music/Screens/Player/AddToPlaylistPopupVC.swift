@@ -7,26 +7,26 @@
 
 import UIKit
 
-class AddToPlaylistPopupVC: UIViewController {
+final class AddToPlaylistPopupVC: UIViewController {
     
     // MARK: - Properties
-    lazy var viewModel = AddToPlaylistPopupVM()
+    lazy var viewModel = AddToPlaylistPopupViewModel()
     lazy var containerView  = AlertContainerView()
     var track: Track?
     
     //MARK: - UI Elements
-    lazy var titleLabel: TitleLabel = {
+    private lazy var titleLabel: TitleLabel = {
         let label = TitleLabel(textAlignment: .center, fontSize: 20)
         label.text = "Choose Playlist"
         return label
     }()
     
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         return tableView
     }()
     
-    lazy var cancelButton: MusicButton = {
+    private lazy var cancelButton: MusicButton = {
         let button = MusicButton(bgColor: .systemPink, color: .systemPink, title: "Cancel", systemImageName: "x.circle")
         button.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         return button
@@ -123,22 +123,10 @@ extension AddToPlaylistPopupVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePlayListTableViewCell.reuseID) as! ProfilePlayListTableViewCell
         
-        if let playlists = viewModel.playlists {
-            let playlist = playlists[indexPath.row]
-            
-            if let imageURL = playlist.image {
-                cell.songImageView.kf.setImage(with: URL(string: imageURL))
-            }
-            
-            if let title = playlist.title {
-                cell.playListName.text = title
-            }
-            
-            if let trackCount = playlist.trackCount {
-                cell.numberOfSound.text = "\(trackCount) Tracks"
-            }
+        if let userPlaylists = viewModel.playlists {
+            let userPlaylist = userPlaylists[indexPath.row]
+            cell.updateUI(userPlaylist: userPlaylist)
         }
-        
         return cell
     }
 }
@@ -157,7 +145,7 @@ extension AddToPlaylistPopupVC: UITableViewDelegate {
     }
 }
 
-extension AddToPlaylistPopupVC: AddToPlaylistPopupVMDelegate {
+extension AddToPlaylistPopupVC: AddToPlaylistPopupViewModelDelegate {
     func updateUI() {
         tableView.reloadData()
     }

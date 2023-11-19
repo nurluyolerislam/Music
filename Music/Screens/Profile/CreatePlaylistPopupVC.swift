@@ -7,12 +7,12 @@
 
 import UIKit
 
-class CreatePlaylistPopupVC: UIViewController {
+final class CreatePlaylistPopupVC: UIViewController {
     
     //MARK: - UI Elements
     lazy var containerView  = AlertContainerView()
     
-    lazy var titleLabel: TitleLabel = {
+    private lazy var titleLabel: TitleLabel = {
         let label = TitleLabel(textAlignment: .center, fontSize: 20)
         label.text = "Create a New Playlist"
         return label
@@ -29,13 +29,13 @@ class CreatePlaylistPopupVC: UIViewController {
         return button
     }()
     
-    lazy var cancelButton: MusicButton = {
+    private lazy var cancelButton: MusicButton = {
         let button = MusicButton(bgColor: .systemPink, color: .systemPink, title: "Cancel", systemImageName: "x.circle")
         button.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         return button
     }()
     
-    lazy var buttonsStackView: UIStackView = {
+    private lazy var buttonsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
             createButton,
             cancelButton

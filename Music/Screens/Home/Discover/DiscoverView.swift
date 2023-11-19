@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DiscoverView: UIView {
+final class DiscoverView: UIView {
     
     //MARK: - UI Elements
     lazy var collectionView: UICollectionView = {
