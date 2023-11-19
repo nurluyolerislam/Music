@@ -48,6 +48,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
         }
     }
     
+    
     //MARK: - UI Configuration
     private func configureUI() {
         configureNavigationBar()

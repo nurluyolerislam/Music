@@ -94,7 +94,7 @@ class ProfileVM {
     }
     
     func uploadUserPhoto(imageData: UIImage) {
-        firebaseStorageManager.uploadImage(image: imageData) { [weak self] in
+        firebaseStorageManager.uploadUserImage(image: imageData) { [weak self] in
             guard let self else { return }
             fetchUserPhoto()
         } onError: { error in
@@ -104,14 +104,13 @@ class ProfileVM {
     
     func fetchUserPhoto() {
         delegate?.showProgressView()
-        firebaseStorageManager.fetchImage { [weak self] url in
+        firebaseStorageManager.fetchUserImage() { [weak self] url in
             guard let self else { return }
             delegate?.updateUserPhoto(imageURL: url)
             delegate?.dismissProgressView()
         } onError: { error in
             print(error)
         }
-        
     }
     
     func logout(completion: @escaping () -> Void ) {
@@ -121,7 +120,5 @@ class ProfileVM {
             print(error)
         }
     }
-    
-    
     
 }

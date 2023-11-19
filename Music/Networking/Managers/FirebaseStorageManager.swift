@@ -12,28 +12,23 @@ final class FirebaseStorageManager {
     
     private let userImageRef = Storage.storage()
         .reference()
-        .child("Media/\(ApplicationVariables.currentUserID).jpg")
+        .child("Media/\(ApplicationVariables.currentUserID!).jpg")
     
-    func uploadImage(image: UIImage, onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
-        
+    func uploadUserImage(image: UIImage, onSuccess: @escaping () -> Void, onError: @escaping (String) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
-        
-        userImageRef.putData(imageData) { storageMetaData, error in
-            if let error = error {
-                onError(error.localizedDescription)
-            }
+        FirebaseStorageService.shared.upload(reference: userImageRef, data: imageData) { metadata in
             onSuccess()
+        } onError: { error in
+            onError(error.localizedDescription)
         }
     }
     
-    func fetchImage(onSuccess: @escaping (URL) -> Void, onError: @escaping (String) -> Void) {
-        userImageRef.downloadURL { url, error in
-            if let error = error {
-                onError(error.localizedDescription)
-            }
-            
-            guard let url else { return }
+    func fetchUserImage(onSuccess: @escaping (URL) -> Void, onError: @escaping (String) -> Void) {
+        FirebaseStorageService.shared.download(reference: userImageRef) { url in
             onSuccess(url)
+        } onError: { error in
+            onError(error.localizedDescription)
         }
     }
+    
 }

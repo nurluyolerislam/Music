@@ -8,7 +8,7 @@
 import Alamofire
 
 protocol ServiceProtocol: AnyObject {
-    func fetch<T>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void) where T: Codable
+    func fetch<T: Codable>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void)
 }
 
 final class AlamofireService: ServiceProtocol {
@@ -17,7 +17,7 @@ final class AlamofireService: ServiceProtocol {
     
     private init() {}
     
-    func fetch<T>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void) where T: Codable {
+    func fetch<T: Codable>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void) {
         AF.request(path).validate().responseDecodable(of: T.self) { (response) in
             guard let model = response.value else {
                 print(response)

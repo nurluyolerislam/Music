@@ -11,9 +11,7 @@ import FirebaseFirestore
 class FirebaseAuthManager {
     func signIn(email: String, password: String, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if let error = error {
-                onError(error)
-            }
+            if let error { onError(error) }
             guard let result else { return }
             ApplicationVariables.currentUserID = result.user.uid
             onSuccess()
@@ -22,16 +20,15 @@ class FirebaseAuthManager {
     
     func register(userName: String, email: String, password: String, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
-            if let error = error {
-                onError(error)
-            }
+            if let error { onError(error) }
             
             guard let result else { return }
             
             let ref = Firestore.firestore().collection("UsersInfo").document(result.user.uid)
             
             let data = [
-                "userName" : userName
+                "userName" : userName,
+                "recentSearches" : []
             ] as! [String : Any]
             
             ApplicationVariables.currentUserID = result.user.uid
@@ -50,7 +47,8 @@ class FirebaseAuthManager {
             let ref = Firestore.firestore().collection("UsersInfo").document(result.user.uid)
             
             let data = [
-                "userName" : username
+                "userName" : username,
+                "recentSearches" : []
             ] as! [String : Any]
             
             ApplicationVariables.currentUserID = result.user.uid
@@ -65,6 +63,7 @@ class FirebaseAuthManager {
     func signOut(onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
         do {
             try Auth.auth().signOut()
+            ApplicationVariables.resetApplicationVariable()
             onSuccess()
         } catch {
             onError(error)

@@ -20,6 +20,7 @@
 		581CF22C2B02406C00E08ADA /* GenreArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF22B2B02406C00E08ADA /* GenreArtistsView.swift */; };
 		581CF22E2B0244FA00E08ADA /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581CF22D2B0244FA00E08ADA /* PlaylistView.swift */; };
 		582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */; };
+		583121402B08BB360006DE58 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5831213F2B08BB360006DE58 /* FirebaseStorageService.swift */; };
 		5848EDF62B081A61006233BD /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5848EDF52B081A61006233BD /* MusicCollectionViewCell.swift */; };
 		5848EDF82B082239006233BD /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5848EDF72B082239006233BD /* FirebaseStorageManager.swift */; };
 		58563FE42AFE76F000ADECE1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 58563FE32AFE76F000ADECE1 /* Alamofire */; };
@@ -105,6 +106,7 @@
 		581CF22B2B02406C00E08ADA /* GenreArtistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreArtistsView.swift; sourceTree = "<group>"; };
 		581CF22D2B0244FA00E08ADA /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 		582B6C5B2AFD328F00B74E8B /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
+		5831213F2B08BB360006DE58 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		5848EDF52B081A61006233BD /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
 		5848EDF72B082239006233BD /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 		58563FE72AFE772900ADECE1 /* AlamofireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireService.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 			children = (
 				58563FE72AFE772900ADECE1 /* AlamofireService.swift */,
 				83C234D32B026E7100F3FF5F /* FirebaseService.swift */,
+				5831213F2B08BB360006DE58 /* FirebaseStorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				83C2350E2B0274FA00F3FF5F /* OnboardingModel.swift in Sources */,
 				58563FFF2AFFCD2100ADECE1 /* HomeViewModel.swift in Sources */,
 				83C234F62B0271C500F3FF5F /* LoginVC.swift in Sources */,
+				583121402B08BB360006DE58 /* FirebaseStorageService.swift in Sources */,
 				58107B2E2B04E3DC008CE0D6 /* ApplicationVariables.swift in Sources */,
 				581CF22C2B02406C00E08ADA /* GenreArtistsView.swift in Sources */,
 				836F4D722AFF5BD4008BE3FA /* SearchTableViewCell.swift in Sources */,

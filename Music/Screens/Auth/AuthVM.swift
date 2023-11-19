@@ -41,7 +41,7 @@ class AuthVM{
         }
         
         Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if let error = error {
+            if let error {
                 // Şifre sıfırlama işlemi başarısız
                 completion(false, "Şifre sıfırlama hatası: \(error.localizedDescription)")
             } else {
@@ -52,15 +52,11 @@ class AuthVM{
     }
     
     func signInGoogle(credential: AuthCredential, username: String, completion: @escaping () -> Void) {
-    
         firebaseAuthManager.signInWithCredential(credential: credential, username: username) {
             completion()
         } onError: { error in
             print(error)
         }
-
-        
-        
     }
     
 }
