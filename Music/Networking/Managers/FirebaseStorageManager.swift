@@ -6,7 +6,7 @@
 //
 
 import FirebaseStorage
-import UIKit.UIImage
+import UIKit
 
 final class FirebaseStorageManager {
     

@@ -5,7 +5,7 @@
 //  Created by Yaşar Duman on 9.11.2023.
 //
 
-import UIKit.UIColor
+import UIKit
 
 struct OnboardingItemModel{
     let color: UIColor

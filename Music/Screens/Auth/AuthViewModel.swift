@@ -6,9 +6,6 @@
 //
 
 import FirebaseAuth
-import FirebaseFirestore
-import FirebaseCore
-import GoogleSignIn
 
 final class AuthViewModel {
     lazy var firebaseAuthManager = FirebaseAuthManager()
@@ -40,14 +37,9 @@ final class AuthViewModel {
             return
         }
         
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if let error {
-                // Şifre sıfırlama işlemi başarısız
-                completion(false, "Şifre sıfırlama hatası: \(error.localizedDescription)")
-            } else {
-                // Şifre sıfırlama işlemi başarılı
-                completion(true, "Şifrenizi sıfırlamak için e-posta gönderildi.")
-            }
+        firebaseAuthManager.resetPassword(email: email) { [weak self] error in
+            guard let self else { return }
+            print(error)
         }
     }
     

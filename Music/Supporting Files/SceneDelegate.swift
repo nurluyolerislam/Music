@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -33,12 +32,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         // MARK: - kullanıcı sürekli giriş yapmamsı için yapılan işlem kullanıcıyı hatırlama işlemi
-        if Auth.auth().currentUser != nil {
+        if ApplicationVariables.currentUserID != nil {
             let TabBar = MainTabBarVC()
             TabBar.modalPresentationStyle = .fullScreen
             window?.rootViewController = TabBar
         }
-         self.window?.makeKeyAndVisible()
+        self.window?.makeKeyAndVisible()
     }
 
 }

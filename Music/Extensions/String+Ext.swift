@@ -1,11 +1,11 @@
 //
-//  Validation + Ext.swift
+//  String+Ext.swift
 //  Music
 //
 //  Created by Yaşar Duman on 9.11.2023.
 //
 
-import Foundation.NSString
+import Foundation
 
 extension String {
     
@@ -43,5 +43,5 @@ extension String {
         let result = LowerCaseTest.evaluate(with: value)
         return result
     }
-
+    
 }

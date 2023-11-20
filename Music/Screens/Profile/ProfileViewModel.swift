@@ -5,7 +5,7 @@
 //  Created by Erislam Nurluyol on 13.11.2023.
 //
 
-import UIKit.UIImage
+import UIKit
 
 protocol ProfileViewModelDelegate: AnyObject {
     func updateUserPhoto(imageURL: URL)

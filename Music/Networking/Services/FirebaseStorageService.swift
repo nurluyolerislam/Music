@@ -14,6 +14,7 @@ protocol FirebaseStorageServiceProtocol: AnyObject {
 }
 
 final class FirebaseStorageService: FirebaseStorageServiceProtocol {
+    
     static let shared = FirebaseStorageService()
     
     private init() {}

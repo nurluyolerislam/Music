@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreMedia.CMTime
+import CoreMedia
 import Kingfisher
 
 

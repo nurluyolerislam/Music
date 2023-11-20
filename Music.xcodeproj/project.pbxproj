@@ -71,7 +71,7 @@
 		83C234E42B02707600F3FF5F /* TitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234E12B02707600F3FF5F /* TitleLabel.swift */; };
 		83C234E82B02708700F3FF5F /* AlertContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234E72B02708700F3FF5F /* AlertContainerView.swift */; };
 		83C234EC2B0270C800F3FF5F /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234EB2B0270C800F3FF5F /* UIViewController+Ext.swift */; };
-		83C234EE2B0270CC00F3FF5F /* Validation + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234ED2B0270CC00F3FF5F /* Validation + Ext.swift */; };
+		83C234EE2B0270CC00F3FF5F /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234ED2B0270CC00F3FF5F /* String+Ext.swift */; };
 		83C234EF2B02711A00F3FF5F /* AlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234E62B02708300F3FF5F /* AlertVC.swift */; };
 		83C234F62B0271C500F3FF5F /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234F32B0271C500F3FF5F /* LoginVC.swift */; };
 		83C234F72B0271C500F3FF5F /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C234F42B0271C500F3FF5F /* RegisterVC.swift */; };
@@ -154,7 +154,7 @@
 		83C234E62B02708300F3FF5F /* AlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertVC.swift; sourceTree = "<group>"; };
 		83C234E72B02708700F3FF5F /* AlertContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertContainerView.swift; sourceTree = "<group>"; };
 		83C234EB2B0270C800F3FF5F /* UIViewController+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
-		83C234ED2B0270CC00F3FF5F /* Validation + Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Validation + Ext.swift"; sourceTree = "<group>"; };
+		83C234ED2B0270CC00F3FF5F /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		83C234F32B0271C500F3FF5F /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		83C234F42B0271C500F3FF5F /* RegisterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		83C234F52B0271C500F3FF5F /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
@@ -363,7 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				83C235222B0278FC00F3FF5F /* UIColor+Ext.swift */,
-				83C234ED2B0270CC00F3FF5F /* Validation + Ext.swift */,
+				83C234ED2B0270CC00F3FF5F /* String+Ext.swift */,
 				83C234EB2B0270C800F3FF5F /* UIViewController+Ext.swift */,
 				587FC5082AFA592500D6B976 /* UIView+Ext.swift */,
 				58107B292B04C804008CE0D6 /* Int+Ext.swift */,
@@ -653,7 +653,7 @@
 				587FC4ED2AFA54AC00D6B976 /* AppDelegate.swift in Sources */,
 				83C234D22B02311800F3FF5F /* GenreArtistsViewModel.swift in Sources */,
 				58107B302B04E935008CE0D6 /* FirebaseAuthManager.swift in Sources */,
-				83C234EE2B0270CC00F3FF5F /* Validation + Ext.swift in Sources */,
+				83C234EE2B0270CC00F3FF5F /* String+Ext.swift in Sources */,
 				582B6C5C2AFD328F00B74E8B /* MainTabBarVC.swift in Sources */,
 				58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */,
 				58563FED2AFE7F7800ADECE1 /* SearchTrackResponse.swift in Sources */,

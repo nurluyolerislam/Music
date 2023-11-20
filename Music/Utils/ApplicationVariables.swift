@@ -8,7 +8,10 @@
 import Foundation
 
 struct ApplicationVariables {
-    static let defaults = UserDefaults.standard
+    
+    private static let defaults = UserDefaults.standard
+    
+    private init() {}
     
     static var currentUserID: String?{
         get{
@@ -18,7 +21,8 @@ struct ApplicationVariables {
         }
     }
     
-    static func resetApplicationVariable(){
+    static func resetApplicationVariables(){
         defaults.removeObject(forKey: "currentUserID")
     }
+    
 }

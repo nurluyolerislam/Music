@@ -63,10 +63,17 @@ final class FirebaseAuthManager {
     func signOut(onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
         do {
             try Auth.auth().signOut()
-            ApplicationVariables.resetApplicationVariable()
+            ApplicationVariables.resetApplicationVariables()
             onSuccess()
         } catch {
             onError(error)
         }
     }
+    
+    func resetPassword(email: String, onError: @escaping (String) -> Void) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error { onError(error.localizedDescription) }
+        }
+    }
+    
 }

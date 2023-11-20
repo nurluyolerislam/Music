@@ -177,7 +177,7 @@ final class LoginVC: UIViewController {
             else {
                 return
             }
-            //print("------->>>>>> DEBUG: \(userName)")
+            
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                            accessToken: user.accessToken.tokenString)
             authViewModel.signInGoogle(credential: credential,username: userName) {[weak self] in
