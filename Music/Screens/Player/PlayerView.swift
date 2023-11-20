@@ -30,7 +30,7 @@ final class PlayerView: UIView {
     
     lazy var songImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "profileImage")
+        image.image = UIImage(systemName: "x.circle")
         image.layer.cornerRadius = 10
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
