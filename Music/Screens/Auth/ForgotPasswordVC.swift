@@ -97,14 +97,14 @@ final class ForgotPasswordVC: UIViewController {
             return
         }
         
-        authViewModel.resetPassword(email: email) { [weak self] success, error in
+        authViewModel.resetPassword(email: email) { [weak self] success, message in
             guard let self else { return }
 
             if success {
-                presentAlert(title: "Alert!", message: "Password renewal request sent to your e-mail address 🥳", buttonTitle: "Ok")
+                presentAlert(title: "Alert!", message: message, buttonTitle: "Ok")
                 navigationController?.popToRootViewController(animated: true)
             } else {
-                presentAlert(title: "Alert!", message: error, buttonTitle: "Ok")
+                presentAlert(title: "Alert!", message: message, buttonTitle: "Ok")
             }
         }
     }

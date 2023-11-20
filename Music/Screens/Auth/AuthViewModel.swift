@@ -33,13 +33,16 @@ final class AuthViewModel {
     // MARK: - ForgotPassword
     func resetPassword(email: String, completion: @escaping (Bool, String) -> Void) {
         guard !email.isEmpty else {
-            completion(false, "E-posta alanı boş bırakılamaz.")
+            completion(false, "E-mail cannot be blank.")
             return
         }
         
-        firebaseAuthManager.resetPassword(email: email) { [weak self] error in
+        firebaseAuthManager.resetPassword(email: email) { [weak self] in
             guard let self else { return }
-            print(error)
+            completion(true, "Please check your e-mail to reset your password.")
+        } onError: { [weak self] error in
+            guard let self else { return }
+            completion(false, error)
         }
     }
     

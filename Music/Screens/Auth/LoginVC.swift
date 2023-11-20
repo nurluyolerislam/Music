@@ -16,7 +16,7 @@ final class LoginVC: UIViewController {
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
     private lazy var passwordTextField    = CustomTextField(fieldType: .password)
     private lazy var signInButton         = MusicButton( bgColor: .authButtonBackground ,color: .authButtonBackground , title: "Sign In", fontSize: .big)
-    private lazy var goggleSignInButton         = MusicButton( bgColor: UIColor.systemBlue ,color: UIColor.systemBlue , title: "Google Sign In", fontSize: .big, systemImageName: "hand.point.up.braille")
+    private lazy var googleSignInButton         = MusicButton( bgColor: UIColor.systemBlue ,color: UIColor.systemBlue , title: "Sign In with Google", fontSize: .big, systemImageName: "g.circle.fill")
     private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
     private lazy var newUserButton        = MusicButton( bgColor:.clear ,color: .label, title: "Sign Up.", fontSize: .small)
     private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: .authButtonBackground , title: "Forgot password?", fontSize: .small)
@@ -27,7 +27,7 @@ final class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubviewsExt(HeadLabel, emailTextField, passwordTextField, forgotPasswordButton, signInButton, goggleSignInButton,stackView)
+        view.addSubviewsExt(HeadLabel, emailTextField, passwordTextField, forgotPasswordButton, signInButton, googleSignInButton,stackView)
         
         configureHeadLabel()
         configureTextField()
@@ -75,7 +75,7 @@ final class LoginVC: UIViewController {
     
     private func configureSignIn(){
         signInButton.configuration?.cornerStyle = .capsule
-        goggleSignInButton.configuration?.cornerStyle = .capsule
+        googleSignInButton.configuration?.cornerStyle = .capsule
         
         signInButton.anchor(top: forgotPasswordButton.bottomAnchor,
                             leading: view.leadingAnchor,
@@ -84,7 +84,7 @@ final class LoginVC: UIViewController {
                             size: .init(width: 0, height: 50))
         
         
-        goggleSignInButton.anchor(top: signInButton.bottomAnchor,
+        googleSignInButton.anchor(top: signInButton.bottomAnchor,
                                   leading: view.leadingAnchor,
                                   trailing: view.trailingAnchor,
                                   padding: .init(top: 20, left: 20, bottom: 0, right: 20),
@@ -92,7 +92,7 @@ final class LoginVC: UIViewController {
         
         
         signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
-        goggleSignInButton.addTarget(self, action: #selector(didTapGoogleSignIn), for: .touchUpInside)
+        googleSignInButton.addTarget(self, action: #selector(didTapGoogleSignIn), for: .touchUpInside)
     }
     
     
@@ -106,7 +106,7 @@ final class LoginVC: UIViewController {
         infoLabel.text = "Don't have an account?"
         
         
-        stackView.anchor(top: goggleSignInButton.bottomAnchor,
+        stackView.anchor(top: googleSignInButton.bottomAnchor,
                          padding: .init(top: 5, left: 0, bottom: 0, right: 0))
         
         stackView.centerXInSuperview()
