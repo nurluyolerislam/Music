@@ -1,11 +1,10 @@
 <h1 align="center">
-    Music <img align="center" src="https://github.com/nurluyolerislam/Music/assets/90938906/cdc7abf6-0c26-4a35-976b-f5578a529071">
+    <img align="center" src="https://github.com/nurluyolerislam/Music/assets/90938906/cdc7abf6-0c26-4a35-976b-f5578a529071"> Music
 </h1>
 
 <img align="right" width="315" src="https://github.com/nurluyolerislam/Music/assets/81991720/462f6510-8061-43cb-9bc5-2e270b581730">
 
-
-This application is a beta version that enables music streaming using the Deezer API.
+This is a prototype music streaming application that uses the Deezer API.
 
 ## Using Technologies:
 - UIKit
@@ -30,10 +29,7 @@ This app is built with the help of the following 3rd party libraries:
 - Kingfisher (7.10.0)
 - Lottie (4.3.3)
 
-
-
-## Screenshots📱
-
+## Screenshots
 
 | On Boarding | Login | Register | Home |
 | --- | --- | --- | --- |
@@ -47,19 +43,16 @@ This app is built with the help of the following 3rd party libraries:
 | --- | --- | --- | --- |
 | <img src="https://github.com/nurluyolerislam/Music/assets/81991720/3c3a8117-9519-485a-b591-7fc9891de84a" alt="Player" width="100%"/> | <img src="https://github.com/nurluyolerislam/Music/assets/81991720/715c813f-9b68-4d9e-95c2-c88476553877" alt="Search" width="100%"/> | <img src="https://github.com/nurluyolerislam/Music/assets/81991720/e102f603-3328-4529-950f-db3af0dd464b" alt="SearchResult" width="100%"/> | <img src="https://github.com/nurluyolerislam/Music/assets/81991720/6ce20ddb-725f-4260-b8ff-24a5c8ddf78c" alt="PlayList" width="100%"/> |
 
-
-
-
-
-
 ## Video Preview 🎥                                                                      
 <div align="center">
-  <video src="https://github.com/duman011/CineVerse-App/assets/81991720/75bb852e-8462-4986-9af4-51af95957dbf" width="50%"  />
+  <video src="https://github.com/nurluyolerislam/Music/assets/90938906/989c848a-46f2-450e-a28c-389c646fdbf1" width="50%"/>
 </div>
 
-## Contact Me 📬
+## Contact Us
 
-If you have any questions, encounter issues, or want to provide feedback, please feel free to reach out to me via email at [01.yasarduman@gmail.com](mailto:01.yasarduman@gmail.com)
+If you have any questions, encounter issues, or want to provide feedback, please feel free to reach out to us via email at<br>
+[nurluyolerislam@gmail.com](mailto:nurluyolerislam@gmail.com)<br>
+[01.yasarduman@gmail.com](mailto:01.yasarduman@gmail.com)
 
 
 
