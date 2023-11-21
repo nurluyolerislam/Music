@@ -11,10 +11,17 @@ import UIKit
 
 final class OnboardingViewModel {
     let sliderData: [OnboardingItemModel] = [
-        OnboardingItemModel(color: .onboardingDarkBackground, title: "Step into the Magic of Cinema", text: "Cineverse welcomes you to the enchanting world of cinema. Begin your journey by discovering the latest film news and captivating stories.", animationName: "a2"),
+        OnboardingItemModel(color: .onboardingDarkBackground,
+                            title: "Explore Music",
+                            text: "It's time to dive into the world of music! Our app brings you an extensive music catalog. Search for your favorite artists' songs or explore different genres. Find the music you want quickly and start listening right away.", animationName: "a2"),
         
-        OnboardingItemModel(color: .onboardingDarkBackground, title: "Experience Film Delight with Cineverse", text: "For movie enthusiasts, Cineverse is here! Explore the newest films and immerse yourself in the enchanting world of cinema.", animationName: "a1"),
+        OnboardingItemModel(color: .onboardingDarkBackground,
+                            title: "Save Your Favorites",
+                            text: "Instantly save the songs that resonate with you! Create your personalized collection of favorite songs. Enjoy revisiting these songs whenever you like.",
+                            animationName: "a1"),
         
-        OnboardingItemModel(color: .onboardingDarkBackground, title: "Ready for a Cinematic Adventure with Cineverse?", text: "Embark on a magical film journey with Cineverse. Discover the latest trailers, star updates, and more in the world of cinema!", animationName: "a2"),
+        OnboardingItemModel(color: .onboardingDarkBackground,
+                            title: "Personalize Your Experience", text: "Tailor your music journey! Explore various settings and discover how to make the most out of our app. Customize your listening experience to suit your tastes.",
+                            animationName: "a2"),
     ]
 }
