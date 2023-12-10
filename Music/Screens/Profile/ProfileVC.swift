@@ -7,32 +7,25 @@
 
 import UIKit
 
-protocol ProfileVCInterface {
+protocol ProfileVCInterface: AnyObject {
+    func configureNavigationBar()
+    func prepareTableView()
+    func addTargets()
     func updateUserPhoto(imageURL: URL)
     func updateUserName()
     func updateTableView()
     func dismissCreatePlaylistPopup()
     func showProgressView()
     func dismissProgressView()
-    func configureViewDidLoad()
     func pushVC(vc: UIViewController)
     func presentVC(vc: UIViewController)
 }
 
 final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate{
     // MARK: - Properties
-    lazy var profileView = ProfileView()
-    lazy var viewModel = ProfileViewModel()
+    private lazy var profileView = ProfileView()
+    private lazy var viewModel = ProfileViewModel(view: self)
     
-    //MARK: - Initializers
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        viewModel.view = self
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     //MARK: - Lifecycle
     override func loadView() {
@@ -55,33 +48,6 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
             viewModel.getUserFavoriteTracks()
         default: return
         }
-    }
-    
-    
-    //MARK: - UI Configuration
-    private func configureUI() {
-        configureNavigationBar()
-        configureSegmentedControll()
-    }
-    
-    private func configureNavigationBar() {
-        title = "Profile"
-    }
-    
-    private func configureSegmentedControll(){
-        profileView.segmentedControl.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
-        profileView.createPlaylistButton.addTarget(self, action: #selector(createPlaylistButtonTapped), for: .touchUpInside)
-        profileView.createPlaylistPopup.createButton.addTarget(self, action: #selector(createPlaylistPopupCreateButtonTapped), for: .touchUpInside)
-        
-        profileView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        profileView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-    }
-    
-    
-    //MARK: - Helper Functions
-    private func addDelegatesAndDataSources() {
-        profileView.tableView.dataSource = self
-        profileView.tableView.delegate = self
     }
     
     
@@ -113,7 +79,6 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
     }
     
     @objc private func  editButtonTapped() {
-        print("------->>>>>> DEBUG: ")
         let pickerController = UIImagePickerController()
         pickerController.delegate = self
         pickerController.sourceType = .photoLibrary
@@ -184,56 +149,36 @@ extension ProfileVC: UITableViewDataSource {
 
 extension ProfileVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        switch profileView.segmentedControl.selectedSegmentIndex {
-        case 0:
-            viewModel.playListsDidSelectRow(at: indexPath)
-          
-            
-        case 1:
-            viewModel.favoriteListsDidSelectRow(at: indexPath)
-          
-            
-        default:
-            return
-        }
-        
+        profileView.segmentedControl.selectedSegmentIndex == 0 
+        ? viewModel.playListsDidSelectRow(at: indexPath)
+        : viewModel.favoriteListsDidSelectRow(at: indexPath)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        switch profileView.segmentedControl.selectedSegmentIndex {
-        case 0:
-            let removePlaylist = UIContextualAction(style: .destructive,
-                                                    title: "Remove") { [weak self] action, view, bool in
-                guard let self else { return }
-                viewModel.removeFromPlayList(at: indexPath)
-            }
-            return UISwipeActionsConfiguration(actions: [removePlaylist])
-            
-        case 1:
-            let removeFromFavoritesAction = UIContextualAction(style: .destructive,
-                                                               title: "Remove") { [weak self] action, view, bool in
-                guard let self else { return }
-                if let userFavoriteTracks = viewModel.userFavoriteTracks {
-                    let track = userFavoriteTracks[indexPath.row]
-                    let vc = PlayerVC(track: track)
-                    vc.viewModel?.delegate = self // TODO: - Sıkıntı Var Canoooo
-                    vc.modalPresentationStyle = .pageSheet
-                    self.present(vc, animated: true)
-                }
-            }
-            return UISwipeActionsConfiguration(actions: [removeFromFavoritesAction])
-            
-        default:
-            return nil
+        let removePlaylist = UIContextualAction(style: .destructive, title: "Remove") { [weak self] action, view, bool in
+            guard let self else { return }
+            profileView.segmentedControl.selectedSegmentIndex == 0 ? viewModel.removePlaylist(at: indexPath) : viewModel.removeTrackFromFavorites(at: indexPath)
         }
+        return UISwipeActionsConfiguration(actions: [removePlaylist])
     }
 }
 
 extension ProfileVC: ProfileVCInterface {
-    func configureViewDidLoad() {
-        addDelegatesAndDataSources()
-        configureUI()
+    func configureNavigationBar() {
+        title = "Profile"
+    }
+    
+    func addTargets() {
+        profileView.segmentedControl.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
+        profileView.createPlaylistButton.addTarget(self, action: #selector(createPlaylistButtonTapped), for: .touchUpInside)
+        profileView.createPlaylistPopup.createButton.addTarget(self, action: #selector(createPlaylistPopupCreateButtonTapped), for: .touchUpInside)
+        profileView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        profileView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+    }
+    
+    func prepareTableView() {
+        profileView.tableView.dataSource = self
+        profileView.tableView.delegate = self
     }
     
     func showProgressView() {

@@ -7,33 +7,40 @@
 
 import UIKit
 
-protocol ProfileVMInterface: AnyObject {
+protocol ProfileVMInterface {
     var view: ProfileVCInterface? { get set }
     func viewDidLoad()
-    func removeFromPlayList(at indexPath: IndexPath)
-    func removeFromFavoriteList(at indexPath: IndexPath)
+    func getUserPlaylists()
+    func getUserFavoriteTracks()
+    func createNewPlaylist(playlistName: String)
+    func uploadUserPhoto(imageData: UIImage)
+    func logout(completion: @escaping () -> Void )
+    func removePlaylist(at indexPath: IndexPath)
+    func removeTrackFromFavorites(at indexPath: IndexPath)
     func playListsDidSelectRow(at indexPath: IndexPath)
+    
     func favoriteListsDidSelectRow(at indexPath: IndexPath)
 }
 
 final class ProfileViewModel {
     
     //MARK: - Variables
+    weak var view: ProfileVCInterface?
     var userName: String?
     var playlists: [UserPlaylist]?
     var userFavoriteTracks: [Track]?
-    var view: ProfileVCInterface?
     let firestoreManager: FirestoreManagerProtocol
     lazy var firebaseAuthManager = FirebaseAuthManager()
     lazy var firebaseStorageManager = FirebaseStorageManager()
     
-    init(firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared) {
+    init(firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared, view: ProfileVCInterface) {
         self.firestoreManager = firestoreManager
+        self.view = view
     }
     
     
     //MARK: - Helper Functions
-    func getUserName() {
+    private func getUserName() {
         view?.showProgressView()
         firestoreManager.getUserName { [weak self] userName in
             guard let self else { return }
@@ -47,6 +54,42 @@ final class ProfileViewModel {
         }
     }
     
+    private func fetchUserPhoto() {
+        view?.showProgressView()
+        firebaseStorageManager.fetchUserImage() { [weak self] url in
+            guard let self else { return }
+            view?.updateUserPhoto(imageURL: url)
+            view?.dismissProgressView()
+        } onError: { error in
+            print(error)
+        }
+    }
+    
+}
+
+
+extension ProfileViewModel: ProfileVMInterface {
+    
+    func viewDidLoad() {
+        view?.configureNavigationBar()
+        view?.addTargets()
+        view?.prepareTableView()
+        getUserName()
+        fetchUserPhoto()
+    }
+    
+    func removeTrackFromFavorites(at indexPath: IndexPath) {
+        guard let userFavoriteTracks else { return }
+        let track = userFavoriteTracks[indexPath.row]
+        firestoreManager.removeTrackFromFavorites(track: track) { [weak self] in
+            guard let self else { return }
+            getUserFavoriteTracks()
+            view?.updateTableView()
+        } onError: { error in
+            print(error)
+        }
+    }
+    
     func getUserPlaylists () {
         firestoreManager.getUserPlaylists { [weak self] playlists in
             guard let self else { return }
@@ -57,7 +100,7 @@ final class ProfileViewModel {
         }
     }
     
-    func getUserFavoriteTracks () {
+    func getUserFavoriteTracks() {
         firestoreManager.getUserFavoriteTracks { [weak self] tracks in
             guard let self else { return }
             userFavoriteTracks = tracks
@@ -77,41 +120,10 @@ final class ProfileViewModel {
         }
     }
     
-    func removeTrackFromFavorites(track: Track) {
-        firestoreManager.removeTrackFromFavorites(track: track) { [weak self] in
-            guard let self else { return }
-            getUserFavoriteTracks()
-            view?.updateTableView()
-        } onError: { error in
-            print(error)
-        }
-    }
-    
-    func removePlaylist(playlist: UserPlaylist) {
-        firestoreManager.removePlaylist(playlist: playlist) { [weak self] in
-            guard let self else { return }
-            getUserPlaylists()
-            view?.updateTableView()
-        } onError: { error in
-            print(error)
-        }
-    }
-    
     func uploadUserPhoto(imageData: UIImage) {
         firebaseStorageManager.uploadUserImage(image: imageData) { [weak self] in
             guard let self else { return }
             fetchUserPhoto()
-        } onError: { error in
-            print(error)
-        }
-    }
-    
-    func fetchUserPhoto() {
-        view?.showProgressView()
-        firebaseStorageManager.fetchUserImage() { [weak self] url in
-            guard let self else { return }
-            view?.updateUserPhoto(imageURL: url)
-            view?.dismissProgressView()
         } onError: { error in
             print(error)
         }
@@ -124,29 +136,17 @@ final class ProfileViewModel {
             print(error)
         }
     }
-
-}
-
-
-extension ProfileViewModel: ProfileVMInterface {
- 
-    func viewDidLoad() {
-        view?.configureViewDidLoad()
-        getUserName()
-        fetchUserPhoto()
-    }
     
-    func removeFromPlayList(at indexPath: IndexPath) {
-        if let playlists = playlists {
-            let playlist = playlists[indexPath.row]
-            removePlaylist(playlist: playlist)
-        }
-    }
-    
-    func removeFromFavoriteList(at indexPath: IndexPath) {
-        if let userFavoriteTracks = userFavoriteTracks {
-            let track = userFavoriteTracks[indexPath.row]
-            removeTrackFromFavorites(track: track)
+    func removePlaylist(at indexPath: IndexPath) {
+        guard let playlists = playlists else  { return }
+        let playlist = playlists[indexPath.row]
+        
+        firestoreManager.removePlaylist(playlist: playlist) { [weak self] in
+            guard let self else { return }
+            getUserPlaylists()
+            view?.updateTableView()
+        } onError: { error in
+            print(error)
         }
     }
     
@@ -160,6 +160,9 @@ extension ProfileViewModel: ProfileVMInterface {
     }
     
     func favoriteListsDidSelectRow(at indexPath: IndexPath) {
+        guard let userFavoriteTracks else { return }
+        let track = userFavoriteTracks[indexPath.row]
+        view?.presentVC(vc: PlayerVC(track: track))
     }
     
 }

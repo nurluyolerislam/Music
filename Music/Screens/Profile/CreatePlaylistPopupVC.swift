@@ -60,13 +60,13 @@ final class CreatePlaylistPopupVC: UIViewController {
         configureButtonsStackView()
     }
     
-    func configureContainerView() {
+    private func configureContainerView() {
         view.addSubview(containerView)
         containerView.centerInSuperview()
         containerView.anchor(size: .init(width: 280, height: 220))
     }
     
-    func configureTitleLabel() {
+    private func configureTitleLabel() {
         containerView.addSubviewsExt(titleLabel, textField, buttonsStackView)
         titleLabel.anchor(top: containerView.topAnchor,
                           leading: containerView.leadingAnchor,
