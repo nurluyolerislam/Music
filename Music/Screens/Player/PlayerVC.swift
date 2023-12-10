@@ -13,7 +13,7 @@ import Kingfisher
 final class PlayerVC: UIViewController {
     
     //MARK: - Variables
-    lazy var playerView = PlayerView()
+    private lazy var playerView = PlayerView()
     var viewModel: PlayerViewModel?
     
     
@@ -177,7 +177,7 @@ extension PlayerVC: PlayerDelegate {
             playerView.playButton.setImage(UIImage(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")?
                 .withConfiguration(UIImage.SymbolConfiguration(pointSize: 40,
                                                                weight: .regular)),
-                                           for: .normal)
+                                                               for: .normal)
         }
     }
 }

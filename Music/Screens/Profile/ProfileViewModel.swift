@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol ProfileViewModelDelegate: AnyObject {
-    func updateUserPhoto(imageURL: URL)
-    func updateUserName()
-    func updateTableView()
-    func dismissCreatePlaylistPopup()
-    func showProgressView()
-    func dismissProgressView()
+protocol ProfileVMInterface: AnyObject {
+    var view: ProfileVCInterface? { get set }
+    func viewDidLoad()
+    func removeFromPlayList(at indexPath: IndexPath)
+    func removeFromFavoriteList(at indexPath: IndexPath)
+    func playListsDidSelectRow(at indexPath: IndexPath)
+    func favoriteListsDidSelectRow(at indexPath: IndexPath)
 }
 
 final class ProfileViewModel {
@@ -22,7 +22,7 @@ final class ProfileViewModel {
     var userName: String?
     var playlists: [UserPlaylist]?
     var userFavoriteTracks: [Track]?
-    weak var delegate: ProfileViewModelDelegate?
+    var view: ProfileVCInterface?
     let firestoreManager: FirestoreManagerProtocol
     lazy var firebaseAuthManager = FirebaseAuthManager()
     lazy var firebaseStorageManager = FirebaseStorageManager()
@@ -34,16 +34,16 @@ final class ProfileViewModel {
     
     //MARK: - Helper Functions
     func getUserName() {
-        delegate?.showProgressView()
+        view?.showProgressView()
         firestoreManager.getUserName { [weak self] userName in
             guard let self else { return }
             self.userName = userName
-            delegate?.updateUserName()
-            delegate?.dismissProgressView()
+            view?.updateUserName()
+            view?.dismissProgressView()
         } onError: { [weak self] error in
             guard let self else { return }
             print(error)
-            delegate?.dismissProgressView()
+            view?.dismissProgressView()
         }
     }
     
@@ -51,7 +51,7 @@ final class ProfileViewModel {
         firestoreManager.getUserPlaylists { [weak self] playlists in
             guard let self else { return }
             self.playlists = playlists
-            delegate?.updateTableView()
+            view?.updateTableView()
         } onError: { error in
             print(error)
         }
@@ -61,7 +61,7 @@ final class ProfileViewModel {
         firestoreManager.getUserFavoriteTracks { [weak self] tracks in
             guard let self else { return }
             userFavoriteTracks = tracks
-            delegate?.updateTableView()
+            view?.updateTableView()
         } onError: { error in
             print(error)
         }
@@ -71,7 +71,7 @@ final class ProfileViewModel {
         firestoreManager.createNewPlaylist(playlistName: playlistName) { [weak self] in
             guard let self else { return }
             getUserPlaylists()
-            delegate?.dismissCreatePlaylistPopup()
+            view?.dismissCreatePlaylistPopup()
         } onError: { error in
             print(error)
         }
@@ -81,7 +81,7 @@ final class ProfileViewModel {
         firestoreManager.removeTrackFromFavorites(track: track) { [weak self] in
             guard let self else { return }
             getUserFavoriteTracks()
-            delegate?.updateTableView()
+            view?.updateTableView()
         } onError: { error in
             print(error)
         }
@@ -91,7 +91,7 @@ final class ProfileViewModel {
         firestoreManager.removePlaylist(playlist: playlist) { [weak self] in
             guard let self else { return }
             getUserPlaylists()
-            delegate?.updateTableView()
+            view?.updateTableView()
         } onError: { error in
             print(error)
         }
@@ -107,11 +107,11 @@ final class ProfileViewModel {
     }
     
     func fetchUserPhoto() {
-        delegate?.showProgressView()
+        view?.showProgressView()
         firebaseStorageManager.fetchUserImage() { [weak self] url in
             guard let self else { return }
-            delegate?.updateUserPhoto(imageURL: url)
-            delegate?.dismissProgressView()
+            view?.updateUserPhoto(imageURL: url)
+            view?.dismissProgressView()
         } onError: { error in
             print(error)
         }
@@ -123,6 +123,43 @@ final class ProfileViewModel {
         } onError: { error in
             print(error)
         }
+    }
+
+}
+
+
+extension ProfileViewModel: ProfileVMInterface {
+ 
+    func viewDidLoad() {
+        view?.configureViewDidLoad()
+        getUserName()
+        fetchUserPhoto()
+    }
+    
+    func removeFromPlayList(at indexPath: IndexPath) {
+        if let playlists = playlists {
+            let playlist = playlists[indexPath.row]
+            removePlaylist(playlist: playlist)
+        }
+    }
+    
+    func removeFromFavoriteList(at indexPath: IndexPath) {
+        if let userFavoriteTracks = userFavoriteTracks {
+            let track = userFavoriteTracks[indexPath.row]
+            removeTrackFromFavorites(track: track)
+        }
+    }
+    
+    func playListsDidSelectRow(at indexPath: IndexPath) {
+        if let playlists = playlists {
+            let playlist = playlists[indexPath.row]
+            let playlistVC = PlaylistVC(userPlaylist: playlist)
+            playlistVC.title = playlist.title
+            view?.pushVC(vc: playlistVC)
+        }
+    }
+    
+    func favoriteListsDidSelectRow(at indexPath: IndexPath) {
     }
     
 }

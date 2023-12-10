@@ -10,7 +10,7 @@ import UIKit
 final class CreatePlaylistPopupVC: UIViewController {
     
     //MARK: - UI Elements
-    lazy var containerView  = AlertContainerView()
+    private lazy var containerView  = AlertContainerView()
     
     private lazy var titleLabel: TitleLabel = {
         let label = TitleLabel(textAlignment: .center, fontSize: 20)
@@ -50,7 +50,6 @@ final class CreatePlaylistPopupVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         configureUI()
-        
     }
     
     //MARK: - Configuration Methods
@@ -68,7 +67,7 @@ final class CreatePlaylistPopupVC: UIViewController {
     }
     
     func configureTitleLabel() {
-        containerView.addSubview(titleLabel)
+        containerView.addSubviewsExt(titleLabel, textField, buttonsStackView)
         titleLabel.anchor(top: containerView.topAnchor,
                           leading: containerView.leadingAnchor,
                           trailing: containerView.trailingAnchor,
@@ -79,7 +78,6 @@ final class CreatePlaylistPopupVC: UIViewController {
     }
     
     private func configureTextView() {
-        containerView.addSubview(textField)
         textField.centerYInSuperview()
         textField.anchor(leading: containerView.leadingAnchor,
                         trailing: containerView.trailingAnchor,
@@ -88,7 +86,6 @@ final class CreatePlaylistPopupVC: UIViewController {
     }
     
     private func configureButtonsStackView() {
-        containerView.addSubview(buttonsStackView)
         buttonsStackView.anchor(leading: containerView.leadingAnchor,
                                 bottom: containerView.bottomAnchor,
                                 trailing: containerView.trailingAnchor,
@@ -99,8 +96,7 @@ final class CreatePlaylistPopupVC: UIViewController {
     
     
     // MARK: - Actions
-    @objc func dismissVC() {
+    @objc private func dismissVC() {
         dismiss(animated: true)
     }
-    
 }

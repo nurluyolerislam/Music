@@ -7,6 +7,18 @@
 
 import UIKit
 
+protocol ProfileVCInterface {
+    func updateUserPhoto(imageURL: URL)
+    func updateUserName()
+    func updateTableView()
+    func dismissCreatePlaylistPopup()
+    func showProgressView()
+    func dismissProgressView()
+    func configureViewDidLoad()
+    func pushVC(vc: UIViewController)
+    func presentVC(vc: UIViewController)
+}
+
 final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINavigationControllerDelegate{
     // MARK: - Properties
     lazy var profileView = ProfileView()
@@ -15,7 +27,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
     //MARK: - Initializers
     init() {
         super.init(nibName: nil, bundle: nil)
-        viewModel.delegate = self
+        viewModel.view = self
     }
     
     required init?(coder: NSCoder) {
@@ -30,10 +42,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addDelegatesAndDataSources()
-        configureUI()
-        viewModel.getUserName()
-        viewModel.fetchUserPhoto()
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +74,6 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
         profileView.createPlaylistPopup.createButton.addTarget(self, action: #selector(createPlaylistPopupCreateButtonTapped), for: .touchUpInside)
         
         profileView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        
         profileView.editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
     }
     
@@ -78,7 +86,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
     
     
     //MARK: - @Actions
-    @objc func segmentValueChanged() {
+    @objc private func segmentValueChanged() {
         switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
             profileView.tableView.register(ProfilePlayListTableViewCell.self, forCellReuseIdentifier: ProfilePlayListTableViewCell.reuseID)
@@ -93,18 +101,18 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
         }
     }
     
-    @objc func createPlaylistButtonTapped(){
+    @objc private func createPlaylistButtonTapped(){
         present(profileView.createPlaylistPopup, animated: true)
     }
     
-    @objc func createPlaylistPopupCreateButtonTapped(){
+    @objc private func createPlaylistPopupCreateButtonTapped(){
         guard let playlistName = profileView.createPlaylistPopup.textField.text else { return }
         if !playlistName.isEmpty {
             viewModel.createNewPlaylist(playlistName: playlistName)
         }
     }
     
-    @objc func  editButtonTapped() {
+    @objc private func  editButtonTapped() {
         print("------->>>>>> DEBUG: ")
         let pickerController = UIImagePickerController()
         pickerController.delegate = self
@@ -118,7 +126,7 @@ final class ProfileVC: UIViewController , UIImagePickerControllerDelegate , UINa
         self.dismiss(animated: true)
     }
     
-    @objc func logoutButtonTapped(){
+    @objc private func logoutButtonTapped(){
         viewModel.logout {
             let loginVC = LoginVC()
             let nav = UINavigationController(rootViewController: loginVC)
@@ -179,21 +187,12 @@ extension ProfileVC: UITableViewDelegate {
         
         switch profileView.segmentedControl.selectedSegmentIndex {
         case 0:
-            if let playlists = viewModel.playlists {
-                let playlist = playlists[indexPath.row]
-                let playlistVC = PlaylistVC(userPlaylist: playlist)
-                playlistVC.title = playlist.title
-                navigationController?.pushViewController(playlistVC, animated: true)
-            }
+            viewModel.playListsDidSelectRow(at: indexPath)
+          
             
         case 1:
-            if let userFavoriteTracks = viewModel.userFavoriteTracks {
-                let track = userFavoriteTracks[indexPath.row]
-                let vc = PlayerVC(track: track)
-                vc.viewModel?.delegate = self
-                vc.modalPresentationStyle = .pageSheet
-                self.present(vc, animated: true)
-            }
+            viewModel.favoriteListsDidSelectRow(at: indexPath)
+          
             
         default:
             return
@@ -207,10 +206,7 @@ extension ProfileVC: UITableViewDelegate {
             let removePlaylist = UIContextualAction(style: .destructive,
                                                     title: "Remove") { [weak self] action, view, bool in
                 guard let self else { return }
-                if let playlists = viewModel.playlists {
-                    let playlist = playlists[indexPath.row]
-                    viewModel.removePlaylist(playlist: playlist)
-                }
+                viewModel.removeFromPlayList(at: indexPath)
             }
             return UISwipeActionsConfiguration(actions: [removePlaylist])
             
@@ -220,7 +216,10 @@ extension ProfileVC: UITableViewDelegate {
                 guard let self else { return }
                 if let userFavoriteTracks = viewModel.userFavoriteTracks {
                     let track = userFavoriteTracks[indexPath.row]
-                    viewModel.removeTrackFromFavorites(track: track)
+                    let vc = PlayerVC(track: track)
+                    vc.viewModel?.delegate = self // TODO: - Sıkıntı Var Canoooo
+                    vc.modalPresentationStyle = .pageSheet
+                    self.present(vc, animated: true)
                 }
             }
             return UISwipeActionsConfiguration(actions: [removeFromFavoritesAction])
@@ -231,7 +230,12 @@ extension ProfileVC: UITableViewDelegate {
     }
 }
 
-extension ProfileVC: ProfileViewModelDelegate {
+extension ProfileVC: ProfileVCInterface {
+    func configureViewDidLoad() {
+        addDelegatesAndDataSources()
+        configureUI()
+    }
+    
     func showProgressView() {
         showLoading()
     }
@@ -244,7 +248,6 @@ extension ProfileVC: ProfileViewModelDelegate {
         profileView.userImage.kf.setImage(with: imageURL)
     }
     
-    
     func updateUserName() {
         profileView.userName.text = viewModel.userName
     }
@@ -256,7 +259,16 @@ extension ProfileVC: ProfileViewModelDelegate {
     func dismissCreatePlaylistPopup() {
         profileView.createPlaylistPopup.dismiss(animated: true)
     }
+    
+    func pushVC(vc: UIViewController) {
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func presentVC(vc: UIViewController) {
+        self.present(vc, animated: true)
+    }
 }
+
 
 extension ProfileVC: PlayerViewModelDelegate {
     func updateFavorites() {
