@@ -6,10 +6,17 @@
 //
 
 
-import Foundation
 import UIKit
 
+protocol onboardingVMInterface: AnyObject {
+    var view: OnboardingVCInterface? { get set }
+    func viewDidLoad()
+}
+
 final class OnboardingViewModel {
+    
+    weak var view: OnboardingVCInterface?
+    
     let sliderData: [OnboardingItemModel] = [
         OnboardingItemModel(color: .onboardingDarkBackground,
                             title: "Explore Music",
@@ -24,4 +31,13 @@ final class OnboardingViewModel {
                             title: "Personalize Your Experience", text: "Tailor your music journey! Explore various settings and discover how to make the most out of our app. Customize your listening experience to suit your tastes.",
                             animationName: "a2"),
     ]
+    
+}
+
+
+extension OnboardingViewModel: onboardingVMInterface {
+    
+    func viewDidLoad() {
+        view?.configureViewController()
+    }
 }

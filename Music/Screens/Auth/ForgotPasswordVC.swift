@@ -21,7 +21,6 @@ final class ForgotPasswordVC: UIViewController {
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureViewController()
         configureHeadLabel()
         configureTextField()
@@ -29,11 +28,8 @@ final class ForgotPasswordVC: UIViewController {
         configureStackView()
     }
     
-    
-    
-    
     // MARK: - UI Configuration
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         self.navigationItem.setHidesBackButton(true, animated: true)
         view.addSubviewsExt(HeadLabel, emailTextField, forgotPasswordButton, stackView)
@@ -45,15 +41,15 @@ final class ForgotPasswordVC: UIViewController {
         HeadLabel.anchor(top: view.topAnchor,
                          leading: view.leadingAnchor,
                          //trailing: view.trailingAnchor,
-                         padding: .init(top: 80, left: 20, bottom: 0, right: 0))
+                         padding: .init(top: 80, leading: 20))
     }
     
     private func configureTextField() {
         emailTextField.anchor(top: HeadLabel.bottomAnchor,
                                  leading: view.leadingAnchor,
                                  trailing: view.trailingAnchor,
-                                 padding: .init(top: 40, left: 20, bottom: 0, right: 20),
-                                 size: .init(width: 0, height: 50))
+                                 padding: .init(top: 40, leading: 20, trailing: 20),
+                                 size: .init(heightSize: 50))
     }
     
     private func configureForgotPassword(){
@@ -62,8 +58,8 @@ final class ForgotPasswordVC: UIViewController {
         forgotPasswordButton.anchor(top: emailTextField.bottomAnchor,
                             leading: view.leadingAnchor,
                             trailing: view.trailingAnchor,
-                            padding: .init(top: 20, left: 20, bottom: 0, right: 20),
-                            size: .init(width: 0, height: 50))
+                            padding: .init(top: 20, leading: 20, trailing: 20),
+                                    size: .init(heightSize: 50))
         
         forgotPasswordButton.addTarget(self, action: #selector(didTapForgotPassword), for: .touchUpInside)
     }
@@ -77,7 +73,7 @@ final class ForgotPasswordVC: UIViewController {
         infoLabel.text = "Already have an account?"
 
         stackView.anchor(top: forgotPasswordButton.bottomAnchor,
-                         padding: .init(top: 5, left: 0, bottom: 0, right: 0))
+                         padding: .init(top: 5))
         
         stackView.centerXInSuperview()
         
@@ -85,7 +81,7 @@ final class ForgotPasswordVC: UIViewController {
     }
     
     // MARK: - Actions
-    @objc func didTapForgotPassword(){
+    @objc private func didTapForgotPassword(){
         //Email & Password Validation
         
         guard let email = emailTextField.text else {
@@ -110,7 +106,6 @@ final class ForgotPasswordVC: UIViewController {
     }
     
     @objc private func didTapSignIn() {
-
         self.navigationController?.popToRootViewController(animated: true)
     } 
 }

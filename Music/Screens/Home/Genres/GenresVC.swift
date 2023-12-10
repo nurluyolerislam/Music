@@ -64,14 +64,7 @@ final class GenresVC: UIViewController {
 
 extension GenresVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let viewModel = viewModel {
-            if let response = viewModel.genresResponse {
-                if let genres = response.data {
-                    return genres.count
-                }
-            }
-        }
-        return 0
+        viewModel?.genresVCnumberOfItemsInSection() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -92,18 +85,6 @@ extension GenresVC: UICollectionViewDataSource {
 
 extension GenresVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let viewModel = viewModel {
-            if let response = viewModel.genresResponse {
-                if let genres = response.data {
-                    let genre = genres[indexPath.row]
-                    
-                    if let genreID = genre.id {
-                        let genresVC = GenreArtistsVC(genreId: genreID.description, manager: viewModel.manager)
-                        genresVC.title = genre.name
-                        navigationController?.pushViewController(genresVC, animated: true)
-                    }
-                }
-            }
-        }
+        viewModel?.GenresVCDidSelectItem(at: indexPath)
     }
 }

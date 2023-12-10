@@ -16,13 +16,14 @@ final class LoginVC: UIViewController {
     private lazy var emailTextField       = CustomTextField(fieldType: .email)
     private lazy var passwordTextField    = CustomTextField(fieldType: .password)
     private lazy var signInButton         = MusicButton( bgColor: .authButtonBackground ,color: .authButtonBackground , title: "Sign In", fontSize: .big)
-    private lazy var googleSignInButton         = MusicButton( bgColor: UIColor.systemBlue ,color: UIColor.systemBlue , title: "Sign In with Google", fontSize: .big, systemImageName: "g.circle.fill")
-    private let infoLabel            = SecondaryTitleLabel(fontSize: 16)
+    private lazy var googleSignInButton   = MusicButton( bgColor: UIColor.systemBlue ,color: UIColor.systemBlue , title: "Sign In with Google", fontSize: .big, systemImageName: "g.circle.fill")
+    private let infoLabel                 = SecondaryTitleLabel(fontSize: 16)
     private lazy var newUserButton        = MusicButton( bgColor:.clear ,color: .label, title: "Sign Up.", fontSize: .small)
     private lazy var forgotPasswordButton = MusicButton( bgColor:.clear ,color: .authButtonBackground , title: "Forgot password?", fontSize: .small)
     
     private lazy var stackView            = UIStackView()
     private let authViewModel = AuthViewModel()
+    
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +35,6 @@ final class LoginVC: UIViewController {
         configureForgotPassword()
         configureSignIn()
         configureStackView()
-        
-        
-        
     }
     // MARK: - UI Configuration
     
@@ -45,22 +43,21 @@ final class LoginVC: UIViewController {
         
         HeadLabel.anchor(top: view.topAnchor,
                          leading: view.leadingAnchor,
-                         //trailing: view.trailingAnchor,
-                         padding: .init(top: 80, left: 20, bottom: 0, right: 0))
+                         padding: .init(top: 80, leading: 20))
     }
     
     private func configureTextField() {
         emailTextField.anchor(top: HeadLabel.bottomAnchor,
                               leading: view.leadingAnchor,
                               trailing: view.trailingAnchor,
-                              padding: .init(top: 40, left: 20, bottom: 0, right: 20),
-                              size: .init(width: 0, height: 50))
+                              padding: .init(top: 40, leading: 20, trailing: 20),
+                              size: .init(heightSize: 50))
         
         passwordTextField.anchor(top: emailTextField.bottomAnchor,
                                  leading: view.leadingAnchor,
                                  trailing: view.trailingAnchor,
-                                 padding: .init(top: 20, left: 20, bottom: 0, right: 20),
-                                 size: .init(width: 0, height: 50))
+                                 padding: .init(top: 20, leading: 20, trailing: 20),
+                                 size: .init(heightSize: 50))
     }
     
     private func configureForgotPassword(){
@@ -68,7 +65,7 @@ final class LoginVC: UIViewController {
         
         forgotPasswordButton.anchor(top: passwordTextField.bottomAnchor,
                                     trailing: passwordTextField.trailingAnchor,
-                                    padding: .init(top: 10, left: 0, bottom: 0, right: 0))
+                                    padding: .init(top: 10))
         
         forgotPasswordButton.addTarget(self, action: #selector(didTapForgotPassword), for: .touchUpInside)
     }
@@ -80,15 +77,15 @@ final class LoginVC: UIViewController {
         signInButton.anchor(top: forgotPasswordButton.bottomAnchor,
                             leading: view.leadingAnchor,
                             trailing: view.trailingAnchor,
-                            padding: .init(top: 20, left: 20, bottom: 0, right: 20),
+                            padding: .init(top: 20, leading: 20),
                             size: .init(width: 0, height: 50))
         
         
         googleSignInButton.anchor(top: signInButton.bottomAnchor,
                                   leading: view.leadingAnchor,
                                   trailing: view.trailingAnchor,
-                                  padding: .init(top: 20, left: 20, bottom: 0, right: 20),
-                                  size: .init(width: 0, height: 50))
+                                  padding: .init(top: 20, leading: 20, trailing: 20),
+                                  size: .init(heightSize: 50))
         
         
         signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
@@ -107,7 +104,7 @@ final class LoginVC: UIViewController {
         
         
         stackView.anchor(top: googleSignInButton.bottomAnchor,
-                         padding: .init(top: 5, left: 0, bottom: 0, right: 0))
+                         padding: .init(top: 5))
         
         stackView.centerXInSuperview()
         

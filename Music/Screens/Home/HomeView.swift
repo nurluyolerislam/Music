@@ -170,7 +170,7 @@ final class HomeView: UIView {
         popularSongsLabel.anchor(top: genresCollectionView.bottomAnchor,
                                  leading: safeAreaLayoutGuide.leadingAnchor,
                                  padding: .init(top: 20,
-                                                leading: 20))
+                                 leading: 20))
     }
     
     private func configurePopularSongsTableView() {
@@ -180,8 +180,8 @@ final class HomeView: UIView {
                                      bottom: safeAreaLayoutGuide.bottomAnchor,
                                      trailing: safeAreaLayoutGuide.trailingAnchor,
                                      padding: .init(top: 20,
-                                        leading: 20,
-                                                    trailing: 20))
+                                     leading: 20,
+                                     trailing: 20))
     }
     
     

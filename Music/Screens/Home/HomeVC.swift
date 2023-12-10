@@ -7,11 +7,20 @@
 
 import UIKit
 
+protocol HomeVCInterface {
+    func configureViewDidLoad()
+    func updateUI()
+    func showProgressView()
+    func dismissProgressView()
+    func pushVC(vc : UIViewController)
+    func presentVC(vc : UIViewController)
+}
+
 final class HomeVC: UIViewController {
     
     //MARK: - Variables
-    lazy var homeView = HomeView()
-    let viewModel = HomeViewModel()
+    private lazy var homeView = HomeView()
+    private lazy var viewModel = HomeViewModel(view: self)
     
     
     //MARK: - Lifecycle
@@ -21,17 +30,13 @@ final class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addTargets()
-        addDelegatesAndDataSources()
-        configureUI()
-        viewModel.delegate = self
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
-    
     
     //MARK: - Configuration Methods
     private func configureUI() {
@@ -41,7 +46,6 @@ final class HomeVC: UIViewController {
     private func configureNavigationBar() {
         title = "Home"
     }
-    
     
     //MARK: - Helper Functions
     private func addDelegatesAndDataSources() {
@@ -69,13 +73,13 @@ final class HomeVC: UIViewController {
     
     
     //MARK: - @Actions
-    @objc func browseButtonTapped() {
+    @objc private func browseButtonTapped() {
         let discoverVC = DiscoverVC(viewModel: viewModel)
         navigationController?.pushViewController(discoverVC, animated: true)
         
     }
     
-    @objc func exploreButtonTapped(){
+    @objc private func exploreButtonTapped(){
         let genresVC = GenresVC(viewModel: viewModel)
         navigationController?.pushViewController(genresVC, animated: true)
     }
@@ -161,32 +165,10 @@ extension HomeVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
         case homeView.discoverCollectionView:
-            
-            if let response = viewModel.radioResponse {
-                if let playlists = response.data {
-                    let playlist = playlists[indexPath.row]
-                    
-                    if let playlistURL = playlist.tracklist {
-                        let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: viewModel.manager)
-                        playlistVC.title = playlist.title
-                        navigationController?.pushViewController(playlistVC, animated: true)
-                    }
-                }
-            }
+            viewModel.discoverCollectionDidSelectItem(at: indexPath)
             
         case homeView.genresCollectionView:
-            if let response = viewModel.genresResponse {
-                if let genres = response.data {
-                    let genre = genres[indexPath.row]
-                    
-                    if let genresID = genre.id {
-                        let genresArtistsVC = GenreArtistsVC(genreId: genresID.description, manager: viewModel.manager)
-                        genresArtistsVC.title = genre.name
-                        navigationController?.pushViewController(genresArtistsVC, animated: true)
-                        
-                    }
-                }
-            }
+            viewModel.genresCollectionDidSelectItem(at: indexPath)
             
         default:
             return
@@ -197,20 +179,22 @@ extension HomeVC: UICollectionViewDelegate {
 
 extension HomeVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let response = viewModel.popularSongsResponse {
-            if let songs = response.data {
-                let song = songs[indexPath.row]
-                let vc = PlayerVC(track: song)
-                vc.modalPresentationStyle = .pageSheet
-                self.present(vc, animated: true)
-            }
-        }
+        viewModel.popularSongsDidSelectItem(at: indexPath)
     }
 }
 
-extension HomeVC: HomeViewModelDelegate {
+
+extension HomeVC: HomeVCInterface{
+    func configureViewDidLoad() {
+        addTargets()
+        addDelegatesAndDataSources()
+        configureUI()
+    }
+    
     func showProgressView() {
-        showLoading()
+        DispatchQueue.main.async {
+            self.showLoading()
+        }
     }
     
     func dismissProgressView() {
@@ -221,5 +205,17 @@ extension HomeVC: HomeViewModelDelegate {
         homeView.discoverCollectionView.reloadData()
         homeView.genresCollectionView.reloadData()
         homeView.popularSongsTableView.reloadData()
-    }    
+    }
+    
+    func pushVC(vc : UIViewController) {
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func presentVC(vc: UIViewController) {
+        DispatchQueue.main.async {
+            self.present(vc, animated: true)
+        }
+    }
 }

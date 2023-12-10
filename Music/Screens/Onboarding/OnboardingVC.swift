@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol OnboardingVCInterface: AnyObject{
+    func configureViewController()
+}
+
 final class OnboardingVC: UIViewController {
     // MARK: - ViewModel
     private var viewModel = OnboardingViewModel()
@@ -16,7 +20,7 @@ final class OnboardingVC: UIViewController {
     private var sliderData: [OnboardingItemModel] = []
     
     // MARK: - Views
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: view.frame.width, height: view.frame.height)
         layout.minimumLineSpacing = 0
@@ -40,7 +44,7 @@ final class OnboardingVC: UIViewController {
         return btn
     }()
     
-    lazy var vStack: UIStackView = {
+    private lazy var vStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.alignment = .center
@@ -80,10 +84,8 @@ final class OnboardingVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        sliderData = viewModel.sliderData
-        setupCollection()
-        setControll()
-        setShape()
+        viewModel.view = self
+        viewModel.viewDidLoad()
     }
     
     // MARK: - UI Setup
@@ -112,8 +114,7 @@ final class OnboardingVC: UIViewController {
     }
     
     private func setControll() {
-        view.addSubview(vStack)
-        view.addSubview(skipBtn)
+        view.addSubviewsExt(vStack, skipBtn)
         
         let pagerStack = UIStackView()
         pagerStack.axis = .horizontal
@@ -134,18 +135,17 @@ final class OnboardingVC: UIViewController {
             
         }
         
-        vStack.addArrangedSubview(nextBtn)
-        vStack.addArrangedSubview(pagerStack)
+        vStack.addArrangedSubviewsExt(nextBtn, pagerStack)
         
         skipBtn.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                        trailing: view.trailingAnchor,
-                       padding: .init(top: 10, left: 0, bottom: 0, right: 10)
+                       padding: .init(top: 10, trailing: 10)
         )
         
         vStack.anchor(leading: view.leadingAnchor,
                       bottom: view.bottomAnchor,
                       trailing: view.trailingAnchor,
-                      padding: .init(top: 0, left: 0, bottom: 50, right: 0)
+                      padding: .init( bottom: 50)
         )
         
     }
@@ -159,7 +159,7 @@ final class OnboardingVC: UIViewController {
         )
     }
     // MARK: - UI Setup
-    @objc func scrollToSlide(sender: UIGestureRecognizer){
+    @objc private func scrollToSlide(sender: UIGestureRecognizer){
         if let index = sender.view?.tag{
             collectionView.scrollToItem(at: IndexPath(item: index-1, section: 0), at: .centeredHorizontally, animated: true)
             
@@ -167,7 +167,7 @@ final class OnboardingVC: UIViewController {
         }
     }
     
-    @objc func nextSlide(){
+    @objc private func nextSlide(){
         let maxSlider = sliderData.count
         if currentSlide < maxSlider-1 {
             currentSlide += 1
@@ -176,7 +176,7 @@ final class OnboardingVC: UIViewController {
     }
     
     // MARK: - Action
-    @objc func skipButtonTapped() {
+    @objc private func skipButtonTapped() {
         let loginVC = LoginVC()
         let navController = UINavigationController(rootViewController: loginVC)
         navController.modalPresentationStyle = .fullScreen
@@ -235,5 +235,15 @@ extension OnboardingVC : UICollectionViewDelegate, UICollectionViewDataSource {
         shape.add(animation, forKey: "animation")
         
         fromValue = curentIndex
+    }
+}
+
+
+extension OnboardingVC: OnboardingVCInterface {
+    func configureViewController() {
+        sliderData = viewModel.sliderData
+        setupCollection()
+        setControll()
+        setShape()
     }
 }

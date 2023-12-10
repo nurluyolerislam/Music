@@ -11,7 +11,7 @@ final class DiscoverVC: UIViewController {
     
     //MARK: - Variables
     lazy var discoverView = DiscoverView()
-    let viewModel: HomeViewModel?
+    private let viewModel: HomeViewModel?
     
     
     //MARK: - Initializers
@@ -62,14 +62,7 @@ final class DiscoverVC: UIViewController {
 
 extension DiscoverVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let viewModel = viewModel {
-            if let response = viewModel.radioResponse {
-                if let playlists = response.data {
-                    return playlists.count
-                }
-            }
-        }
-        return 0
+        viewModel?.discoverVCnumberOfItemsInSection() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -91,18 +84,6 @@ extension DiscoverVC: UICollectionViewDataSource {
 
 extension DiscoverVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let viewModel = viewModel {
-            if let response = viewModel.radioResponse {
-                if let playlists = response.data {
-                    let playlist = playlists[indexPath.row]
-                    
-                    if let playlistURL = playlist.tracklist {
-                        let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: viewModel.manager)
-                        playlistVC.title = playlist.title
-                        navigationController?.pushViewController(playlistVC, animated: true)
-                    }
-                }
-            }
-        }
+        viewModel?.DiscoverVCDidSelectItem(at: indexPath)
     }
 }

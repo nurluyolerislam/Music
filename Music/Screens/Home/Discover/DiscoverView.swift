@@ -41,5 +41,4 @@ final class DiscoverView: UIView {
         collectionView.fillSuperview(padding: .init(leading: 20,
                                                     trailing: 20))
     }
-
 }

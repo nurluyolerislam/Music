@@ -8,7 +8,7 @@
 import FirebaseAuth
 
 final class AuthViewModel {
-    lazy var firebaseAuthManager = FirebaseAuthManager()
+    private lazy var firebaseAuthManager = FirebaseAuthManager()
     // MARK: - Login
     func login(email: String, password: String, completion: @escaping () -> Void) {
         firebaseAuthManager.signIn(email: email, password: password) {
@@ -38,10 +38,10 @@ final class AuthViewModel {
         }
         
         firebaseAuthManager.resetPassword(email: email) { [weak self] in
-            guard let self else { return }
+            guard self != nil else { return }
             completion(true, "Please check your e-mail to reset your password.")
         } onError: { [weak self] error in
-            guard let self else { return }
+            guard self != nil else { return }
             completion(false, error)
         }
     }
