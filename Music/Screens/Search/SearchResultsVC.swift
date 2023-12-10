@@ -105,18 +105,8 @@ extension SearchResultsVC: UITableViewDataSource {
 
 extension SearchResultsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if let response = viewModel.data {
-            
-            if let songs = response.data {
-                
-                let song = songs[indexPath.row]
-                let vc = PlayerVC(track: song)
-                vc.modalPresentationStyle = .pageSheet
-                self.present(vc, animated: true)
-                
-            }
-        }
+        viewModel.SearchResultsVCDidSelectRow(at: indexPath)
+      
     }
 }
 

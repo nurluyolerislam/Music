@@ -56,12 +56,12 @@ final class RecentSearchesView: UIView {
     //MARK: - Configuration Methods
     private func configureUI() {
         backgroundColor = .systemBackground
+        addSubviewsExt(headerStackView, recentSearchesTableView)
         configureHeaderStackView()
         configureRecentSearchesTableView()
     }
     
     private func configureHeaderStackView() {
-        addSubview(headerStackView)
         headerStackView.anchor(top: safeAreaLayoutGuide.topAnchor,
                                leading: safeAreaLayoutGuide.leadingAnchor,
                                trailing: safeAreaLayoutGuide.trailingAnchor,
@@ -70,7 +70,6 @@ final class RecentSearchesView: UIView {
     }
     
     private func configureRecentSearchesTableView() {
-        addSubview(recentSearchesTableView)
         recentSearchesTableView.anchor(top: recentSearchesLabel.bottomAnchor,
                                        leading: safeAreaLayoutGuide.leadingAnchor,
                                        bottom: safeAreaLayoutGuide.bottomAnchor,

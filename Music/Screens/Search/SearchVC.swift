@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol SearcVCInterface {
+    func configureViewDidLoad()
+    func updateRecentSearches()
+    func presentVC(vc: UIViewController)
+}
+
 final class SearchVC: UIViewController {
     
     //MARK: - Variables
     private lazy var recentSearchesView = RecentSearchesView()
-    private lazy var viewModel = SearchViewModel()
+    private lazy var viewModel = SearchViewModel(view: self)
     private lazy var workItem = WorkItem()
     
     //MARK: - UI Elements
@@ -31,14 +37,13 @@ final class SearchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addTargets()
-        configureNavigationBar()
-        addDelegatesAndDataSources()
+        viewModel.viewDidLoad()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.getRecentSearches()
+        viewModel.viewDidAppear()
+     
     }
     
     
@@ -54,15 +59,13 @@ final class SearchVC: UIViewController {
     }
     
     private func addDelegatesAndDataSources() {
-        viewModel.recentSearchesDelegate = self
         recentSearchesView.recentSearchesTableView.dataSource = self
         recentSearchesView.recentSearchesTableView.delegate = self
     }
     
-    @objc func clearRecentSearchesButtonTapped(){
+    @objc private  func clearRecentSearchesButtonTapped(){
         viewModel.clearRecentSearches()
     }
-    
 }
 
 extension SearchVC: UISearchResultsUpdating {
@@ -81,9 +84,7 @@ extension SearchVC: UISearchResultsUpdating {
                 viewModel.updateRecentSearches(searchText: query)
             }
         }
-        
     }
-    
 }
 
 extension SearchVC: UITableViewDataSource , UITableViewDelegate{
@@ -115,8 +116,18 @@ extension SearchVC: UITableViewDataSource , UITableViewDelegate{
 }
 
 
-extension SearchVC: RecentSearchesDelegate {
+extension SearchVC: SearcVCInterface {
+    func configureViewDidLoad() {
+        addTargets()
+        configureNavigationBar()
+        addDelegatesAndDataSources()
+    }
+    
     func updateRecentSearches() {
         recentSearchesView.recentSearchesTableView.reloadData()
+    }
+    
+    func presentVC(vc: UIViewController) {
+        self.present(vc, animated: true)
     }
 }

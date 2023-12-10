@@ -96,7 +96,7 @@ final class PlayerVC: UIViewController {
     
     
     //MARK: - @Actions
-    @objc func playButtonTapped(){
+    @objc private func playButtonTapped(){
         if viewModel!.isPlaying {
             viewModel?.pauseAudio()
         } else {
@@ -104,42 +104,42 @@ final class PlayerVC: UIViewController {
         }
     }
     
-    @objc func musicTimeSliderValueChanged(_ sender: UISlider) {
+    @objc private func musicTimeSliderValueChanged(_ sender: UISlider) {
         viewModel?.pauseAudio()
         playerView.timeLabelMin.text = Int(sender.value).formatTime()
     }
     
-    @objc func musicTimeSliderEndEditing(_ sender: UISlider){
+    @objc private func musicTimeSliderEndEditing(_ sender: UISlider){
         let timeToSeek = CMTimeMakeWithSeconds(Double(sender.value), preferredTimescale: 1)
         viewModel?.currentDuration = timeToSeek
         viewModel?.playAudio()
     }
     
-    @objc func rewindButtonPressed() {
+    @objc private func rewindButtonPressed() {
         let timeToRewind = CMTimeMakeWithSeconds(5, preferredTimescale: 1)
         viewModel?.player?.seek(to: CMTimeSubtract(viewModel?.player?.currentTime() ?? CMTime.zero, timeToRewind))
     }
     
-    @objc func fastForwardButtonPressed() {
+    @objc private func fastForwardButtonPressed() {
         let timeToForward = CMTimeMakeWithSeconds(5, preferredTimescale: 1)
         viewModel?.player?.seek(to: CMTimeAdd(viewModel?.player?.currentTime() ?? CMTime.zero, timeToForward))
     }
     
-    @objc func sliderVolumeChanged(_ sender: UISlider) {
+    @objc private func sliderVolumeChanged(_ sender: UISlider) {
         viewModel?.player?.volume = sender.value / 10
     }
     
-    @objc func volumeDownPressed() {
+    @objc private func volumeDownPressed() {
         playerView.volumeSlider.value -= 1
         viewModel?.adjustVolume(delta: -0.1)
     }
     
-    @objc func volumeUpPressed() {
+    @objc private func volumeUpPressed() {
         playerView.volumeSlider.value += 1
         viewModel?.adjustVolume(delta: 0.1)
     }
     
-    @objc func addToPlaylistButtonTapped(){
+    @objc private func addToPlaylistButtonTapped(){
         let track = viewModel!.track
         let popup = AddToPlaylistPopupVC(tack: track)
         popup.modalPresentationStyle  = .overFullScreen
@@ -147,7 +147,7 @@ final class PlayerVC: UIViewController {
         present(popup, animated: true)
     }
     
-    @objc func likeButtonTapped() {
+    @objc private func likeButtonTapped() {
         viewModel?.toggleLikeStatus() { [weak self] isFavorited in
             guard let self else { return }
             if isFavorited {
@@ -157,7 +157,6 @@ final class PlayerVC: UIViewController {
             }
         }
     }
-    
 }
 
 extension PlayerVC: PlayerDelegate {
