@@ -24,13 +24,14 @@ final class PlayerViewModel {
     let player: AVPlayer?
     let playerItem: AVPlayerItem?
     var currentDuration: CMTime = .init(seconds: 0, preferredTimescale: 1)
-    let firestoreManager = FirestoreManager()
+    private let firestoreManager: FirestoreManagerProtocol
     weak var delegate: PlayerViewModelDelegate?
     weak var playerDelegate: PlayerDelegate?
     
     //MARK: - Initializers
-    init(track: Track) {
+    init(track: Track, firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared) {
         self.track = track
+        self.firestoreManager = firestoreManager
         
         if let previewURL = track.preview {
             if let url = URL(string: previewURL) {
@@ -87,8 +88,7 @@ final class PlayerViewModel {
     }
     
     func checkTrackFavorited(completion: @escaping (Bool) -> Void) {
-        firestoreManager.checkTrackFavorited(track: track) { [weak self] exists in
-            guard let self else { return }
+        firestoreManager.checkTrackFavorited(track: track) { exists in
             completion(exists)
         } onError: { error in
             print(error)

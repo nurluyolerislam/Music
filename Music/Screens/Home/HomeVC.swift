@@ -8,8 +8,14 @@
 import UIKit
 
 protocol HomeVCInterface {
-    func configureViewDidLoad()
-    func updateUI()
+    func prepareTableView()
+    func prepareDiscoverCollectionView()
+    func prepareGenresCollectionView()
+    func addTargets()
+    func configureNavigationBar()
+    func reloadTableView()
+    func reloadDiscoverCollectionView()
+    func reloadGenresCollectionView()
     func showProgressView()
     func dismissProgressView()
     func pushVC(vc : UIViewController)
@@ -20,7 +26,7 @@ final class HomeVC: UIViewController {
     
     //MARK: - Variables
     private lazy var homeView = HomeView()
-    private lazy var viewModel = HomeViewModel(view: self)
+    private lazy var viewModel: HomeViewModelProtocol = HomeViewModel(view: self)
     
     
     //MARK: - Lifecycle
@@ -36,39 +42,6 @@ final class HomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-    }
-    
-    //MARK: - Configuration Methods
-    private func configureUI() {
-        configureNavigationBar()
-    }
-    
-    private func configureNavigationBar() {
-        title = "Home"
-    }
-    
-    //MARK: - Helper Functions
-    private func addDelegatesAndDataSources() {
-        homeView.discoverCollectionView.register(MusicCollectionViewCell.self,
-                                                 forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
-        homeView.genresCollectionView.register(MusicCollectionViewCell.self,
-                                                     forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
-        homeView.popularSongsTableView.register(ProfileFavoriteTableViewCell.self,
-                                                forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
-        
-        homeView.discoverCollectionView.delegate = self
-        homeView.genresCollectionView.delegate = self
-        homeView.popularSongsTableView.delegate = self
-        homeView.discoverCollectionView.dataSource = self
-        homeView.genresCollectionView.dataSource = self
-        homeView.popularSongsTableView.dataSource = self
-    }
-    
-    
-    //MARK: - Targets
-    private func addTargets() {
-        homeView.browseButton.addTarget(self, action: #selector(browseButtonTapped), for: .touchUpInside)
-        homeView.exploreButton.addTarget(self, action: #selector(exploreButtonTapped), for: .touchUpInside)
     }
     
     
@@ -100,12 +73,9 @@ extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = homeView.popularSongsTableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID, for: indexPath) as! ProfileFavoriteTableViewCell
         
-        if let response = viewModel.popularSongsResponse {
-            if let tracks = response.data {
-                let track = tracks[indexPath.row]
-                cell.updateUI(track: track)
-            }
-        }
+        
+        let track = viewModel.tableViewCellForItem(at: indexPath)
+        cell.updateUI(track: track)
         return cell
     }
     
@@ -116,10 +86,8 @@ extension HomeVC: UICollectionViewDataSource {
         switch collectionView {
         case homeView.discoverCollectionView:
             return 5
-            
         case homeView.genresCollectionView:
             return 5
-            
         default:
             return 0
         }
@@ -132,26 +100,17 @@ extension HomeVC: UICollectionViewDataSource {
             let cell = homeView.discoverCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
                                                                            for: indexPath) as! MusicCollectionViewCell
             
-            if let response = viewModel.radioResponse {
-                if let playlists = response.data {
-                    let playlist = playlists[indexPath.row]
-                    cell.updateUI(playlist: playlist)
-                }
-            }
-            
+            let playlist = viewModel.discoverCollectionViewCellForItem(at: indexPath)
+            cell.updateUI(playlist: playlist)
             return cell
             
         case homeView.genresCollectionView:
             let cell = homeView.genresCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.reuseID,
-                                                                               
-                                                                               for: indexPath) as! MusicCollectionViewCell
+                                                                         
+                                                                         for: indexPath) as! MusicCollectionViewCell
             
-            if let response = viewModel.genresResponse {
-                if let genresPlaylists = response.data {
-                    let genresPlaylist = genresPlaylists[indexPath.row]
-                    cell.updateUI(genresPlaylist: genresPlaylist)
-                }
-            }
+            let genresPlaylist = viewModel.genresCollectionViewCellForItem(at: indexPath)
+            cell.updateUI(genresPlaylist: genresPlaylist)
             return cell
             
         default:
@@ -185,11 +144,40 @@ extension HomeVC: UITableViewDelegate {
 
 
 extension HomeVC: HomeVCInterface{
-    func configureViewDidLoad() {
-        addTargets()
-        addDelegatesAndDataSources()
-        configureUI()
+    
+    func prepareTableView() {
+        homeView.popularSongsTableView.register(ProfileFavoriteTableViewCell.self,
+                                                forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
+        homeView.popularSongsTableView.delegate = self
+        homeView.popularSongsTableView.dataSource = self
     }
+    
+    func prepareDiscoverCollectionView() {
+        homeView.discoverCollectionView.register(MusicCollectionViewCell.self,
+                                                 forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
+        homeView.discoverCollectionView.dataSource = self
+        homeView.discoverCollectionView.delegate = self
+    }
+    
+    func prepareGenresCollectionView() {
+        homeView.genresCollectionView.register(MusicCollectionViewCell.self,
+                                               forCellWithReuseIdentifier: MusicCollectionViewCell.reuseID)
+        homeView.genresCollectionView.delegate = self
+        homeView.genresCollectionView.dataSource = self
+    }
+    
+    func addTargets() {
+        homeView.browseButton.addTarget(self, action: #selector(browseButtonTapped), for: .touchUpInside)
+        homeView.exploreButton.addTarget(self, action: #selector(exploreButtonTapped), for: .touchUpInside)
+    }
+    
+    func configureNavigationBar() { title = "Home" }
+    
+    func reloadTableView() { homeView.popularSongsTableView.reloadData() }
+    
+    func reloadDiscoverCollectionView() { homeView.discoverCollectionView.reloadData() }
+    
+    func reloadGenresCollectionView() { homeView.genresCollectionView.reloadData() }
     
     func showProgressView() {
         DispatchQueue.main.async {
@@ -199,12 +187,6 @@ extension HomeVC: HomeVCInterface{
     
     func dismissProgressView() {
         dismissLoading()
-    }
-    
-    func updateUI() {
-        homeView.discoverCollectionView.reloadData()
-        homeView.genresCollectionView.reloadData()
-        homeView.popularSongsTableView.reloadData()
     }
     
     func pushVC(vc : UIViewController) {

@@ -11,11 +11,11 @@ final class GenresVC: UIViewController {
     
     //MARK: - Variables
     lazy var genresView = GenresView()
-    let viewModel: HomeViewModel?
+    let viewModel: HomeViewModelProtocol?
     
     
     //MARK: - Initializers
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         addDelegatesAndDataSources()

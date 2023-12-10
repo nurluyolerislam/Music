@@ -89,7 +89,8 @@ final class ProfileFavoriteTableViewCell: UITableViewCell {
         stackView.fillSuperview(padding: .init(top: 10, bottom: 10))
     }
     
-    func updateUI(track: Track) {
+    func updateUI(track: Track?) {
+        guard let track else { return }
         if let album = track.album {
             if let albumImageURL = album.coverXl {
                 songImageView.kf.setImage(with: URL(string: albumImageURL))

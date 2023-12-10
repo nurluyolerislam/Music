@@ -23,9 +23,13 @@ final class ProfileViewModel {
     var playlists: [UserPlaylist]?
     var userFavoriteTracks: [Track]?
     weak var delegate: ProfileViewModelDelegate?
-    lazy var firestoreManager = FirestoreManager()
+    let firestoreManager: FirestoreManagerProtocol
     lazy var firebaseAuthManager = FirebaseAuthManager()
     lazy var firebaseStorageManager = FirebaseStorageManager()
+    
+    init(firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared) {
+        self.firestoreManager = firestoreManager
+    }
     
     
     //MARK: - Helper Functions

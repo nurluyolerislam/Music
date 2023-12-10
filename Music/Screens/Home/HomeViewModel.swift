@@ -8,8 +8,10 @@
 import Foundation
 
 protocol HomeViewModelProtocol: AnyObject {
-    func getData()
     func viewDidLoad()
+    func tableViewCellForItem(at indexPath: IndexPath) -> Track?
+    func discoverCollectionViewCellForItem(at indexPath: IndexPath) -> Playlist?
+    func genresCollectionViewCellForItem(at indexPath: IndexPath) -> GenresPlayList?
     func discoverCollectionDidSelectItem(at indexPath: IndexPath)
     func genresCollectionDidSelectItem(at indexPath: IndexPath)
     func popularSongsDidSelectItem(at indexPath: IndexPath)
@@ -27,21 +29,90 @@ final class HomeViewModel {
     var radioResponse: RadioResponse?
     var genresResponse: GenresMusicResponse?
     var popularSongsResponse: RadioPlaylistResponse?
-    let manager = DeezerAPIManager()
+    let manager: DeezerAPIManagerProtocol
     private var view: HomeVCInterface?
     
-    init(view: HomeVCInterface?) {
+    init(manager: DeezerAPIManagerProtocol = DeezerAPIManager.shared, view: HomeVCInterface?) {
+        self.manager = manager
         self.view = view
     }
+    
+    private func getRadioPlaylists() {
+        //view?.showProgressView()
+        manager.getRadioPlaylists { data in
+            self.radioResponse = data
+            self.view?.reloadDiscoverCollectionView()
+            self.getPopularSongs(playlistURL: data?.data?.first?.tracklist ?? "")
+            // self.view?.dismissProgressView()
+        } onError: { error in
+            print(error)
+            // self.view?.dismissProgressView()
+        }
+    }
+    
+    private func getGenres() {
+        view?.showProgressView()
+        manager.getGenresLists { data in
+            self.genresResponse = data
+            self.view?.reloadGenresCollectionView()
+            self.view?.dismissProgressView()
+        } onError: { error in
+            print(error)
+            self.view?.dismissProgressView()
+        }
+    }
+    
+    private func getPopularSongs(playlistURL: String) {
+        //view?.showProgressView()
+        manager.getRadioPlaylist(playlistURL: playlistURL) { data in
+            self.popularSongsResponse = data
+            self.view?.reloadTableView()
+            // self.view?.dismissProgressView()
+        } onError: { error in
+            print(error)
+            // self.view?.dismissProgressView()
+        }
+    }
+    
 }
 
 extension HomeViewModel: HomeViewModelProtocol{
     
-    
     func viewDidLoad() {
-        view?.configureViewDidLoad()
-        getData()
-        getDataGenres()
+        view?.prepareTableView()
+        view?.prepareDiscoverCollectionView()
+        view?.prepareGenresCollectionView()
+        view?.addTargets()
+        view?.configureNavigationBar()
+        getRadioPlaylists()
+        getGenres()
+    }
+    
+    func tableViewCellForItem(at indexPath: IndexPath) -> Track? {
+        if let popularSongsResponse {
+            if let tracks = popularSongsResponse.data {
+                return tracks[indexPath.row]
+            }
+        }
+        return nil
+    }
+    
+    func discoverCollectionViewCellForItem(at indexPath: IndexPath) -> Playlist? {
+        if let radioResponse {
+            if let playlists = radioResponse.data {
+                return playlists[indexPath.row]
+            }
+        }
+        return nil
+    }
+    
+    func genresCollectionViewCellForItem(at indexPath: IndexPath) -> GenresPlayList? {
+        if let genresResponse {
+            if let genresPlaylists = genresResponse.data {
+                return genresPlaylists[indexPath.row]
+            }
+        }
+        return nil
     }
     
     func discoverCollectionDidSelectItem(at indexPath: IndexPath) {
@@ -50,7 +121,7 @@ extension HomeViewModel: HomeViewModelProtocol{
                 let playlist = playlists[indexPath.row]
                 
                 if let playlistURL = playlist.tracklist {
-                    let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: manager)
+                    let playlistVC = PlaylistVC(playlistURL: playlistURL)
                     playlistVC.title = playlist.title
                     view?.pushVC(vc: playlistVC)
                 }
@@ -64,7 +135,7 @@ extension HomeViewModel: HomeViewModelProtocol{
                 let genre = genres[indexPath.row]
                 
                 if let genresID = genre.id {
-                    let genresArtistsVC = GenreArtistsVC(genreId: genresID.description, manager: manager)
+                    let genresArtistsVC = GenreArtistsVC(genreId: genresID.description)
                     genresArtistsVC.title = genre.name
                     view?.pushVC(vc: genresArtistsVC)
                     
@@ -99,7 +170,7 @@ extension HomeViewModel: HomeViewModelProtocol{
                 let playlist = playlists[indexPath.row]
                 
                 if let playlistURL = playlist.tracklist {
-                    let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: manager)
+                    let playlistVC = PlaylistVC(playlistURL: playlistURL)
                     playlistVC.title = playlist.title
                     view?.pushVC(vc: playlistVC)
                 }
@@ -122,50 +193,11 @@ extension HomeViewModel: HomeViewModelProtocol{
                 let genre = genres[indexPath.row]
                 
                 if let genreID = genre.id {
-                    let genresVC = GenreArtistsVC(genreId: genreID.description, manager: manager)
+                    let genresVC = GenreArtistsVC(genreId: genreID.description)
                     genresVC.title = genre.name
                     view?.pushVC(vc: genresVC)
                 }
             }
-        }
-    }
-    
-    
-    
-    func getData() {
-        //view?.showProgressView()
-        manager.getRadioPlaylists { data in
-            self.radioResponse = data
-            self.getPopularSongs(playlistURL: data?.data?.first?.tracklist ?? "")
-            self.view?.updateUI()
-            // self.view?.dismissProgressView()
-        } onError: { error in
-            print(error)
-            // self.view?.dismissProgressView()
-        }
-    }
-    
-    func getDataGenres() {
-        view?.showProgressView()
-        manager.getGenresLisits { data in
-            self.genresResponse = data
-            self.view?.updateUI()
-            self.view?.dismissProgressView()
-        } onError: { error in
-            print(error)
-            self.view?.dismissProgressView()
-        }
-    }
-    
-    func getPopularSongs(playlistURL: String) {
-        //view?.showProgressView()
-        manager.getRadioPlaylist(playlistURL: playlistURL) { data in
-            self.popularSongsResponse = data
-            self.view?.updateUI()
-            // self.view?.dismissProgressView()
-        } onError: { error in
-            print(error)
-            // self.view?.dismissProgressView()
         }
     }
 }

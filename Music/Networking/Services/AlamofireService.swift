@@ -7,16 +7,19 @@
 
 import Alamofire
 
-protocol ServiceProtocol: AnyObject {
+protocol AlamofireServiceProtocol: AnyObject {
     func fetch<T: Codable>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void)
 }
 
-final class AlamofireService: ServiceProtocol {
+final class AlamofireService {
     
     static let shared = AlamofireService()
     
     private init() {}
     
+}
+
+extension AlamofireService: AlamofireServiceProtocol {
     func fetch<T: Codable>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void) {
         AF.request(path).validate().responseDecodable(of: T.self) { response in
             if let error = response.error { onError(error) }
@@ -24,5 +27,4 @@ final class AlamofireService: ServiceProtocol {
             onSuccess(model)
         }
     }
-    
 }

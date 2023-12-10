@@ -15,8 +15,8 @@ final class GenreArtistsVC: UIViewController {
     
     
     //MARK: - Initializers
-    init(genreId: String, manager: DeezerAPIManager) {
-        self.viewModel = GenreArtistsViewModel(genreId: genreId, manager: manager)
+    init(genreId: String) {
+        self.viewModel = GenreArtistsViewModel(genreId: genreId)
         super.init(nibName: nil, bundle: nil)
         viewModel?.delegate = self
         addDelegatesAndDataSources()
@@ -87,7 +87,7 @@ extension GenreArtistsVC: UICollectionViewDelegate {
                     let artist = artists[indexPath.row]
                     
                     if let playlistURL = artist.tracklist {
-                        let playlistVC = PlaylistVC(playlistURL: playlistURL, deezerAPIManager: viewModel.manager)
+                        let playlistVC = PlaylistVC(playlistURL: playlistURL)
                         playlistVC.title = artist.name
                         navigationController?.pushViewController(playlistVC, animated: true)
                     }

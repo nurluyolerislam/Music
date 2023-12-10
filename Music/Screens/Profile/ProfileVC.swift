@@ -181,7 +181,7 @@ extension ProfileVC: UITableViewDelegate {
         case 0:
             if let playlists = viewModel.playlists {
                 let playlist = playlists[indexPath.row]
-                let playlistVC = PlaylistVC(userPlaylist: playlist, firestoreManager: viewModel.firestoreManager)
+                let playlistVC = PlaylistVC(userPlaylist: playlist)
                 playlistVC.title = playlist.title
                 navigationController?.pushViewController(playlistVC, animated: true)
             }

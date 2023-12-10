@@ -13,9 +13,10 @@ protocol AddToPlaylistPopupViewModelDelegate: AnyObject {
 final class AddToPlaylistPopupViewModel {
     var playlists: [UserPlaylist]?
     weak var delegate: AddToPlaylistPopupViewModelDelegate?
-    lazy var firestoreManager = FirestoreManager()
+    private let firestoreManager: FirestoreManagerProtocol
     
-    init() {
+    init(firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared) {
+        self.firestoreManager = firestoreManager
         getUserPlaylists()
     }
     

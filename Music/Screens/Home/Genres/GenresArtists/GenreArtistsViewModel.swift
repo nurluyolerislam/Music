@@ -18,17 +18,17 @@ final class GenreArtistsViewModel: GenreArtistsViewModelProtocol {
    
     let genreId: String
     var data: GenresArtistListsResponse?
-    let manager: DeezerAPIManager
+    let manager: DeezerAPIManagerProtocol
     weak var delegate: GenreArtistsViewModelDelegate?
     
-    init(genreId: String, manager: DeezerAPIManager) {
+    init(genreId: String, manager: DeezerAPIManagerProtocol = DeezerAPIManager.shared) {
         self.genreId = genreId
         self.manager = manager
         getData()
     }
     
     func getData() {
-        manager.getGenresLisitsArtist(id: self.genreId) { data in
+        manager.getGenresListsArtist(id: self.genreId) { data in
             self.data = data
             self.delegate?.updateUI()
         } onError: { error in

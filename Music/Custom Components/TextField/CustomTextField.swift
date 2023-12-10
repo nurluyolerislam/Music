@@ -14,7 +14,7 @@ final class CustomTextField: UITextField {
         case email
         case password
     }
-    private lazy var rightButton  = UIButton(type: .custom)
+    private lazy var rightButton  = UIButton(configuration: .plain())
     private let authField: CustomTextFieldType
     
     init(fieldType: CustomTextFieldType) {
@@ -69,7 +69,6 @@ final class CustomTextField: UITextField {
             
             rightButton.setImage(UIImage(systemName: "eye.slash.fill") , for: .normal)
             rightButton.addTarget(self, action: #selector(toggleShowHide), for: .touchUpInside)
-            rightButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
             rightButton.frame = CGRect(x:0, y:0, width:30, height:30)
             
             

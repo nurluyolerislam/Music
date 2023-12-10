@@ -17,23 +17,25 @@ protocol PlaylistViewModelDelegate: AnyObject {
 final class PlaylistViewModel: PlaylistViewModelProtocol {
     var tracks: [Track]?
     var userPlaylist: UserPlaylist?
-    var deezerAPIManager: DeezerAPIManager?
-    var firestoreManager: FirestoreManager?
+    private let deezerAPIManager: DeezerAPIManagerProtocol
+    private let firestoreManager: FirestoreManagerProtocol
     weak var delegate: PlaylistViewModelDelegate?
     
-    init(playlistURL: String, deezerAPIManager: DeezerAPIManager) {
+    init(deezerAPIManager: DeezerAPIManagerProtocol = DeezerAPIManager.shared, firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared, playlistURL: String) {
         self.deezerAPIManager = deezerAPIManager
+        self.firestoreManager = firestoreManager
         getRadioPlaylist(playlistURL: playlistURL)
     }
     
-    init(userplaylist: UserPlaylist, firestoreManager: FirestoreManager) {
+    init(userplaylist: UserPlaylist, firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared, deezerAPIManager: DeezerAPIManagerProtocol = DeezerAPIManager.shared) {
         self.userPlaylist = userplaylist
+        self.deezerAPIManager = deezerAPIManager
         self.firestoreManager = firestoreManager
         getUserPlaylist(playlist: userplaylist)
     }
     
     func getRadioPlaylist(playlistURL: String) {
-        deezerAPIManager?.getRadioPlaylist(playlistURL: playlistURL) { data in
+        deezerAPIManager.getRadioPlaylist(playlistURL: playlistURL) { data in
             if let tracks = data?.data {
                 self.tracks = tracks
             }
@@ -45,7 +47,7 @@ final class PlaylistViewModel: PlaylistViewModelProtocol {
     }
     
     func getUserPlaylist(playlist: UserPlaylist) {
-        firestoreManager?.getUserPlaylist(playlist: playlist) { tracks in
+        firestoreManager.getUserPlaylist(playlist: playlist) { tracks in
             self.tracks = tracks
             self.delegate?.updateUI()
         } onError: { error in
@@ -55,7 +57,7 @@ final class PlaylistViewModel: PlaylistViewModelProtocol {
     
     func removeTrackFromPlaylist(track: Track) {
         if let userPlaylist = userPlaylist {
-            firestoreManager?.removeTrackFromPlaylist(track: track, userPlaylist: userPlaylist) { [weak self] in
+            firestoreManager.removeTrackFromPlaylist(track: track, userPlaylist: userPlaylist) { [weak self] in
                 guard let self else { return }
                 getUserPlaylist(playlist: userPlaylist)
             } onError: { error in

@@ -14,15 +14,15 @@ final class PlaylistVC: UIViewController {
     let viewModel: PlaylistViewModel
     
     //MARK: - Initializers
-    init(playlistURL: String, deezerAPIManager: DeezerAPIManager) {
-        self.viewModel = PlaylistViewModel(playlistURL: playlistURL, deezerAPIManager: deezerAPIManager)
+    init(playlistURL: String) {
+        self.viewModel = PlaylistViewModel(playlistURL: playlistURL)
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
         addDelegatesAndDataSources()
     }
     
-    init(userPlaylist: UserPlaylist, firestoreManager: FirestoreManager) {
-        self.viewModel = PlaylistViewModel(userplaylist: userPlaylist, firestoreManager: firestoreManager)
+    init(userPlaylist: UserPlaylist) {
+        self.viewModel = PlaylistViewModel(userplaylist: userPlaylist)
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
         addDelegatesAndDataSources()
@@ -94,18 +94,15 @@ extension PlaylistVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if let userPlaylist = viewModel.userPlaylist {
-            let removeTrack = UIContextualAction(style: .destructive,
-                                                 title: "Remove") { [weak self] action, view, bool in
-                guard let self else { return }
-                if let tracks = viewModel.tracks {
-                    let track = tracks[indexPath.row]
-                    viewModel.removeTrackFromPlaylist(track: track)
-                }
+        let removeTrack = UIContextualAction(style: .destructive,
+                                             title: "Remove") { [weak self] action, view, bool in
+            guard let self else { return }
+            if let tracks = viewModel.tracks {
+                let track = tracks[indexPath.row]
+                viewModel.removeTrackFromPlaylist(track: track)
             }
-            return UISwipeActionsConfiguration(actions: [removeTrack])
         }
-        return nil
+        return UISwipeActionsConfiguration(actions: [removeTrack])
     }
 }
 

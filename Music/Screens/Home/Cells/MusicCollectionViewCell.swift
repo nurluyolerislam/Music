@@ -71,7 +71,9 @@ final class MusicCollectionViewCell: UICollectionViewCell {
     
     
     //MARK: - Helper Functions
-    func updateUI(playlist: Playlist) {
+    func updateUI(playlist: Playlist?) {
+        guard let playlist else { return }
+        
         if let imageURL = playlist.pictureXl {
             imageView.kf.setImage(with: URL(string: imageURL))
         }
@@ -81,7 +83,9 @@ final class MusicCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func updateUI(genresPlaylist: GenresPlayList) {
+    func updateUI(genresPlaylist: GenresPlayList?) {
+        guard let genresPlaylist else { return }
+        
         if let imageURL = genresPlaylist.pictureXl {
             imageView.kf.setImage(with: URL(string: imageURL))
         }
@@ -91,7 +95,9 @@ final class MusicCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func updateUI(artist: Artist) {
+    func updateUI(artist: Artist?) {
+        guard let artist else { return }
+        
         if let imageURL = artist.pictureXl {
             imageView.kf.setImage(with: URL(string: imageURL))
         }

@@ -19,10 +19,15 @@ final class SearchViewModel: SearchViewModelProtocol {
     var data: SearchTrackResponse?
     weak var changeResultsProtocol: ChangeResultsProtocol?
     weak var recentSearchesDelegate: RecentSearchesDelegate?
-    let deezerAPIManager = DeezerAPIManager()
-    let firestoreManager = FirestoreManager()
+    let deezerAPIManager: DeezerAPIManagerProtocol
+    let firestoreManager: FirestoreManagerProtocol
     var searchText = ""
     var recentSearches: [String]?
+    
+    init(deezerAPIManager: DeezerAPIManagerProtocol = DeezerAPIManager.shared, firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared) {
+        self.deezerAPIManager = deezerAPIManager
+        self.firestoreManager = firestoreManager
+    }
     
     // MARK: - Functions
     func getData() {

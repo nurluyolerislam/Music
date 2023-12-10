@@ -11,11 +11,11 @@ final class DiscoverVC: UIViewController {
     
     //MARK: - Variables
     lazy var discoverView = DiscoverView()
-    private let viewModel: HomeViewModel?
+    private let viewModel: HomeViewModelProtocol?
     
     
     //MARK: - Initializers
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         addDelegatesAndDataSources()
