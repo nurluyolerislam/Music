@@ -8,8 +8,14 @@
 import UIKit
 
 protocol SearcVCInterface {
-    func configureViewDidLoad()
-    func updateRecentSearches()
+    func configureNavigationBar()
+    func addTargets()
+    func prepareRecentSearchesTableView()
+    func prepareSearchResultsTableView()
+    func reloadRecentSearchesTableView()
+    func reloadSearchResultsTableView()
+    func showRecentSearches()
+    func showResults()
     func presentVC(vc: UIViewController)
 }
 
@@ -17,12 +23,13 @@ final class SearchVC: UIViewController {
     
     //MARK: - Variables
     private lazy var recentSearchesView = RecentSearchesView()
+    private lazy var searchResultsView = SearchResultsView()
     private lazy var viewModel = SearchViewModel(view: self)
-    private lazy var workItem = WorkItem()
+    
     
     //MARK: - UI Elements
     private lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: SearchResultsVC(viewModel: viewModel))
+        let searchController = UISearchController()
         searchController.searchBar.placeholder = "Search for songs, albums or artists"
         searchController.searchBar.backgroundImage = UIImage()
         return searchController
@@ -32,7 +39,7 @@ final class SearchVC: UIViewController {
     //MARK: - Lifecycle
     override func loadView() {
         super.loadView()
-        view = recentSearchesView
+        viewModel.loadView()
     }
     
     override func viewDidLoad() {
@@ -43,73 +50,54 @@ final class SearchVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.viewDidAppear()
-     
     }
     
-    
-    //MARK: - Helper Functions
-    private func addTargets() {
-        recentSearchesView.clearRecentSearchesButton.addTarget(self, action: #selector(clearRecentSearchesButtonTapped), for: .touchUpInside)
-    }
-    
-    private func configureNavigationBar() {
-        navigationItem.title = "Song Search"
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
-    }
-    
-    private func addDelegatesAndDataSources() {
-        recentSearchesView.recentSearchesTableView.dataSource = self
-        recentSearchesView.recentSearchesTableView.delegate = self
-    }
-    
-    @objc private  func clearRecentSearchesButtonTapped(){
-        viewModel.clearRecentSearches()
-    }
 }
 
 extension SearchVC: UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
-        guard let query = searchController.searchBar.text else { return }
-        if query == "" {
-            let resultVC = searchController.searchResultsController as! SearchResultsVC
-            viewModel.data = nil
-            resultVC.searchResultsView.searchResultsTableView.reloadData()
-        } else {
-            workItem.perform(after: 0.5) { [weak self] in
-                guard let self else { return }
-                viewModel.searchText = query
-                viewModel.getData()
-                viewModel.updateRecentSearches(searchText: query)
-            }
-        }
+        guard let searchText = searchController.searchBar.text else { return }
+        viewModel.updateSearchResults(searchText: searchText)
     }
 }
 
 extension SearchVC: UITableViewDataSource , UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let recentSearches = viewModel.recentSearches {
-            return recentSearches.count
+        switch tableView {
+        case recentSearchesView.recentSearchesTableView: viewModel.recentSearchesCount
+        case searchResultsView.searchResultsTableView: viewModel.searchResultsCount
+        default: 0
         }
-        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        if let recentSearches = viewModel.recentSearches {
-            let searchText = recentSearches[indexPath.row]
-            cell.textLabel?.text = searchText
+        if tableView == recentSearchesView.recentSearchesTableView {
+            let cell = UITableViewCell()
+            cell.textLabel?.text = viewModel.recentSearchesTableViewCellForRow(at: indexPath)
+            return cell
         }
-        return cell
+        
+        if tableView == searchResultsView.searchResultsTableView {
+            guard let cell = searchResultsView.searchResultsTableView.dequeueReusableCell(withIdentifier: ProfileFavoriteTableViewCell.reuseID) as? ProfileFavoriteTableViewCell else { return .init() }
+            if let track = viewModel.searchResultsTableViewCellForRow(at: indexPath) {
+                cell.updateUI(track: track)
+                return cell
+            }
+        }
+        return .init()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let recentSearches = viewModel.recentSearches {
-            let searchText = recentSearches[indexPath.row]
+        
+        if tableView == recentSearchesView.recentSearchesTableView {
+            let searchText = viewModel.recentSearches[indexPath.row]
             searchController.searchBar.text = searchText
             searchController.searchBar.becomeFirstResponder()
+        }
+        
+        if tableView == searchResultsView.searchResultsTableView {
+            viewModel.searchResultsTableViewDidSelectRow(at: indexPath)
         }
     }
     
@@ -117,14 +105,42 @@ extension SearchVC: UITableViewDataSource , UITableViewDelegate{
 
 
 extension SearchVC: SearcVCInterface {
-    func configureViewDidLoad() {
-        addTargets()
-        configureNavigationBar()
-        addDelegatesAndDataSources()
+    
+    func showRecentSearches() {
+        view = recentSearchesView
     }
     
-    func updateRecentSearches() {
+    func showResults() {
+        view = searchResultsView
+    }
+    
+    func configureNavigationBar() {
+        navigationItem.title = "Song Search"
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+    }
+    
+    func addTargets() {
+        recentSearchesView.clearRecentSearchesButton.addTarget(self, action: #selector(viewModel.clearRecentSearchesButtonTapped), for: .touchUpInside)
+    }
+    
+    func prepareRecentSearchesTableView() {
+        recentSearchesView.recentSearchesTableView.dataSource = self
+        recentSearchesView.recentSearchesTableView.delegate = self
+    }
+    
+    func prepareSearchResultsTableView() {
+        searchResultsView.searchResultsTableView.register(ProfileFavoriteTableViewCell.self, forCellReuseIdentifier: ProfileFavoriteTableViewCell.reuseID)
+        searchResultsView.searchResultsTableView.dataSource = self
+        searchResultsView.searchResultsTableView.delegate = self
+    }
+    
+    func reloadRecentSearchesTableView() {
         recentSearchesView.recentSearchesTableView.reloadData()
+    }
+    
+    func reloadSearchResultsTableView() {
+        searchResultsView.searchResultsTableView.reloadData()
     }
     
     func presentVC(vc: UIViewController) {

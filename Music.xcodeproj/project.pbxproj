@@ -45,7 +45,6 @@
 		58BBD8652AFCEFB500DB65BD /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8642AFCEFB500DB65BD /* SearchVC.swift */; };
 		58BBD8672AFCEFC200DB65BD /* RecentSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */; };
 		58BBD8692AFCF66C00DB65BD /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */; };
-		58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */; };
 		58DA64A52B03D5FA0097A954 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DA64A42B03D5FA0097A954 /* FirestoreManager.swift */; };
 		58EE9CCD2B029F7200CAAF8E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EE9CCC2B029F7200CAAF8E /* ProfileViewModel.swift */; };
 		58EE9CCF2B02B94300CAAF8E /* UserPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EE9CCE2B02B94300CAAF8E /* UserPlaylist.swift */; };
@@ -130,7 +129,6 @@
 		58BBD8642AFCEFB500DB65BD /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesView.swift; sourceTree = "<group>"; };
 		58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVC.swift; sourceTree = "<group>"; };
 		58DA64A42B03D5FA0097A954 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		58EE9CCC2B029F7200CAAF8E /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		58EE9CCE2B02B94300CAAF8E /* UserPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlaylist.swift; sourceTree = "<group>"; };
@@ -388,7 +386,6 @@
 				58BBD8642AFCEFB500DB65BD /* SearchVC.swift */,
 				58BBD8662AFCEFC200DB65BD /* RecentSearchesView.swift */,
 				58BBD8682AFCF66C00DB65BD /* SearchResultsView.swift */,
-				58BBD86D2AFD085B00DB65BD /* SearchResultsVC.swift */,
 				58563FEE2AFE7FAF00ADECE1 /* SearchViewModel.swift */,
 			);
 			path = Search;
@@ -619,7 +616,6 @@
 				83C234E82B02708700F3FF5F /* AlertContainerView.swift in Sources */,
 				58563FFD2AFFCBAC00ADECE1 /* RadioResponse.swift in Sources */,
 				58563FEA2AFE7EAA00ADECE1 /* DeezerAPIManager.swift in Sources */,
-				58BBD86E2AFD085B00DB65BD /* SearchResultsVC.swift in Sources */,
 				83C234CC2B0227FA00F3FF5F /* GenresMusicResponse.swift in Sources */,
 				83C234F82B0271C500F3FF5F /* ForgotPasswordVC.swift in Sources */,
 				58A8462F2B016653002F6544 /* PlaylistVC.swift in Sources */,
