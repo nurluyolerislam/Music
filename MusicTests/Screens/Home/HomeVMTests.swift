@@ -19,7 +19,6 @@ final class HomeVMTests: XCTestCase {
         view = .init()
         manager = .init()
         viewModel = .init(manager: manager, view: view)
-        
     }
     
     override func tearDown() {
@@ -60,7 +59,6 @@ final class HomeVMTests: XCTestCase {
         XCTAssertEqual(manager.invokedGetGenresListsCount, 1)
     }
     
-    
     func test_tableViewCellForItem_ReturnTrack() {
         XCTAssertNil(viewModel.popularSongsResponse?.data)
         
@@ -94,17 +92,21 @@ final class HomeVMTests: XCTestCase {
     func test_discoverCollectionDidSelectItem_ReturnPlayList() {
         XCTAssertNil(viewModel.radioResponse?.data)
         XCTAssertFalse(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.isEmpty)
         
         viewModel.viewDidLoad()
         viewModel.discoverCollectionDidSelectItem(at: IndexPath(item: 0, section: 0))
         
         XCTAssertNotNil(viewModel.radioResponse?.data)
         XCTAssertTrue(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.map(\.vc) is [PlaylistVC])
+
     }
 
     func test_genresCollectionDidSelectItem_ReturnGenreArtistList() {
         XCTAssertNil(viewModel.genresResponse?.data)
         XCTAssertFalse(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.isEmpty)
         
         viewModel.viewDidLoad()
         sleep(5)
@@ -112,19 +114,21 @@ final class HomeVMTests: XCTestCase {
         
         XCTAssertNotNil(viewModel.genresResponse?.data)
         XCTAssertTrue(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.map(\.vc) is [GenreArtistsVC])
     }
-    
     
     func test_popularSongsDidSelectItem_ReturnsSongs() {
         XCTAssertNil(viewModel.popularSongsResponse?.data)
         XCTAssertFalse(view.invokedPresentVC)
+        XCTAssertTrue(view.invokedPresentVCParametersList.isEmpty)
         
         viewModel.viewDidLoad()
         sleep(5)
         viewModel.popularSongsDidSelectItem(at: IndexPath(row: 0, section: 0))
-    
+        
         XCTAssertNotNil(viewModel.popularSongsResponse?.data)
         XCTAssertTrue(view.invokedPresentVC)
+        XCTAssertTrue(view.invokedPresentVCParametersList.map(\.vc) is [PlayerVC])
     }
     
     func test_discoverVCnumberOfItemsInSection_ReturnsPlayListCount() {
@@ -136,16 +140,17 @@ final class HomeVMTests: XCTestCase {
         XCTAssertNotNil(viewModel.radioResponse?.data)
     }
     
-    
     func test_DiscoverVCDidSelectItem_ReturnTarckLists() {
         XCTAssertNil(viewModel.radioResponse?.data)
         XCTAssertFalse(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.isEmpty)
         
         viewModel.viewDidLoad()
         viewModel.DiscoverVCDidSelectItem(at: IndexPath(row: 0, section: 0))
         
         XCTAssertNotNil(viewModel.radioResponse?.data)
         XCTAssertTrue(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.map(\.vc) is [PlaylistVC])
     }
     
     func test_genresVCnumberOfItemsInSection_ReturnGenresResponseCount() {
@@ -161,6 +166,7 @@ final class HomeVMTests: XCTestCase {
     func test_GenresVCDidSelectItem_ReturnGenreArtistDetail() {
         XCTAssertNil(viewModel.genresResponse?.data)
         XCTAssertFalse(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.isEmpty)
         
         viewModel.viewDidLoad()
         sleep(5)
@@ -168,5 +174,6 @@ final class HomeVMTests: XCTestCase {
         
         XCTAssertNotNil(viewModel.genresResponse?.data)
         XCTAssertTrue(view.invokedPushVC)
+        XCTAssertTrue(view.invokedPushVCParametersList.map(\.vc) is [GenreArtistsVC])
     }
 }

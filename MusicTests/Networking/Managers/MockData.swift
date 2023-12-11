@@ -24,6 +24,12 @@ struct MockData {
         return Music.GenresMusicResponse (data: [mockGenresPlayList])
     }()
     
+    static let mockUserPlaylist: Music.UserPlaylist = {
+        .init(title: "Mock Playlist",
+              trackCount: 1,
+              tracks: [mockTrack])
+    }()
+    
     static let mockPlayList: Music.Playlist = {
         return Music.Playlist(id: 1,
                               title: "",

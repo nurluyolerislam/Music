@@ -39,6 +39,9 @@
 		587FC5022AFA558900D6B976 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5012AFA558900D6B976 /* HomeVC.swift */; };
 		587FC5042AFA55B300D6B976 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5032AFA55B300D6B976 /* HomeView.swift */; };
 		587FC5092AFA592500D6B976 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587FC5082AFA592500D6B976 /* UIView+Ext.swift */; };
+		588F65132B27AA65000F8021 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588F65122B27AA65000F8021 /* SearchViewModelTests.swift */; };
+		588F65152B27AB4E000F8021 /* MockSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588F65142B27AB4E000F8021 /* MockSearchVC.swift */; };
+		588F65172B27AE5B000F8021 /* MockFirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588F65162B27AE5B000F8021 /* MockFirestoreManager.swift */; };
 		58A8462D2B016403002F6544 /* RadioPlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8462C2B016403002F6544 /* RadioPlaylistResponse.swift */; };
 		58A8462F2B016653002F6544 /* PlaylistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A8462E2B016653002F6544 /* PlaylistVC.swift */; };
 		58A846312B016664002F6544 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A846302B016664002F6544 /* PlaylistViewModel.swift */; };
@@ -138,6 +141,9 @@
 		587FC5012AFA558900D6B976 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		587FC5032AFA55B300D6B976 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		587FC5082AFA592500D6B976 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		588F65122B27AA65000F8021 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
+		588F65142B27AB4E000F8021 /* MockSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchVC.swift; sourceTree = "<group>"; };
+		588F65162B27AE5B000F8021 /* MockFirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFirestoreManager.swift; sourceTree = "<group>"; };
 		58A8462C2B016403002F6544 /* RadioPlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlaylistResponse.swift; sourceTree = "<group>"; };
 		58A8462E2B016653002F6544 /* PlaylistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistVC.swift; sourceTree = "<group>"; };
 		58A846302B016664002F6544 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
@@ -402,6 +408,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		588F65112B27AA3E000F8021 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				588F65122B27AA65000F8021 /* SearchViewModelTests.swift */,
+				588F65142B27AB4E000F8021 /* MockSearchVC.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		58BBD8622AFCDE1B00DB65BD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,6 +483,7 @@
 			isa = PBXGroup;
 			children = (
 				83AE47732B272C8C00279E52 /* Home */,
+				588F65112B27AA3E000F8021 /* Search */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -494,6 +510,7 @@
 			children = (
 				83AE477A2B272FB900279E52 /* MockDeezerAPIManager.swift */,
 				83AE477C2B27388E00279E52 /* MockData.swift */,
+				588F65162B27AE5B000F8021 /* MockFirestoreManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -779,7 +796,10 @@
 			files = (
 				83AE476C2B272C4600279E52 /* MusicTests.swift in Sources */,
 				83AE47752B272CA200279E52 /* HomeVMTests.swift in Sources */,
+				588F65152B27AB4E000F8021 /* MockSearchVC.swift in Sources */,
+				588F65132B27AA65000F8021 /* SearchViewModelTests.swift in Sources */,
 				83AE47772B272D3600279E52 /* MockHomeVC.swift in Sources */,
+				588F65172B27AE5B000F8021 /* MockFirestoreManager.swift in Sources */,
 				83AE477B2B272FB900279E52 /* MockDeezerAPIManager.swift in Sources */,
 				83AE477D2B27388E00279E52 /* MockData.swift in Sources */,
 			);

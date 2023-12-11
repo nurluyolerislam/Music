@@ -6,7 +6,6 @@
 //
 
 struct UserPlaylist: Codable {
-    let image: String?
     let title: String?
     let trackCount: Int?
     let tracks: [Track]?

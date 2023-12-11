@@ -82,16 +82,25 @@ final class MockHomeVC: HomeVCInterface {
     
     var invokedPushVC = false
     var invokedPushVCCount = 0
+    var invokedPushVCParameters: (vc: UIViewController, Void)?
+    var invokedPushVCParametersList = [(vc: UIViewController, Void)]()
     func pushVC(vc: UIViewController) {
         invokedPushVC = true
         invokedPushVCCount += 1
+        invokedPushVCParameters = (vc: vc, ())
+        invokedPushVCParametersList.append((vc: vc, ()))
     }
     
     var invokedPresentVC = false
     var invokedPresentVCCount = 0
+    var invokedPresentVCParameters: (vc: UIViewController, Void)?
+    var invokedPresentVCParametersList = [(vc: UIViewController, Void)]()
+    
     func presentVC(vc: UIViewController) {
         invokedPresentVC = true
         invokedPresentVCCount += 1
+        invokedPresentVCParameters = (vc: vc, ())
+        invokedPresentVCParametersList.append((vc: vc, ()))
     }
 }
 
