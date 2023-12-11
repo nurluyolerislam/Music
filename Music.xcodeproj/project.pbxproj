@@ -56,6 +56,11 @@
 		83ABE1B52AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B42AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift */; };
 		83ABE1B92AFD25DA00AA4146 /* PlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1B82AFD25DA00AA4146 /* PlayerVC.swift */; };
 		83ABE1BB2AFD25EC00AA4146 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ABE1BA2AFD25EC00AA4146 /* PlayerView.swift */; };
+		83AE476C2B272C4600279E52 /* MusicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE476B2B272C4600279E52 /* MusicTests.swift */; };
+		83AE47752B272CA200279E52 /* HomeVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE47742B272CA200279E52 /* HomeVMTests.swift */; };
+		83AE47772B272D3600279E52 /* MockHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE47762B272D3600279E52 /* MockHomeVC.swift */; };
+		83AE477B2B272FB900279E52 /* MockDeezerAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE477A2B272FB900279E52 /* MockDeezerAPIManager.swift */; };
+		83AE477D2B27388E00279E52 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AE477C2B27388E00279E52 /* MockData.swift */; };
 		83AF00392B05F73E009D58E6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83AF00382B05F73E009D58E6 /* GoogleService-Info.plist */; };
 		83AF003C2B05FB1F009D58E6 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 83AF003B2B05FB1F009D58E6 /* GoogleSignIn */; };
 		83AF003E2B05FB1F009D58E6 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83AF003D2B05FB1F009D58E6 /* GoogleSignInSwift */; };
@@ -89,6 +94,16 @@
 		83C235232B0278FC00F3FF5F /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C235222B0278FC00F3FF5F /* UIColor+Ext.swift */; };
 		83EB85942B04F43E0070359B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83EB85932B04F43E0070359B /* FirebaseStorage */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		83AE476D2B272C4600279E52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 587FC4E12AFA54AC00D6B976 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 587FC4E82AFA54AC00D6B976;
+			remoteInfo = Music;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		580719E42B02C4F900B77045 /* CreatePlaylistPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaylistPopupVC.swift; sourceTree = "<group>"; };
@@ -140,6 +155,12 @@
 		83ABE1B42AFD076900AA4146 /* ProfileFavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		83ABE1B82AFD25DA00AA4146 /* PlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVC.swift; sourceTree = "<group>"; };
 		83ABE1BA2AFD25EC00AA4146 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		83AE47692B272C4600279E52 /* MusicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		83AE476B2B272C4600279E52 /* MusicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTests.swift; sourceTree = "<group>"; };
+		83AE47742B272CA200279E52 /* HomeVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVMTests.swift; sourceTree = "<group>"; };
+		83AE47762B272D3600279E52 /* MockHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeVC.swift; sourceTree = "<group>"; };
+		83AE477A2B272FB900279E52 /* MockDeezerAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDeezerAPIManager.swift; sourceTree = "<group>"; };
+		83AE477C2B27388E00279E52 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		83AF00382B05F73E009D58E6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		83C234CB2B0227FA00F3FF5F /* GenresMusicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresMusicResponse.swift; sourceTree = "<group>"; };
 		83C234CD2B022EC300F3FF5F /* GenresArtistLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresArtistLists.swift; sourceTree = "<group>"; };
@@ -181,6 +202,13 @@
 				58563FE42AFE76F000ADECE1 /* Alamofire in Frameworks */,
 				83EB85942B04F43E0070359B /* FirebaseStorage in Frameworks */,
 				83AF003C2B05FB1F009D58E6 /* GoogleSignIn in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83AE47662B272C4600279E52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				587FC4EB2AFA54AC00D6B976 /* Music */,
+				83AE476A2B272C4600279E52 /* MusicTests */,
 				587FC4EA2AFA54AC00D6B976 /* Products */,
 				83C235162B02769700F3FF5F /* Frameworks */,
 			);
@@ -314,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				587FC4E92AFA54AC00D6B976 /* Music.app */,
+				83AE47692B272C4600279E52 /* MusicTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -422,6 +452,50 @@
 				580719E82B02D34B00B77045 /* AddToPlaylistPopupViewModel.swift */,
 			);
 			path = Player;
+			sourceTree = "<group>";
+		};
+		83AE476A2B272C4600279E52 /* MusicTests */ = {
+			isa = PBXGroup;
+			children = (
+				83AE47782B272F9A00279E52 /* Networking */,
+				83AE47722B272C7C00279E52 /* Screens */,
+				83AE476B2B272C4600279E52 /* MusicTests.swift */,
+			);
+			path = MusicTests;
+			sourceTree = "<group>";
+		};
+		83AE47722B272C7C00279E52 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				83AE47732B272C8C00279E52 /* Home */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		83AE47732B272C8C00279E52 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				83AE47742B272CA200279E52 /* HomeVMTests.swift */,
+				83AE47762B272D3600279E52 /* MockHomeVC.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		83AE47782B272F9A00279E52 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				83AE47792B272FA300279E52 /* Managers */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		83AE47792B272FA300279E52 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				83AE477A2B272FB900279E52 /* MockDeezerAPIManager.swift */,
+				83AE477C2B27388E00279E52 /* MockData.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		83C234D52B026FC500F3FF5F /* Custom Components */ = {
@@ -538,6 +612,24 @@
 			productReference = 587FC4E92AFA54AC00D6B976 /* Music.app */;
 			productType = "com.apple.product-type.application";
 		};
+		83AE47682B272C4600279E52 /* MusicTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83AE476F2B272C4600279E52 /* Build configuration list for PBXNativeTarget "MusicTests" */;
+			buildPhases = (
+				83AE47652B272C4600279E52 /* Sources */,
+				83AE47662B272C4600279E52 /* Frameworks */,
+				83AE47672B272C4600279E52 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				83AE476E2B272C4600279E52 /* PBXTargetDependency */,
+			);
+			name = MusicTests;
+			productName = MusicTests;
+			productReference = 83AE47692B272C4600279E52 /* MusicTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -550,6 +642,10 @@
 				TargetAttributes = {
 					587FC4E82AFA54AC00D6B976 = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					83AE47682B272C4600279E52 = {
+						CreatedOnToolsVersion = 15.0.1;
+						TestTargetID = 587FC4E82AFA54AC00D6B976;
 					};
 				};
 			};
@@ -574,6 +670,7 @@
 			projectRoot = "";
 			targets = (
 				587FC4E82AFA54AC00D6B976 /* Music */,
+				83AE47682B272C4600279E52 /* MusicTests */,
 			);
 		};
 /* End PBXProject section */
@@ -588,6 +685,13 @@
 				83AF00392B05F73E009D58E6 /* GoogleService-Info.plist in Resources */,
 				83C235202B02789400F3FF5F /* a1.json in Resources */,
 				83C235212B02789400F3FF5F /* a2.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83AE47672B272C4600279E52 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,7 +773,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83AE47652B272C4600279E52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83AE476C2B272C4600279E52 /* MusicTests.swift in Sources */,
+				83AE47752B272CA200279E52 /* HomeVMTests.swift in Sources */,
+				83AE47772B272D3600279E52 /* MockHomeVC.swift in Sources */,
+				83AE477B2B272FB900279E52 /* MockDeezerAPIManager.swift in Sources */,
+				83AE477D2B27388E00279E52 /* MockData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		83AE476E2B272C4600279E52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 587FC4E82AFA54AC00D6B976 /* Music */;
+			targetProxy = 83AE476D2B272C4600279E52 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		587FC4F72AFA54AD00D6B976 /* LaunchScreen.storyboard */ = {
@@ -858,6 +982,42 @@
 			};
 			name = Release;
 		};
+		83AE47702B272C4600279E52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ACB3S45S75;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = yasarduman.MusicTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Music.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Music";
+			};
+			name = Debug;
+		};
+		83AE47712B272C4600279E52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ACB3S45S75;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = yasarduman.MusicTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Music.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Music";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -875,6 +1035,15 @@
 			buildConfigurations = (
 				587FC4FE2AFA54AD00D6B976 /* Debug */,
 				587FC4FF2AFA54AD00D6B976 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83AE476F2B272C4600279E52 /* Build configuration list for PBXNativeTarget "MusicTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83AE47702B272C4600279E52 /* Debug */,
+				83AE47712B272C4600279E52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

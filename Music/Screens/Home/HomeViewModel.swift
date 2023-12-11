@@ -100,7 +100,7 @@ extension HomeViewModel: HomeViewModelProtocol{
     func discoverCollectionViewCellForItem(at indexPath: IndexPath) -> Playlist? {
         if let radioResponse {
             if let playlists = radioResponse.data {
-                return playlists[indexPath.row]
+                return playlists[indexPath.item]
             }
         }
         return nil
@@ -109,7 +109,7 @@ extension HomeViewModel: HomeViewModelProtocol{
     func genresCollectionViewCellForItem(at indexPath: IndexPath) -> GenresPlayList? {
         if let genresResponse {
             if let genresPlaylists = genresResponse.data {
-                return genresPlaylists[indexPath.row]
+                return genresPlaylists[indexPath.item]
             }
         }
         return nil
@@ -118,7 +118,7 @@ extension HomeViewModel: HomeViewModelProtocol{
     func discoverCollectionDidSelectItem(at indexPath: IndexPath) {
         if let response = radioResponse {
             if let playlists = response.data {
-                let playlist = playlists[indexPath.row]
+                let playlist = playlists[indexPath.item]
                 
                 if let playlistURL = playlist.tracklist {
                     let playlistVC = PlaylistVC(playlistURL: playlistURL)

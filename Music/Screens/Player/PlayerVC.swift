@@ -53,7 +53,11 @@ final class PlayerVC: UIViewController {
     }
     
     private func configureSongImage() {
-        playerView.songImage.kf.setImage(with: URL(string: viewModel!.track.album!.coverXl!)!)
+        guard let viewModel else {return}
+        guard let album = viewModel.track.album else {return}
+        guard let imageURl = album.coverXl else {return}
+        
+        playerView.songImage.kf.setImage(with: URL(string: imageURl))
     }
     
     private func configureSongTitle() {
