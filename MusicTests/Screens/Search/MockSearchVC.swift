@@ -22,7 +22,7 @@ final class MockSearchVC: SearcVCInterface {
     var invokedAddTargetsCount = 0
     func addTargets() {
         invokedAddTargets = true
-        invokedAddTargetsCount = 0
+        invokedAddTargetsCount += 1
     }
     
     var invokedPrepareRecentSearchesTableView = false
