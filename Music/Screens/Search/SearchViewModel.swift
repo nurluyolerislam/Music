@@ -74,6 +74,21 @@ final class SearchViewModel {
 
 extension SearchViewModel: SearchVMInterface{
     
+    func loadView() {
+        view?.showRecentSearches()
+    }
+    
+    func viewDidLoad() {
+        view?.configureNavigationBar()
+        view?.prepareRecentSearchesTableView()
+        view?.prepareSearchResultsTableView()
+        view?.addTargets()
+    }
+    
+    func viewDidAppear() {
+        getRecentSearches()
+    }
+    
     func recentSearchesTableViewCellForRow(at indexPath: IndexPath) -> String {
         return recentSearches[indexPath.row]
     }
@@ -92,22 +107,6 @@ extension SearchViewModel: SearchVMInterface{
     
     var recentSearchesCount: Int {
         recentSearches.count
-    }
-    
-    
-    func loadView() {
-        view?.showRecentSearches()
-    }
-    
-    func viewDidLoad() {
-        view?.configureNavigationBar()
-        view?.prepareRecentSearchesTableView()
-        view?.prepareSearchResultsTableView()
-        view?.addTargets()
-    }
-    
-    func viewDidAppear() {
-        getRecentSearches()
     }
     
     func updateSearchResults(searchText: String) {
