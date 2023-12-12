@@ -29,12 +29,15 @@ final class ProfileViewModel {
     var userName: String?
     var playlists: [UserPlaylist]?
     var userFavoriteTracks: [Track]?
-    let firestoreManager: FirestoreManagerProtocol
-    lazy var firebaseAuthManager = FirebaseAuthManager()
-    lazy var firebaseStorageManager = FirebaseStorageManager()
+    private let firestoreManager: FirestoreManagerProtocol
+    private let firebaseAuthManager: FirebaseAuthManagerProtocol
+    private let firebaseStorageManager: FirebaseStorageManagerProtocol
     
-    init(firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared, view: ProfileVCInterface) {
+    init(view: ProfileVCInterface, firestoreManager: FirestoreManagerProtocol = FirestoreManager.shared, firebaseAuthManager: FirebaseAuthManagerProtocol = FirebaseAuthManager.shared,firebaseStorageManager: FirebaseStorageManagerProtocol = FirebaseStorageManager.shared ) {
         self.firestoreManager = firestoreManager
+        self.firebaseAuthManager = firebaseAuthManager
+        self.firebaseStorageManager = firebaseStorageManager
+        
         self.view = view
     }
     

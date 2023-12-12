@@ -8,7 +8,11 @@
 import FirebaseAuth
 
 final class AuthViewModel {
-    private lazy var firebaseAuthManager = FirebaseAuthManager()
+    private var firebaseAuthManager: FirebaseAuthManagerProtocol
+    
+    init(firebaseAuthManager: FirebaseAuthManagerProtocol = FirebaseAuthManager.shared) {
+        self.firebaseAuthManager = firebaseAuthManager
+    }
     // MARK: - Login
     func login(email: String, password: String, completion: @escaping () -> Void) {
         firebaseAuthManager.signIn(email: email, password: password) {

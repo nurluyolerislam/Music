@@ -98,4 +98,8 @@ struct MockData {
                                     type: "")
     }()
     
+    static let mockURL: URL = {
+        return URL(string: "https://image.tmdb.org/t/p/w500/18IsRVfs5MkkTcqTGlUAnka6sCh.jpg")
+    }()!
+    
 }
