@@ -61,4 +61,26 @@ final class SearchViewModelTests: XCTestCase {
         XCTAssertEqual(firestoreManager.invokedGetRecentSearchesCount, 1)
         XCTAssertEqual(view.invokedReloadRecentSearchesTableViewCount, 1)
     }
+    
+    func test_recentSearchesTableViewCellForRow_ReturnRecentSearchesCount() {
+        XCTAssertEqual(viewModel.recentSearches.count, 0)
+        
+        viewModel.recentSearches = ["TestSearch"]
+        viewModel.recentSearchesTableViewCellForRow(at: IndexPath(row: 0, section: 0))
+        
+        XCTAssertEqual(viewModel.recentSearches.count, 1)
+    }
+    
+    func test_searchResultsTableViewCellForRow_ReturnTrack() {
+        XCTAssertNil(viewModel.searchResponse)
+        
+        viewModel.searchResponse = MockData.mockSearchTrackResponse
+        viewModel.searchResultsTableViewCellForRow(at: IndexPath(row: 0, section: 0))
+        
+        XCTAssertNotNil(viewModel.searchResponse)
+    }
+    
+    func test_updateSearchResults_invokesRequiredMethods() {
+        
+    }
 }
